@@ -1,0 +1,91 @@
+.feedback-form-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feedback-form h1 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .input-group input, 
+  .input-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .input-group textarea {
+    height: 100px;
+    resize: none;
+  }
+  
+  .star-rating {
+    display: flex;
+  }
+  
+  .star {
+    cursor: pointer;
+    font-size: 24px;
+    color: #ddd;
+  }
+  
+  .star.filled {
+    color: #f39c12;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .submit-btn, .cancel-btn {
+    width: 48%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .submit-btn {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .cancel-btn {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .message {
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+  
+  .success-message {
+    color: green;
+  }
+  
+  .error-message {
+    color: red;
+  }

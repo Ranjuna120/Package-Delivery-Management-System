@@ -1,0 +1,146 @@
+/* Feedback List Page Styles */
+
+.app-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto; /* Center the container */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center text inside the container */
+}
+
+/* Heading */
+h2 {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 25px;
+  font-weight: bold;
+  text-align: center; /* Ensure heading is centered */
+}
+
+.message {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: green;
+}
+
+.error-message {
+  color: red;
+}
+
+/* Feedback Header (Search Bar and PDF Button) */
+.actions {
+  display: flex;
+  justify-content: space-between; /* Space between search bar and button */
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px; /* Add spacing between elements */
+  flex-wrap: wrap; /* Ensure elements wrap on smaller screens */
+}
+
+.search-bar {
+  flex-grow: 1; /* Allow search bar to take up more space */
+  max-width: 300px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  flex-shrink: 0; /* Prevent button from shrinking */
+  padding: 10px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.generate-btn {
+  background-color: #0088a9; /* Button color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 15px; /* Padding for button */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease; /* Transition for hover effect */
+}
+
+.accept-btn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.reject-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.accept-btn:hover, .reject-btn:hover {
+  opacity: 0.9;
+  transition: 0.3s ease;
+}
+
+/* Table Styles */
+.feedback-table-container {
+  overflow-x: auto;
+  text-align: center; /* Center the table */
+}
+
+.feedback-table {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto; /* Center the table */
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-table th, 
+.feedback-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.feedback-table th {
+  background-color: #f0f0f0;
+  color: #555;
+  font-size: 18px;
+}
+
+.feedback-table td {
+  color: #333;
+}
+
+.feedback-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 15px;
+  }
+
+  .feedback-table th, 
+  .feedback-table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .search-bar {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%; /* Full width on small screens */
+    margin-bottom: 10px;
+  }
+}
