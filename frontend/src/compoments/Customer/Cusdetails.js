@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable'; // For automatic table generation
+import 'jspdf-autotable';
 import '../../style/customer/Cusdetails.css';
 
 const Cusdetails = () => {
