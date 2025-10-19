@@ -77,52 +77,58 @@ const Cusdetails = () => {
 
   return (
     <div className="customer-details-container">
-      <h2>Customer Details</h2>
-      <div className="search-generate">
-        <button className="generate-report" onClick={generatePDF}>Generate Report</button>
-        <input 
-          type="text" 
-          className="search-bar" 
-          placeholder="Search here" 
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className="cusdetails-card">
+        <h2 className="cusdetails-title">Customer Details</h2>
+        <div className="search-generate">
+          <button className="generate-report" onClick={generatePDF}>Generate Report</button>
+          <input
+            type="text"
+            className="search-bar"
+            placeholder="Search by name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className="cusdetails-table-wrapper">
+          <table className="customer-table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Age</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredCustomers.length === 0 ? (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: 'center', color: '#888', fontStyle: 'italic' }}>
+                    No customers found.
+                  </td>
+                </tr>
+              ) : (
+                filteredCustomers.map(customer => (
+                  <tr key={customer._id}>
+                    <td>{customer.name || 'N/A'}</td>
+                    <td>{customer.username}</td>
+                    <td>{customer.email}</td>
+                    <td>{customer.address}</td>
+                    <td>{customer.age}</td>
+                    <td>
+                      <div className="cusdetails-action-group">
+                        <button className="update-button" onClick={() => handleUpdate(customer._id)}>Update</button>
+                        <button className="delete-button" onClick={() => handleDelete(customer._id)}>Delete</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-      <table className="customer-table">
-        <thead>
-          <tr>
-          <th>Customer Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Age</th>
-            {/* <th>Payment Status</th> */}
-            {/* <th>Feedback</th> */}
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredCustomers.map(customer => (
-            <tr key={customer._id}>
-               <td>{customer.name || 'N/A'}</td> {/* Fallback for missing names */}
-              <td>{customer.username}</td>
-              <td>{customer.email}</td>
-              <td>{customer.address}</td>
-              <td>{customer.age}</td>
-              {/* <td>
-                <button className="view-button">View</button>
-              </td> */}
-              {/* <td>
-                <button className="response-button">Response</button>
-              </td> */}
-              <td>
-                <button className="update-button" onClick={() => handleUpdate(customer._id)}>Update</button>
-                <button className="delete-button" onClick={() => handleDelete(customer._id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 };
