@@ -7,13 +7,33 @@ body {
   padding: 0;
 }
 
+
 .customer-details-container {
-  max-width: 1200px; /* Max width for the container */
-  margin: 20px auto; /* Center container */
-  padding: 20px;
-  background-color: #ffffff; /* White background */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.cusdetails-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(33, 147, 176, 0.10);
+  padding: 32px 28px 28px 28px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.cusdetails-title {
+  text-align: center;
+  color: #2193b0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
 }
 
 h2 {
@@ -22,97 +42,118 @@ h2 {
   margin-bottom: 20px;
 }
 
+
 .search-generate {
   display: flex;
-  justify-content: space-between; /* Space between button and search bar */
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px; /* Space below the search section */
+  margin-bottom: 28px;
+  gap: 18px;
 }
+
 
 .generate-report {
-  background-color: #0088a9; /* Button color */
-  color: white; /* Text color */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 15px; /* Padding for button */
-  cursor: pointer; /* Pointer cursor */
-  transition: background-color 0.3s ease; /* Transition for hover effect */
+  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(33,147,176,0.08);
+  transition: background 0.3s;
+}
+.generate-report:hover {
+  background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
 }
 
-.generate-report:hover {
-  background-color: #006f85; /* Darker shade on hover */
-}
 
 .search-bar {
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-  }
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1.5px solid #b5d0e6;
+  border-radius: 8px;
+  background: #f7fbfd;
+  outline: none;
+  transition: border 0.2s;
+}
+.search-bar:focus {
+  border: 1.5px solid #2193b0;
+  background: #eaf6fb;
+}
   
-  .search-bar input {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
+
+
+.cusdetails-table-wrapper {
+  overflow-x: auto;
+  margin-top: 18px;
+}
 
 .customer-table {
-  width: 100%; /* Full width of the table */
-  border-collapse: collapse; /* Remove space between cells */
-  margin-top: 20px; /* Space above table */
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+  background: #fafdff;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 1rem;
 }
+
 
 .customer-table th, .customer-table td {
-  padding: 12px; /* Padding for cells */
-  text-align: left; /* Left align text */
-  border: 1px solid #ddd; /* Light border for cells */
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e3eaf1;
 }
+
 
 .customer-table th {
-  background-color: #031f42; /* Header background color */
-  color: #ffffff; /* Header text color */
+  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  font-size: 1.08rem;
 }
+
 
 .customer-table tr:nth-child(even) {
-  background-color: #f2f2f2; /* Zebra striping effect */
+  background-color: #f3fafd;
 }
-
 .customer-table tr:hover {
-  background-color: #e0e0e0; /* Highlight row on hover */
+  background: #eaf6fb;
+  transition: background 0.2s;
 }
 
-.view-button, .update-button, .delete-button {
-  background-color: #0088a9; /* Button color */
-  color: white; /* Text color */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 8px 12px; /* Padding for buttons */
-  cursor: pointer; /* Pointer cursor */
-  transition: background-color 0.3s ease; /* Transition for hover effect */
+
+.cusdetails-action-group {
+  display: flex;
+  gap: 12px;
 }
 
-.view-button:hover, .response-button:hover,
-.update-button:hover, .delete-button:hover {
-  background-color: #006f85; /* Darker shade on hover */
+.update-button, .delete-button {
+  border: none;
+  border-radius: 7px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 1px 4px rgba(33,147,176,0.08);
 }
-
 .update-button {
-  background-color: #f0ad4e; /* Update button color */
-  margin-right: 40px;
+  background: linear-gradient(90deg, #f0ad4e 0%, #f7d774 100%);
+  color: #fff;
 }
-
 .update-button:hover {
-  background-color: #ec971f; /* Darker shade on hover */
+  background: linear-gradient(90deg, #ec971f 0%, #f0ad4e 100%);
 }
-
 .delete-button {
-  background-color: #ff0800; /* Delete button color */
-  
+  background: linear-gradient(90deg, #ff0800 0%, #ff5e62 100%);
+  color: #fff;
 }
-
 .delete-button:hover {
-  background-color: #ff0800; /* Darker shade on hover */
-  
+  background: linear-gradient(90deg, #ff5e62 0%, #ff0800 100%);
 }
