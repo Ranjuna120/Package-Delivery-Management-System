@@ -1,143 +1,127 @@
 import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 
 function AdminLogin({ onLogin, userType }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
-
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
-    e.preventDefault(); // Prevent default form submission
-
-    // Dummy logic - Replace with backend logic if needed
-    const StoredRole = "General"; // Example stored role, replace with real logic
-
+    e.preventDefault();
+    setError('');
+    const StoredRole = "General";
     if (username && password) {
       if (role === "Stock") {
         if (StoredRole === "Stock" || StoredRole === "General") {
-          navigate('/StockDashBoardPage'); // Redirect
+          navigate('/StockDashBoardPage');
         } else {
-          alert("Access denied. Incorrect role.");
+          setError("Access denied. Incorrect role.");
         }
       } else if (role === "Deputy") {
-        // Validation for Deputy Manager login
         if (username === 'admin' && password === 'admin') {
           if (StoredRole === "Deputy" || StoredRole === "General") {
-            navigate('/DMChoose'); // Redirect
+            navigate('/DMChoose');
           } else {
-            alert("Access denied. Incorrect role.");
+            setError("Access denied. Incorrect role.");
           }
         } else {
-          alert("Invalid username or password for Deputy Manager.");
+          setError("Invalid username or password for Deputy Manager.");
         }
       } else if (role === "Plant") {
         if (StoredRole === "Plant" || StoredRole === "General") {
-          navigate('/PMChoose'); // Redirect
+          navigate('/PMChoose');
         } else {
-          alert("Access denied. Incorrect role.");
+          setError("Access denied. Incorrect role.");
         }
       } else if (role === "General") {
-        navigate('/GMChoose'); // Redirect
+        navigate('/GMChoose');
       } else {
-        alert("Invalid role selected.");
+        setError("Invalid role selected.");
       }
     } else {
-      alert("Please enter both username and password.");
+      setError("Please enter both username and password.");
     }
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>{userType} Login Page</h2>
-      <form onSubmit={handleLogin} style={styles.form}>
-        <div style={styles.inputContainer}>
-          <label style={styles.label}>Username:</label>
-          <input 
-            type="text" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-            required 
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.inputContainer}>
-          <label style={styles.label}>Password:</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.inputContainer}>
-          <label style={styles.label}>Role:</label>
-          <select value={role} onChange={(e) => setRole(e.target.value)} required style={styles.input}>
-            <option value="">Select Role</option>
-            <option value="Stock">Stock</option>
-            <option value="Deputy">Deputy</option>
-            <option value="Plant">Plant</option>
-            <option value="General">General</option>
-          </select>
-        </div>
-        <button type="submit" style={styles.button}>Login</button>
-      </form>
-    </div>
+    <section
+      className="d-flex align-items-center justify-content-center"
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%)',
+        padding: '20px'
+      }}
+    >
+      <div className="card shadow-lg p-4" style={{ maxWidth: 420, width: '100%', borderRadius: 16 }}>
+        <h3 className="text-center mb-4" style={{ color: '#2193b0', fontWeight: 700 }}>{userType} Login</h3>
+        {error && (
+          <div className="alert alert-danger py-2 mb-3 text-center" role="alert" style={{ fontSize: 15 }}>{error}</div>
+        )}
+        <form onSubmit={handleLogin} autoComplete="off">
+          <div className="mb-3">
+            <label className="form-label" style={{ fontWeight: 500 }}>Username</label>
+            <input
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              style={{ borderRadius: 10 }}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label" style={{ fontWeight: 500 }}>Password</label>
+            <input
+              type="password"
+              className="form-control form-control-lg"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={{ borderRadius: 10 }}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label" style={{ fontWeight: 500 }}>Role</label>
+            <select
+              className="form-select form-select-lg"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              required
+              style={{ borderRadius: 10 }}
+            >
+              <option value="">Select Role</option>
+              <option value="Stock">Stock</option>
+              <option value="Deputy">Deputy</option>
+              <option value="Plant">Plant</option>
+              <option value="General">General</option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            className="btn w-100"
+            style={{
+              fontWeight: 600,
+              fontSize: 17,
+              background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 10,
+              boxShadow: '0 2px 10px rgba(33,147,176,0.15)',
+              transition: 'background 0.3s',
+              padding: '10px 0'
+            }}
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '100vh',
-    backgroundColor: '#f5f5f5',
-  },
-  heading: {
-    marginBottom: '20px',
-    fontSize: '24px',
-    color: '#333',
-  },
-  form: {
-    backgroundColor: '#fff',
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.1)',
-    width: '300px',
-  },
-  inputContainer: {
-    marginBottom: '15px',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '5px',
-    fontWeight: 'bold',
-    color: '#555',
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '4px',
-    border: '1px solid #ddd',
-    fontSize: '14px',
-  },
-  button: {
-    width: '100%',
-    padding: '10px',
-    backgroundColor: '#28a745',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-  buttonHover: {
-    backgroundColor: '#218838',
-  },
-};
 
 export default AdminLogin;
