@@ -4,25 +4,13 @@
 
     "test": "echo \"Error: no test specified\" && exit 1",
 
-    "start": "concurrently \"cd frontend && npm start\" \"cd backend && npm run dev\""
+    "start": "concurrently \"cd frontend && npm start\" \"cd BACKEND && npm run dev\""
 
   },
 
   "dependencies": {
 
-    "concurrently": "^9.0.1",
-
-    "jspdf": "^2.5.2",
-
-    "jspdf-autotable": "^3.8.3",
-
-    "react": "^18.3.1",
-
-    "react-data-table-component": "^7.6.2",
-
-    "react-dom": "^18.3.1",
-
-    "xlsx": "^0.18.5"
+    "concurrently": "^9.0.1"
 
   }
 
