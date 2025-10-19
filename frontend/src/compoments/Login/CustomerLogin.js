@@ -37,34 +37,34 @@ const CustomerLogin = () => {
       alignItems: 'center',
       justifyContent: 'center'
     }}>
-      <div className="card shadow-lg p-3" style={{ maxWidth: 340, width: '100%', borderRadius: 14, background: 'rgba(255,255,255,0.97)' }}>
-        <h4 className="text-center mb-3" style={{ fontWeight: 700, letterSpacing: 1, color: '#2193b0' }}>Welcome back</h4>
+      <div className="card shadow-lg p-4" style={{ maxWidth: 460, width: '100%', borderRadius: 16, background: 'rgba(255,255,255,0.98)' }}>
+        <h3 className="text-center mb-4" style={{ fontWeight: 700, letterSpacing: 0.5, color: '#2193b0' }}>Welcome back</h3>
         <form onSubmit={handleSubmit} autoComplete="off">
-          <div className="mb-2">
-            <label className="form-label" style={{ fontWeight: 500, fontSize: 14 }}>Username</label>
-            <input type="text" className="form-control" placeholder="Enter your username" value={username} onChange={e => setUsername(e.target.value)} required style={{ borderRadius: 8, fontSize: 14, padding: '7px 10px' }} />
+          <div className="mb-3">
+            <label className="form-label" style={{ fontWeight: 500, fontSize: 15 }}>Username</label>
+            <input type="text" className="form-control form-control-lg" placeholder="Enter your username" value={username} onChange={e => setUsername(e.target.value)} required style={{ borderRadius: 10 }} />
           </div>
-          <div className="mb-2">
-            <label className="form-label" style={{ fontWeight: 500, fontSize: 14 }}>Password</label>
-            <input type="password" className="form-control" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} required style={{ borderRadius: 8, fontSize: 14, padding: '7px 10px' }} />
+          <div className="mb-3">
+            <label className="form-label" style={{ fontWeight: 500, fontSize: 15 }}>Password</label>
+            <input type="password" className="form-control form-control-lg" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} required style={{ borderRadius: 10 }} />
           </div>
-          {error && <div className="alert alert-danger py-2 mb-2 text-center" style={{ fontSize: 13 }}>{error}</div>}
+          {error && <div className="alert alert-danger py-2 mb-3 text-center" style={{ fontSize: 14 }}>{error}</div>}
           <button type="submit" className="btn w-100" disabled={loading} style={{
             fontWeight: 600,
-            fontSize: 15,
+            fontSize: 17,
             background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
             color: '#fff',
             border: 'none',
-            borderRadius: 8,
-            boxShadow: '0 2px 8px rgba(33,147,176,0.10)',
+            borderRadius: 10,
+            boxShadow: '0 2px 10px rgba(33,147,176,0.15)',
             transition: 'background 0.3s',
-            padding: '8px 0'
+            padding: '10px 0'
           }}>
             {loading ? 'Signing in...' : 'Login'}
           </button>
         </form>
-        <div className="text-center mt-2">
-          <span style={{ color: '#2193b0', fontSize: 13 }}>New here? <a href="/Regi" className="text-decoration-none" style={{ color: '#6dd5ed', fontWeight: 600 }}>Create an account</a></span>
+        <div className="text-center mt-3">
+          <span style={{ color: '#2193b0', fontSize: 14 }}>New here? <a href="/Regi" className="text-decoration-none" style={{ color: '#6dd5ed', fontWeight: 600 }}>Create an account</a></span>
         </div>
       </div>
     </div>
