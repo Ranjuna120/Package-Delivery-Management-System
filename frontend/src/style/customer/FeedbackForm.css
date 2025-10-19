@@ -1,91 +1,130 @@
+:root {
+  --brand-primary: #2193b0;
+  --brand-accent: #6dd5ed;
+  --star-active: #f5c518;
+  --text-dark: #333;
+}
+
+/* Legacy wrapper (kept for backward compatibility) */
 .feedback-form-container {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+  
+.feedback-form h1 {
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  text-align: center;
+}
+  
+  
+.input-group {
+  margin-bottom: 15px;
+}
+  
+.input-group label {
+  display: block;
+  font-size: 16px;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+  
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 0.2rem rgba(33, 147, 176, 0.15);
+}
+  
+.input-group textarea {
+  height: 120px;
+  resize: vertical;
+}
+  
+.star-rating {
+  display: flex;
+  gap: 8px;
+}
+  
+.star {
+  cursor: pointer;
+  font-size: 24px;
+  color: #ddd;
+  transition: transform 0.15s ease, color 0.2s ease;
+}
+  
+.star:hover,
+.star:focus {
+  transform: scale(1.15);
+  color: var(--star-active);
+}
+
+.star.filled {
+  color: var(--star-active);
+}
+  
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+  
+.submit-btn,
+.cancel-btn {
+  width: 48%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+  
+.submit-btn {
+  background: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(33, 147, 176, 0.15);
+}
+  
+.cancel-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+  
+.message {
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+  
+.success-message {
+  color: #198754; /* Bootstrap success */
+}
+  
+.error-message {
+  color: #dc3545; /* Bootstrap danger */
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+  .feedback-form-container {
+    padding: 16px;
   }
-  
-  .feedback-form h1 {
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  
-  .input-group {
-    margin-bottom: 15px;
-  }
-  
-  .input-group label {
-    display: block;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .input-group input, 
+  .input-group input,
   .input-group textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    font-size: 13px;
   }
-  
-  .input-group textarea {
-    height: 100px;
-    resize: none;
-  }
-  
-  .star-rating {
-    display: flex;
-  }
-  
-  .star {
-    cursor: pointer;
-    font-size: 24px;
-    color: #ddd;
-  }
-  
-  .star.filled {
-    color: #f39c12;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .submit-btn, .cancel-btn {
-    width: 48%;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .submit-btn {
-    background-color: #28a745;
-    color: #fff;
-  }
-  
-  .cancel-btn {
-    background-color: #dc3545;
-    color: #fff;
-  }
-  
-  .message {
-    margin-bottom: 15px;
-    font-size: 14px;
-  }
-  
-  .success-message {
-    color: green;
-  }
-  
-  .error-message {
-    color: red;
-  }
+}
