@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';  
-import { useNavigate, useParams } from 'react-router-dom';  
-import axios from 'axios';  
+
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import '../../style/customer/UpdateCustomer.css';
 
 function UpdateCustomer() {
   const [customerData, setCustomerData] = useState({
@@ -47,124 +49,70 @@ function UpdateCustomer() {
   };
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      alignItems: 'center', 
-      justifyContent: 'center', 
-      minHeight: '100vh', 
-      backgroundColor: '#f4f4f4', 
-      padding: '20px' 
-    }}>
-      <h1 style={{ marginBottom: '20px' }}>Update Customer</h1>
-      <form onSubmit={handleSubmit} style={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        width: '400px', 
-        padding: '20px', 
-        backgroundColor: '#fff', 
-        borderRadius: '8px', 
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' 
-      }}>
-          <input 
-          type="text" 
-          name="username" 
-          placeholder="Username" 
-          value={customerData.username} 
-          onChange={handleChange} 
-          required 
-          style={{ 
-            padding: '10px', 
-            marginBottom: '15px', 
-            borderRadius: '4px', 
-            border: '1px solid #ccc' 
-          }} 
-        />
-        <input 
-          type="text" 
-          name="name" 
-          placeholder="Name" 
-          value={customerData.name} 
-          onChange={handleChange} 
-          required 
-          style={{ 
-            padding: '10px', 
-            marginBottom: '15px', 
-            borderRadius: '4px', 
-            border: '1px solid #ccc' 
-          }} 
-        />
-        <input 
-          type="text" 
-          name="email" 
-          placeholder="Email" 
-          value={customerData.email} 
-          onChange={handleChange} 
-          required 
-          style={{ 
-            padding: '10px', 
-            marginBottom: '15px', 
-            borderRadius: '4px', 
-            border: '1px solid #ccc' 
-          }} 
-        />
-        <input 
-          type="text" 
-          name="address" 
-          placeholder="Address" 
-          value={customerData.address} 
-          onChange={handleChange} 
-          required 
-          style={{ 
-            padding: '10px', 
-            marginBottom: '15px', 
-            borderRadius: '4px', 
-            border: '1px solid #ccc' 
-          }} 
-        />
-        <input 
-          type="number" 
-          name="age" 
-          placeholder="Age" 
-          value={customerData.age} 
-          onChange={handleChange} 
-          required 
-          style={{ 
-            padding: '10px', 
-            marginBottom: '15px', 
-            borderRadius: '4px', 
-            border: '1px solid #ccc' 
-          }} 
-        />
-        <input 
-          type="text" 
-          name="gender" 
-          placeholder="Gender" 
-          value={customerData.gender} 
-          onChange={handleChange} 
-          required 
-          style={{ 
-            padding: '10px', 
-            marginBottom: '15px', 
-            borderRadius: '4px', 
-            border: '1px solid #ccc' 
-          }} 
-        />
-      
-        <button type="submit" style={{ 
-          padding: '10px 0', 
-          backgroundColor: '#2a9df4', 
-          color: '#fff', 
-          border: 'none', 
-          borderRadius: '4px', 
-          cursor: 'pointer',
-          width: '200px', // Set the desired width here
-          display: 'block',
-          margin: '20px auto'
-        }}>
-          Update
-        </button>
-      </form>
+    <div className="update-customer-bg">
+      <div className="update-customer-card">
+        <h2 className="update-customer-title">Update Customer</h2>
+        <form className="update-customer-form" onSubmit={handleSubmit}>
+          <input
+            className="update-customer-input"
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={customerData.username}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="update-customer-input"
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={customerData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="update-customer-input"
+            type="text"
+            name="email"
+            placeholder="Email"
+            value={customerData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="update-customer-input"
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={customerData.address}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="update-customer-input"
+            type="number"
+            name="age"
+            placeholder="Age"
+            value={customerData.age}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="update-customer-input"
+            type="text"
+            name="gender"
+            placeholder="Gender"
+            value={customerData.gender}
+            onChange={handleChange}
+            required
+          />
+          <button className="update-customer-btn" type="submit">
+            Update
+          </button>
+        </form>
+      </div>
+
     </div>
   );
 }
