@@ -1,0 +1,70 @@
+/* UpdateCustomer.css - Modern, clean, card-based form for updating customer info */
+
+.update-customer-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.update-customer-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(33, 147, 176, 0.10);
+  padding: 36px 32px 32px 32px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.update-customer-title {
+  color: #2193b0;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.update-customer-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.update-customer-input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #b5d0e6;
+  font-size: 1rem;
+  background: #f7fbfd;
+  outline: none;
+  transition: border 0.2s;
+}
+.update-customer-input:focus {
+  border: 1.5px solid #2193b0;
+  background: #eaf6fb;
+}
+
+.update-customer-btn {
+  padding: 12px 0;
+  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 18px;
+  box-shadow: 0 2px 8px rgba(33,147,176,0.08);
+  transition: background 0.3s;
+}
+.update-customer-btn:hover {
+  background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
+}
