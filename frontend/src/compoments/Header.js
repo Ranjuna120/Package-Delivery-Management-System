@@ -7,11 +7,25 @@ import { useNavigate } from 'react-router-dom';
 function Header() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        // Check if user is logged in
-        const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        setIsLoggedIn(loggedIn);
+        // Function to update login and admin state
+        const updateAuthState = () => {
+            const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            setIsLoggedIn(loggedIn);
+            const adminLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+            setIsAdmin(adminLoggedIn);
+        };
+        updateAuthState();
+        // Listen for storage changes (multi-tab and immediate update)
+        window.addEventListener('storage', updateAuthState);
+        // Listen for custom event for same-tab updates
+        window.addEventListener('adminLoginChange', updateAuthState);
+        return () => {
+            window.removeEventListener('storage', updateAuthState);
+            window.removeEventListener('adminLoginChange', updateAuthState);
+        };
     }, []);
 
     const handleNavigate = (path) => {
@@ -24,7 +38,11 @@ function Header() {
         localStorage.removeItem('customerName');
         localStorage.removeItem('customerId');
         localStorage.removeItem('lastLogin');
+        localStorage.removeItem('adminLoggedIn');
         setIsLoggedIn(false);
+        setIsAdmin(false);
+        // Notify all listeners (including this tab) of admin login state change
+        window.dispatchEvent(new Event('adminLoginChange'));
         navigate('/');
     };
 
@@ -38,10 +56,10 @@ function Header() {
                 </form>
                 <nav>
                     <ul className="nav_links">
-                        <li><a href="/">Home</a></li>
-                        {!isLoggedIn && <li><a href="/Regi">Register</a></li>}
-                        <li><a href="/AdminLogin">Admin</a></li>
-                        <li><a href="/EmpLogin">Employee</a></li>
+                        {!isAdmin && <li><a href="/">Home</a></li>}
+                        {!isLoggedIn && !isAdmin && <li><a href="/Regi">Register</a></li>}
+                        {!isAdmin && <li><a href="/AdminLogin">Admin</a></li>}
+                        {!isAdmin && <li><a href="/EmpLogin">Employee</a></li>}
                     </ul>
                 </nav>
                 {!isLoggedIn ? (
