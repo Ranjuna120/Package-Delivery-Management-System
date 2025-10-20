@@ -3,185 +3,130 @@
 
 .feedbacklist-bg {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 40px 0;
 }
-
 .feedbacklist-card {
   background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 6px 32px rgba(33, 147, 176, 0.10);
-  padding: 32px 28px 28px 28px;
-  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   max-width: 1100px;
   margin: 0 auto;
+  padding: 40px 30px 30px 30px;
 }
-
 .feedbacklist-title {
-  text-align: center;
-  color: #2193b0;
+  color: #667eea;
   font-size: 2.2rem;
   font-weight: 700;
-  margin-bottom: 28px;
+  margin-bottom: 30px;
+  text-align: center;
   letter-spacing: 1px;
 }
-
-/* Heading */
-h2 {
-  font-size: 26px;
-  color: #333;
-  margin-bottom: 25px;
-  font-weight: bold;
-  text-align: center; /* Ensure heading is centered */
-}
-
-
-.feedbacklist-message {
-  margin-bottom: 18px;
-  font-size: 1.08rem;
-  color: #2193b0;
-  text-align: center;
-  font-weight: 500;
-}
-
-.error-message {
-  color: red;
-}
-
-/* Feedback Header (Search Bar and PDF Button) */
-
 .feedbacklist-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
-  gap: 18px;
-  flex-wrap: wrap;
+  margin-bottom: 25px;
+  gap: 20px;
 }
-
-
-.feedbacklist-search-bar {
-  width: 100%;
-  max-width: 320px;
-  padding: 10px 14px;
-  font-size: 1rem;
-  border: 1.5px solid #b5d0e6;
-  border-radius: 8px;
-  background: #f7fbfd;
-  outline: none;
-  transition: border 0.2s;
-}
-.feedbacklist-search-bar:focus {
-  border: 1.5px solid #2193b0;
-  background: #eaf6fb;
-}
-
-button {
-  flex-shrink: 0; /* Prevent button from shrinking */
-  padding: 10px 14px;
-  font-size: 14px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-
 .feedbacklist-generate-btn {
-  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 10px 22px;
+  border-radius: 30px;
+  padding: 12px 32px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(33,147,176,0.08);
-  transition: background 0.3s;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  transition: background 0.3s, transform 0.3s;
 }
 .feedbacklist-generate-btn:hover {
-  background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
+  background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+  transform: translateY(-2px);
 }
-
-
-.feedbacklist-accept-btn, .feedbacklist-reject-btn {
-  border: none;
-  border-radius: 7px;
-  padding: 8px 18px;
+.feedbacklist-search-bar {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: 1px solid #e0e7ff;
   font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  box-shadow: 0 1px 4px rgba(33,147,176,0.08);
+  outline: none;
+  background: #f8f9ff;
+  color: #333;
 }
-.feedbacklist-accept-btn {
-  background: linear-gradient(90deg, #28a745 0%, #7ee787 100%);
-  color: #fff;
-}
-.feedbacklist-accept-btn:hover {
-  background: linear-gradient(90deg, #218838 0%, #28a745 100%);
-}
-.feedbacklist-reject-btn {
-  background: linear-gradient(90deg, #dc3545 0%, #ff7b7b 100%);
-  color: #fff;
-}
-.feedbacklist-reject-btn:hover {
-  background: linear-gradient(90deg, #ff7b7b 0%, #dc3545 100%);
-}
-
-/* Table Styles */
-
 .feedbacklist-table-wrapper {
   overflow-x: auto;
-  margin-top: 18px;
 }
-
 .feedbacklist-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 0;
-  background: #fafdff;
+  margin-top: 10px;
+  background: #f8f9ff;
   border-radius: 12px;
   overflow: hidden;
-  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
 }
 .feedbacklist-table th, .feedbacklist-table td {
-  padding: 14px 12px;
+  padding: 16px 12px;
   text-align: left;
-  border-bottom: 1px solid #e3eaf1;
 }
 .feedbacklist-table th {
-  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  background: #667eea;
   color: #fff;
-  font-weight: 700;
-  border: none;
-  font-size: 1.08rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 .feedbacklist-table tr:nth-child(even) {
-  background-color: #f3fafd;
+  background-color: #f0f4ff;
 }
 .feedbacklist-table tr:hover {
-  background: #eaf6fb;
+  background: #e0e7ff;
   transition: background 0.2s;
 }
-
-/* Responsiveness */
-@media (max-width: 768px) {
+.feedbacklist-accept-btn, .feedbacklist-reject-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.feedbacklist-accept-btn {
+  background: #667eea;
+  color: #fff;
+}
+.feedbacklist-accept-btn:hover {
+  background: #5a67d8;
+}
+.feedbacklist-reject-btn {
+  background: #f44336;
+  color: #fff;
+}
+.feedbacklist-reject-btn:hover {
+  background: #c0392b;
+}
+.feedbacklist-message {
+  text-align: center;
+  color: #2193b0;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+@media (max-width: 700px) {
   .feedbacklist-card {
-    padding: 15px;
+    padding: 20px 5px 10px 5px;
+  }
+  .feedbacklist-title {
+    font-size: 1.3rem;
+  }
+  .feedbacklist-actions {
+    flex-direction: column;
+    gap: 10px;
   }
   .feedbacklist-table th, .feedbacklist-table td {
-    font-size: 14px;
-    padding: 10px;
-  }
-  .feedbacklist-search-bar {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  .feedbacklist-generate-btn, .feedbacklist-accept-btn, .feedbacklist-reject-btn {
-    width: 100%;
-    margin-bottom: 10px;
+    padding: 10px 6px;
+    font-size: 0.95rem;
   }
 }
