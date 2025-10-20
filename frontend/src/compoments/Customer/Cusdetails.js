@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { useNavigate } from 'react-router-dom';
 import '../../style/customer/Cusdetails.css';
 
 const Cusdetails = () => {
@@ -9,6 +10,7 @@ const Cusdetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -76,6 +78,26 @@ const Cusdetails = () => {
 
   return (
     <div className="customer-details-container">
+      <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '10px' }}>
+        <button
+          style={{
+            background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '25px',
+            padding: '10px 32px',
+            fontWeight: 600,
+            fontSize: '16px',
+            boxShadow: '0 2px 10px rgba(33,147,176,0.10)',
+            cursor: 'pointer',
+            marginLeft: '10px',
+            marginTop: '10px',
+          }}
+          onClick={() => navigate('/CustomerDashBoardPage')}
+        >
+          Back
+        </button>
+      </div>
       <div className="cusdetails-card">
         <h2 className="cusdetails-title">Customer Details</h2>
         <div className="search-generate">
