@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import '../../style/customer/Cusdetails.css';
 
 const Cusdetails = () => {
@@ -43,22 +43,21 @@ const Cusdetails = () => {
   // Function to handle PDF generation
   const generatePDF = () => {
     const doc = new jsPDF();
-    const tableColumn = [ "Customer Name" ,"Username","Email","Address", "Age"];
-    const tableRows = [];
+    const tableColumn = ["Customer Name", "Username", "Email", "Address", "Age"];
+    const tableRows = customers.map(customer => [
+      customer.name,
+      customer.username,
+      customer.email,
+      customer.address,
+      customer.age,
+    ]);
 
-    customers.forEach(customer => {
-      const customerData = [
-        customer.name,
-        customer.username,
-        customer.email,
-        customer.address,
-        customer.age,
-      ];
-      tableRows.push(customerData);
-    });
-
-    doc.autoTable(tableColumn, tableRows, { startY: 20 });
     doc.text("Customer Report", 14, 15);
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20
+    });
     doc.save("customer_report.pdf");
   };
 
