@@ -13,6 +13,8 @@ import Regi from './compoments/Regi';
 import CusProfile from './compoments/Customer/CusProfile';
 import CustomerLogin from './compoments/Login/CustomerLogin';
 import AdminLogin from './compoments/AdminLogin';
+import EmpLogin from './compoments/EmpLogin';
+import EmployeeProfile from './pages/employee/EmployeeProfile';
 import CustomerDashBoardPage from './pages/customer/CustomerDashBoardPage';
 import UpdateCustomer from './compoments/Customer/UpdateCustomer';
 
@@ -56,6 +58,8 @@ function App() {
         <Route path="/update-customer/:id" element={<UpdateCustomer />} />
         <Route path="/CustomerProfileOne" element={<CustomerProfileOne/>}/>
         <Route path="/AdminLogin" element={<AdminLogin/>}/>
+  <Route path="/EmpLogin" element={<EmpLogin/>}/>
+  <Route path="/EmployeeProfile" element={<EmployeeProfile/>}/>
         <Route path="/CusProfile" element={<CusProfile />} />
 
         <Route path="/DMChoose" element={<DMChoose/>}/> 
