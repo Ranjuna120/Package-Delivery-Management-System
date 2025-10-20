@@ -24,8 +24,11 @@ const EmpLogin = () => {
         // Check if the pass key matches
         if (Number(employeeData.EmpPassKey) === Number(EmpPassKey)) {
           // Successful login
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('username', EmpID);
           //navigate('/EmployeeProfile'); // Redirect to the EmployeeProfile
           navigate('/EmployeeProfile', { state: { empID: EmpID } }); // Redirect to the EmployeeProfile with the ID
+          window.location.reload();
         } else {
           // Handle login error
           //setError('Invalid EmpID or PassKey');
