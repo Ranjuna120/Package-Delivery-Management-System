@@ -21,6 +21,9 @@ function Header() {
     const handleLogout = () => {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('username');
+        localStorage.removeItem('customerName');
+        localStorage.removeItem('customerId');
+        localStorage.removeItem('lastLogin');
         setIsLoggedIn(false);
         navigate('/');
     };
