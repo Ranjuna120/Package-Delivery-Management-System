@@ -37,6 +37,20 @@ class customerController {
     }
   }
 
+  // Get single customer by ID
+  async getCustomerById(req, res) {
+    try {
+      const customerId = req.params.id;
+      const customer = await Customer.findById(customerId).select('-password');
+      if (!customer) {
+        return res.status(404).json({ message: 'Customer not found' });
+      }
+      res.status(200).json(customer);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   // Update customer data
   async updateCustomer(req, res) {
     try {
