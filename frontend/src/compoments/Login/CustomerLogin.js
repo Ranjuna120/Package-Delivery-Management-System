@@ -17,7 +17,12 @@ const CustomerLogin = () => {
     try {
       const response = await axios.post('http://localhost:8070/api/customers/login', { username, password });
       if (response.data.success) {
+        // Set login status in localStorage
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', username);
         navigate('/CustomerProfileOne');
+        // Reload to update header
+        window.location.reload();
       } else {
         setError('Invalid username or password');
       }
