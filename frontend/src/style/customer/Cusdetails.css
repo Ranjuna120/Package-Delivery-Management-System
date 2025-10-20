@@ -1,159 +1,136 @@
 /* Cusdetails.css */
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #f8f9fa; /* Light background color */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
   margin: 0;
   padding: 0;
 }
 
-
 .customer-details-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 40px 0;
 }
-
 .cusdetails-card {
   background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 6px 32px rgba(33, 147, 176, 0.10);
-  padding: 32px 28px 28px 28px;
-  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   max-width: 1100px;
   margin: 0 auto;
+  padding: 40px 30px 30px 30px;
 }
-
 .cusdetails-title {
-  text-align: center;
-  color: #2193b0;
+  color: #667eea;
   font-size: 2.2rem;
   font-weight: 700;
-  margin-bottom: 28px;
+  margin-bottom: 30px;
+  text-align: center;
   letter-spacing: 1px;
 }
-
-h2 {
-  text-align: center;
-  color: #031f42; /* Dark color for the heading */
-  margin-bottom: 20px;
-}
-
-
 .search-generate {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
-  gap: 18px;
+  margin-bottom: 25px;
+  gap: 20px;
 }
-
-
 .generate-report {
-  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 10px 22px;
+  border-radius: 30px;
+  padding: 12px 32px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(33,147,176,0.08);
-  transition: background 0.3s;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  transition: background 0.3s, transform 0.3s;
 }
 .generate-report:hover {
-  background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
+  background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+  transform: translateY(-2px);
 }
-
-
 .search-bar {
-  width: 100%;
-  max-width: 320px;
-  padding: 10px 14px;
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: 1px solid #e0e7ff;
   font-size: 1rem;
-  border: 1.5px solid #b5d0e6;
-  border-radius: 8px;
-  background: #f7fbfd;
   outline: none;
-  transition: border 0.2s;
+  background: #f8f9ff;
+  color: #333;
 }
-.search-bar:focus {
-  border: 1.5px solid #2193b0;
-  background: #eaf6fb;
-}
-  
-
-
 .cusdetails-table-wrapper {
   overflow-x: auto;
-  margin-top: 18px;
 }
-
 .customer-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 0;
-  background: #fafdff;
+  margin-top: 10px;
+  background: #f8f9ff;
   border-radius: 12px;
   overflow: hidden;
-  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
 }
-
-
 .customer-table th, .customer-table td {
-  padding: 14px 12px;
+  padding: 16px 12px;
   text-align: left;
-  border-bottom: 1px solid #e3eaf1;
 }
-
-
 .customer-table th {
-  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  background: #667eea;
   color: #fff;
-  font-weight: 700;
-  border: none;
-  font-size: 1.08rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
-
-
 .customer-table tr:nth-child(even) {
-  background-color: #f3fafd;
+  background-color: #f0f4ff;
 }
 .customer-table tr:hover {
-  background: #eaf6fb;
+  background: #e0e7ff;
   transition: background 0.2s;
 }
-
-
 .cusdetails-action-group {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
-
 .update-button, .delete-button {
-  border: none;
-  border-radius: 7px;
   padding: 8px 18px;
-  font-size: 1rem;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
-  box-shadow: 0 1px 4px rgba(33,147,176,0.08);
 }
 .update-button {
-  background: linear-gradient(90deg, #f0ad4e 0%, #f7d774 100%);
+  background: #667eea;
   color: #fff;
 }
 .update-button:hover {
-  background: linear-gradient(90deg, #ec971f 0%, #f0ad4e 100%);
+  background: #5a67d8;
 }
 .delete-button {
-  background: linear-gradient(90deg, #ff0800 0%, #ff5e62 100%);
+  background: #f44336;
   color: #fff;
 }
 .delete-button:hover {
-  background: linear-gradient(90deg, #ff5e62 0%, #ff0800 100%);
+  background: #c0392b;
+}
+@media (max-width: 700px) {
+  .cusdetails-card {
+    padding: 20px 5px 10px 5px;
+  }
+  .cusdetails-title {
+    font-size: 1.3rem;
+  }
+  .search-generate {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .customer-table th, .customer-table td {
+    padding: 10px 6px;
+    font-size: 0.95rem;
+  }
 }
