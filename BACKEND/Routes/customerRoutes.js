@@ -12,6 +12,9 @@ router.post('/login', customerController.loginCustomer);
 // Get all customers (Admin view)
 router.get('/all', customerController.getAllCustomers);
 
+// Get single customer by ID
+router.get('/:id', customerController.getCustomerById);
+
 // Update customer details
 router.put('/:id', customerController.updateCustomer);
 
