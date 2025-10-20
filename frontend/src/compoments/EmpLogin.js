@@ -46,37 +46,64 @@ const EmpLogin = () => {
   
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh' }}>
-      <div className="EmpLoginBox">
-        <h2 style={{ textAlign: 'center' }}>Employee Login</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-            <label>EmpID:</label>
+    <section
+      className="d-flex align-items-center justify-content-center"
+      style={{
+        minHeight: 'calc(100vh - 120px)',
+        background: 'linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%)',
+        padding: '20px'
+      }}
+    >
+      <div className="card shadow-lg p-4" style={{ maxWidth: 420, width: '100%', borderRadius: 16 }}>
+        <h3 className="text-center mb-4" style={{ color: '#2193b0', fontWeight: 700 }}>Employee Login</h3>
+        {error && (
+          <div className="alert alert-danger py-2 mb-3 text-center" role="alert" style={{ fontSize: 15 }}>{error}</div>
+        )}
+        <form onSubmit={handleLogin} autoComplete="off">
+          <div className="mb-3">
+            <label className="form-label" style={{ fontWeight: 500 }}>EmpID</label>
             <input
               type="text"
+              className="form-control form-control-lg"
+              placeholder="Enter your EmpID (e.g., 1001)"
               value={empID}
               onChange={(e) => setEmpID(e.target.value)}
               required
-              style={{ width: '100%', padding: '8px', margin: '10px 0' }}
+              style={{ borderRadius: 10 }}
             />
           </div>
-          <div>
-            <label>PassKey:</label>
+          <div className="mb-3">
+            <label className="form-label" style={{ fontWeight: 500 }}>PassKey</label>
             <input
               type="password"
+              className="form-control form-control-lg"
+              placeholder="Enter your 4-digit PassKey"
               value={empPassKey}
               onChange={(e) => setEmpPassKey(e.target.value)}
               required
-              style={{ width: '100%', padding: '8px', margin: '10px 0' }}
+              style={{ borderRadius: 10 }}
             />
           </div>
-          {error && <div className="error-message" style={{ color: 'red' }}>{error}</div>}
-          <button type="submit" style={{ width: '100%', padding: '10px', marginTop: '16px', fontSize: '16px', borderRadius: '15px' }}>
+          <button
+            type="submit"
+            className="btn w-100"
+            style={{
+              fontWeight: 600,
+              fontSize: 17,
+              background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 10,
+              boxShadow: '0 2px 10px rgba(33,147,176,0.15)',
+              transition: 'background 0.3s',
+              padding: '10px 0'
+            }}
+          >
             Login
           </button>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 
