@@ -89,59 +89,68 @@ function FeedbackList() {
   };
 
   return (
-    <div className="app-container">
-      <div className="main-content">
-        <h2>Feedback List</h2>
-        {message && <p className="message">{message}</p>} {/* Display message */}
-        <div className="actions">
-          <button className="generate-btn" onClick={generatePDF}>
+    <div className="feedbacklist-bg">
+      <div className="feedbacklist-card">
+        <h2 className="feedbacklist-title">Feedback List</h2>
+        {message && <div className="feedbacklist-message">{message}</div>}
+        <div className="feedbacklist-actions">
+          <button className="feedbacklist-generate-btn" onClick={generatePDF}>
             Generate PDF Report
           </button>
-          <div className="feedback-header">
-            <div className="search-bar">
-              <input 
-                type="text" 
-                placeholder="Search here" 
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
+          <input
+            className="feedbacklist-search-bar"
+            type="text"
+            placeholder="Search by customer name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
-        <table className="feedback-table">
-          <thead>
-            <tr>
-              <th>Customer Name</th>
-              <th>Email</th>
-              <th>Feedback</th>
-              <th>Rating</th>
-              <th>Status</th>
-              <th>Approve</th>
-              <th>Reject</th>
-            </tr>
-          </thead>
-          <tbody>
-            {feedbacks
-              .filter(feedback =>
+        <div className="feedbacklist-table-wrapper">
+          <table className="feedbacklist-table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th>Feedback</th>
+                <th>Rating</th>
+                <th>Status</th>
+                <th>Approve</th>
+                <th>Reject</th>
+              </tr>
+            </thead>
+            <tbody>
+              {feedbacks.filter(feedback =>
                 feedback.fullName.toLowerCase().includes(searchTerm.toLowerCase())
-              )
-              .map(feedback => (
-                <tr key={feedback._id}>
-                  <td>{feedback.fullName}</td>
-                  <td>{feedback.email}</td>
-                  <td>{feedback.feedback}</td>
-                  <td>{feedback.rating}</td>
-                  <td>{feedback.status}</td>
-                  <td>
-                    <button className="accept-btn" onClick={() => handleAccept(feedback._id)}>Accept</button>
-                  </td>
-                  <td>
-                    <button className="reject-btn" onClick={() => handleReject(feedback._id)}>Reject</button>
+              ).length === 0 ? (
+                <tr>
+                  <td colSpan="7" style={{ textAlign: 'center', color: '#888', fontStyle: 'italic' }}>
+                    No feedbacks found.
                   </td>
                 </tr>
-              ))}
-          </tbody>
-        </table>
+              ) : (
+                feedbacks
+                  .filter(feedback =>
+                    feedback.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                  .map(feedback => (
+                    <tr key={feedback._id}>
+                      <td>{feedback.fullName}</td>
+                      <td>{feedback.email}</td>
+                      <td>{feedback.feedback}</td>
+                      <td>{feedback.rating}</td>
+                      <td>{feedback.status}</td>
+                      <td>
+                        <button className="feedbacklist-accept-btn" onClick={() => handleAccept(feedback._id)}>Accept</button>
+                      </td>
+                      <td>
+                        <button className="feedbacklist-reject-btn" onClick={() => handleReject(feedback._id)}>Reject</button>
+                      </td>
+                    </tr>
+                  ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
