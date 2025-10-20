@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
@@ -9,33 +9,45 @@ const MachineManager = () => {
     const [machines, setMachines] = useState([]);
     const [searchQuery, setSearchQuery] = useState(''); 
     const [filteredMachines, setFilteredMachines] = useState([]); 
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchMachines();
     }, []);
 
     useEffect(() => {
-        const filtered = machines.filter(machine =>
-            machine.machineName.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        const filtered = machines.filter(machine => {
+            const matchesName = machine.machineName?.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesCategory = !selectedCategory || machine.machineCategory === selectedCategory;
+            return matchesName && matchesCategory;
+        });
         setFilteredMachines(filtered);
-    }, [searchQuery, machines]);
+    }, [searchQuery, selectedCategory, machines]);
 
     const fetchMachines = async () => {
         try {
+            setLoading(true);
             const response = await axios.get('http://localhost:8070/machines/Allread');
             setMachines(response.data);
         } catch (error) {
             console.error('Error fetching machines:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleDelete = async (id) => {
+        const ok = window.confirm('Are you sure you want to delete this machine?');
+        if (!ok) return;
         try {
+            setLoading(true);
             await axios.delete(`http://localhost:8070/machines/delete/${id}`);
             fetchMachines();
         } catch (error) {
             console.error('Error deleting machine:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -78,8 +90,35 @@ const MachineManager = () => {
         doc.save('machines_report.pdf');
     };
 
+    // Derived: unique categories for filter and summary
+    const categories = useMemo(() => {
+        const set = new Set((machines || []).map(m => m.machineCategory).filter(Boolean));
+        return Array.from(set);
+    }, [machines]);
+
+    const avgDuration = useMemo(() => {
+        if (!machines || machines.length === 0) return 0;
+        const sum = machines.reduce((acc, m) => acc + (Number(m.durationTime) || 0), 0);
+        return Math.round((sum / machines.length) * 10) / 10; // 1 decimal
+    }, [machines]);
+
     return (
         <div style={styles.container}>
+            {/* Stats */}
+            <div style={styles.statsRow}>
+                <div style={styles.statCard}>
+                    <div style={styles.statLabel}>Total Machines</div>
+                    <div style={styles.statValue}>{machines.length}</div>
+                </div>
+                <div style={styles.statCard}>
+                    <div style={styles.statLabel}>Categories</div>
+                    <div style={styles.statValue}>{categories.length}</div>
+                </div>
+                <div style={styles.statCard}>
+                    <div style={styles.statLabel}>Avg. Duration (h)</div>
+                    <div style={styles.statValue}>{avgDuration}</div>
+                </div>
+            </div>
             <div style={styles.buttonContainer}>
                 <button onClick={() => navigate('/MachineDashBoardPage/add-machine')} style={styles.addButton}>
                     Add Machine
@@ -93,8 +132,8 @@ const MachineManager = () => {
                 </button>
             </div>
 
-            {/* Search Input */}
-            <div style={styles.searchContainer}>
+            {/* Filters */}
+            <div style={styles.filtersRow}>
                 <input 
                     type="text" 
                     placeholder="Search by machine name..." 
@@ -102,8 +141,23 @@ const MachineManager = () => {
                     onChange={(e) => setSearchQuery(e.target.value)} 
                     style={styles.searchInput} 
                 />
+                <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    style={styles.categorySelect}
+                >
+                    <option value="">All Categories</option>
+                    {categories.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                    ))}
+                </select>
             </div>
 
+            {loading ? (
+                <div style={styles.emptyState}>Loading machines...</div>
+            ) : filteredMachines.length === 0 ? (
+                <div style={styles.emptyState}>No machines found. Try changing filters or add a new machine.</div>
+            ) : (
             <div style={styles.tableFrame}>
                 <table style={styles.table}>
                     <thead>
@@ -133,6 +187,7 @@ const MachineManager = () => {
                     </tbody>
                 </table>
             </div>
+            )}
         </div>
     );
 };
@@ -142,6 +197,30 @@ const styles = {
         padding: '30px',
         background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
         minHeight: '100vh',
+    },
+    statsRow: {
+        display: 'flex',
+        gap: '16px',
+        marginBottom: '20px',
+        flexWrap: 'wrap',
+    },
+    statCard: {
+        flex: '1 1 180px',
+        minWidth: '180px',
+        background: 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)',
+        borderRadius: '12px',
+        boxShadow: '0 6px 18px rgba(33,147,176,0.12)',
+        padding: '16px 18px',
+    },
+    statLabel: {
+        color: '#5f6b7a',
+        fontSize: '13px',
+        marginBottom: '6px',
+    },
+    statValue: {
+        color: '#2193b0',
+        fontWeight: 800,
+        fontSize: '22px',
     },
     buttonContainer: {
         display: 'flex',
@@ -185,8 +264,12 @@ const styles = {
         transition: 'all 0.3s ease',
         boxShadow: '0 4px 12px rgba(23, 162, 184, 0.3)',
     },
-    searchContainer: {
+    filtersRow: {
+        display: 'flex',
+        gap: '12px',
         marginBottom: '25px',
+        flexWrap: 'wrap',
+        alignItems: 'center',
     },
     searchInput: {
         width: '100%',
@@ -198,6 +281,17 @@ const styles = {
         outline: 'none',
         boxSizing: 'border-box',
     },
+    categorySelect: {
+        minWidth: '220px',
+        padding: '12px 16px',
+        borderRadius: '8px',
+        border: '2px solid #e1e8ed',
+        fontSize: '15px',
+        transition: 'all 0.3s ease',
+        outline: 'none',
+        backgroundColor: '#ffffff',
+        cursor: 'pointer',
+    },
     tableFrame: {
         border: 'none',
         borderRadius: '12px',
@@ -205,6 +299,14 @@ const styles = {
         backgroundColor: '#fff',
         boxShadow: '0 8px 24px rgba(33, 147, 176, 0.12)',
         overflow: 'hidden',
+    },
+    emptyState: {
+        background: 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)',
+        borderRadius: '12px',
+        boxShadow: '0 6px 18px rgba(33,147,176,0.12)',
+        padding: '24px',
+        textAlign: 'center',
+        color: '#5f6b7a',
     },
     table: {
         width: '100%',
