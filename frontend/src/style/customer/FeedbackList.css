@@ -1,14 +1,32 @@
 /* Feedback List Page Styles */
 
-.app-container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 40px auto; /* Center the container */
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  text-align: center; /* Center text inside the container */
+
+.feedbacklist-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.feedbacklist-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(33, 147, 176, 0.10);
+  padding: 32px 28px 28px 28px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.feedbacklist-title {
+  text-align: center;
+  color: #2193b0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
 }
 
 /* Heading */
@@ -20,10 +38,13 @@ h2 {
   text-align: center; /* Ensure heading is centered */
 }
 
-.message {
-  margin-bottom: 15px;
-  font-size: 16px;
-  color: green;
+
+.feedbacklist-message {
+  margin-bottom: 18px;
+  font-size: 1.08rem;
+  color: #2193b0;
+  text-align: center;
+  font-weight: 500;
 }
 
 .error-message {
@@ -31,26 +52,31 @@ h2 {
 }
 
 /* Feedback Header (Search Bar and PDF Button) */
-.actions {
+
+.feedbacklist-actions {
   display: flex;
-  justify-content: space-between; /* Space between search bar and button */
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  gap: 10px; /* Add spacing between elements */
-  flex-wrap: wrap; /* Ensure elements wrap on smaller screens */
+  margin-bottom: 28px;
+  gap: 18px;
+  flex-wrap: wrap;
 }
 
-.search-bar {
-  flex-grow: 1; /* Allow search bar to take up more space */
-  max-width: 300px;
-}
 
-.search-bar input {
+.feedbacklist-search-bar {
   width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  max-width: 320px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1.5px solid #b5d0e6;
+  border-radius: 8px;
+  background: #f7fbfd;
+  outline: none;
+  transition: border 0.2s;
+}
+.feedbacklist-search-bar:focus {
+  border: 1.5px solid #2193b0;
+  background: #eaf6fb;
 }
 
 button {
@@ -62,85 +88,100 @@ button {
   cursor: pointer;
 }
 
-.generate-btn {
-  background-color: #0088a9; /* Button color */
-  color: white; /* Text color */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 15px; /* Padding for button */
-  cursor: pointer; /* Pointer cursor */
-  transition: background-color 0.3s ease; /* Transition for hover effect */
+
+.feedbacklist-generate-btn {
+  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(33,147,176,0.08);
+  transition: background 0.3s;
+}
+.feedbacklist-generate-btn:hover {
+  background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
 }
 
-.accept-btn {
-  background-color: #28a745;
+
+.feedbacklist-accept-btn, .feedbacklist-reject-btn {
+  border: none;
+  border-radius: 7px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 1px 4px rgba(33,147,176,0.08);
+}
+.feedbacklist-accept-btn {
+  background: linear-gradient(90deg, #28a745 0%, #7ee787 100%);
   color: #fff;
 }
-
-.reject-btn {
-  background-color: #dc3545;
+.feedbacklist-accept-btn:hover {
+  background: linear-gradient(90deg, #218838 0%, #28a745 100%);
+}
+.feedbacklist-reject-btn {
+  background: linear-gradient(90deg, #dc3545 0%, #ff7b7b 100%);
   color: #fff;
 }
-
-.accept-btn:hover, .reject-btn:hover {
-  opacity: 0.9;
-  transition: 0.3s ease;
+.feedbacklist-reject-btn:hover {
+  background: linear-gradient(90deg, #ff7b7b 0%, #dc3545 100%);
 }
 
 /* Table Styles */
-.feedback-table-container {
+
+.feedbacklist-table-wrapper {
   overflow-x: auto;
-  text-align: center; /* Center the table */
+  margin-top: 18px;
 }
 
-.feedback-table {
+.feedbacklist-table {
   width: 100%;
-  max-width: 1000px;
-  margin: 0 auto; /* Center the table */
   border-collapse: collapse;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 0;
+  background: #fafdff;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 1rem;
 }
-
-.feedback-table th, 
-.feedback-table td {
-  padding: 15px;
+.feedbacklist-table th, .feedbacklist-table td {
+  padding: 14px 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e3eaf1;
 }
-
-.feedback-table th {
-  background-color: #f0f0f0;
-  color: #555;
-  font-size: 18px;
+.feedbacklist-table th {
+  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  font-size: 1.08rem;
 }
-
-.feedback-table td {
-  color: #333;
+.feedbacklist-table tr:nth-child(even) {
+  background-color: #f3fafd;
 }
-
-.feedback-table tr:nth-child(even) {
-  background-color: #fafafa;
+.feedbacklist-table tr:hover {
+  background: #eaf6fb;
+  transition: background 0.2s;
 }
 
 /* Responsiveness */
 @media (max-width: 768px) {
-  .app-container {
+  .feedbacklist-card {
     padding: 15px;
   }
-
-  .feedback-table th, 
-  .feedback-table td {
+  .feedbacklist-table th, .feedbacklist-table td {
     font-size: 14px;
     padding: 10px;
   }
-
-  .search-bar {
+  .feedbacklist-search-bar {
     width: 100%;
     margin-bottom: 10px;
   }
-
-  button {
-    width: 100%; /* Full width on small screens */
+  .feedbacklist-generate-btn, .feedbacklist-accept-btn, .feedbacklist-reject-btn {
+    width: 100%;
     margin-bottom: 10px;
   }
 }
