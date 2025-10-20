@@ -58,8 +58,8 @@ function App() {
         <Route path="/update-customer/:id" element={<UpdateCustomer />} />
         <Route path="/CustomerProfileOne" element={<CustomerProfileOne/>}/>
         <Route path="/AdminLogin" element={<AdminLogin/>}/>
-  <Route path="/EmpLogin" element={<EmpLogin/>}/>
-  <Route path="/EmployeeProfile" element={<EmployeeProfile/>}/>
+        <Route path="/EmpLogin" element={<EmpLogin/>}/>
+        <Route path="/EmployeeProfile" element={<EmployeeProfile/>}/>
         <Route path="/CusProfile" element={<CusProfile />} />
 
         <Route path="/DMChoose" element={<DMChoose/>}/> 
