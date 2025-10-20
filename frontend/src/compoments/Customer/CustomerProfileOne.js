@@ -4,41 +4,27 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate for redire
 import '../../style/Comman css/CustomerProfileOne.css'
 
 function CustomerProfileOne  ()  {
-  // const [user, setUser] = useState(null);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState('');
-  // const navigate = useNavigate(); // Initialize useNavigate
+  const [customerName, setCustomerName] = useState('');
+  const [lastLogin, setLastLogin] = useState('');
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchUserProfile = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:8070/api/customers/profile');
-  //       console.log('Response:', response); // Log the response from the server
+  useEffect(() => {
+    // Get customer name and last login from localStorage
+    const name = localStorage.getItem('customerName') || localStorage.getItem('username') || 'Guest';
+    const loginTime = localStorage.getItem('lastLogin') || 'N/A';
+    
+    setCustomerName(name);
+    setLastLogin(loginTime);
+  }, []);
 
-  //       setUser(response.data);
-  //     } 
-  //     catch (err) {
-  //       console.error('Error fetching data:', err.response || err); // Log the error
-  //       setError('Error fetching user data');
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchUserProfile();
-  // }, [navigate]);
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>{error}</div>;
-  // }
-
-  // if (!user) {
-  //   return <div>No user data available</div>;
-  // }
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('customerName');
+    localStorage.removeItem('lastLogin');
+    navigate('/');
+    window.location.reload();
+  };
 
   return (
     <div className="dashboard-container">
@@ -51,16 +37,17 @@ function CustomerProfileOne  ()  {
           <li><a href="/FeedbackForm">Feedback</a></li>
           <li><a href="/PaymentDashBoardOne">Payment</a></li>
           <li><a href="#">Create Package</a></li>
-          <li><a href="." onClick={() => {
-            // navigate('/'); // Redirect to home or login page on logout
+          <li><a href="#" onClick={(e) => {
+            e.preventDefault();
+            handleLogout();
           }}>Logout</a></li>
         </ul>
       </div>
 
       <div className="customer-profile-main-content">
         <header className="dashboard-header">
-          <h1>Welcome !</h1>
-          <p>Your last login: </p>
+          <h1>Welcome, {customerName}!</h1>
+          <p>Your last login: {lastLogin}</p>
         </header>
 
         <section className="stats-section">
