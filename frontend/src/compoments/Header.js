@@ -56,7 +56,15 @@ function Header() {
                 </form>
                 <nav>
                     <ul className="nav_links">
-                        {!isAdmin && <li><a href="/">Home</a></li>}
+                        {!isAdmin && (
+                          <li>
+                            {isLoggedIn ? (
+                              <a href="/CustomerProfileOne">Dashboard</a>
+                            ) : (
+                              <a href="/">Home</a>
+                            )}
+                          </li>
+                        )}
                         {!isLoggedIn && !isAdmin && <li><a href="/Regi">Register</a></li>}
                         {!isAdmin && <li><a href="/AdminLogin">Admin</a></li>}
                         {!isAdmin && <li><a href="/EmpLogin">Employee</a></li>}
