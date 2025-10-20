@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable'; // Import the autotable plugin
+import autoTable from 'jspdf-autotable';
 import '../../style/customer/FeedbackList.css';
 
 function FeedbackList() {
@@ -67,11 +67,7 @@ function FeedbackList() {
   // Function to request PDF generation
   const generatePDF = () => {
     const doc = new jsPDF();
-
-    // Add title
     doc.text('Feedback Report', 14, 20);
-    
-    // Define table columns and rows
     const tableColumn = ["Customer Name", "Email", "Feedback", "Rating", "Status"];
     const tableRows = feedbacks.map(feedback => [
       feedback.fullName,
@@ -80,11 +76,11 @@ function FeedbackList() {
       feedback.rating,
       feedback.status
     ]);
-
-    // Create table
-    doc.autoTable(tableColumn, tableRows, { startY: 30 });
-    
-    // Save the PDF
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 30
+    });
     doc.save('feedback_report.pdf');
   };
 
