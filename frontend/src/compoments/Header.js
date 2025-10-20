@@ -50,10 +50,7 @@ function Header() {
         <div className="hed">
             <header>
                 <h1 className="com_name">Ruchi Package</h1>
-                <form className="search-form" action="">
-                    <input className="in" type="search" placeholder="Search here ..." />
-                    <i className="fa fa-search"></i>
-                </form>
+                {/* Search removed as requested */}
                 <nav>
                     <ul className="nav_links">
                         {!isAdmin && (
