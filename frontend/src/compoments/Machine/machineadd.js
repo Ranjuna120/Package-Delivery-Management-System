@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './machineadd.css';
+import '../../style/machine/machineadd.css';
 
-const machineadd = () => {
+const MachineAdd = () => {
     const [machineName, setMachineName] = useState('');
     const [durationTime, setDurationTime] = useState('');
     const [description, setDescription] = useState('');
@@ -67,4 +67,4 @@ const machineadd = () => {
     );
 };
 
-export default machineadd;
+export default MachineAdd;
