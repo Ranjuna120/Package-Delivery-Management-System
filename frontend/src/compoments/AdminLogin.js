@@ -16,14 +16,20 @@ function AdminLogin({ onLogin, userType }) {
     if (username && password) {
       if (role === "Stock") {
         if (StoredRole === "Stock" || StoredRole === "General") {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('username', username);
           navigate('/StockDashBoardPage');
+          window.location.reload();
         } else {
           setError("Access denied. Incorrect role.");
         }
       } else if (role === "Deputy") {
         if (username === 'admin' && password === 'admin') {
           if (StoredRole === "Deputy" || StoredRole === "General") {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', username);
             navigate('/DMChoose');
+            window.location.reload();
           } else {
             setError("Access denied. Incorrect role.");
           }
@@ -32,12 +38,18 @@ function AdminLogin({ onLogin, userType }) {
         }
       } else if (role === "Plant") {
         if (StoredRole === "Plant" || StoredRole === "General") {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('username', username);
           navigate('/PMChoose');
+          window.location.reload();
         } else {
           setError("Access denied. Incorrect role.");
         }
       } else if (role === "General") {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', username);
         navigate('/GMChoose');
+        window.location.reload();
       } else {
         setError("Invalid role selected.");
       }
