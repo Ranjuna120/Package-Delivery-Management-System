@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const feedbackRoutes = require('./Routes/feedbackRoutes.js');  
 const customerRoutes = require('./Routes/customerRoutes.js');
+const employeeRoutes = require('./Routes/employeeRoutes.js');
 
 // Middleware
 app.use(cors());
@@ -19,6 +20,7 @@ app.use(express.static('public')); // Assuming you store PDF files in 'public' f
 // Routes
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/customers', customerRoutes);
+app.use('/api', employeeRoutes);
 
 // Database connection
 const PORT = process.env.PORT || 8070;
