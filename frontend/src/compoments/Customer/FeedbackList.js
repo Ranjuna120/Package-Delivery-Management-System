@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { useNavigate } from 'react-router-dom';
 import '../../style/customer/FeedbackList.css';
 
 function FeedbackList() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const fetchFeedbacks = async () => {
     try {
@@ -86,6 +88,26 @@ function FeedbackList() {
 
   return (
     <div className="feedbacklist-bg">
+      <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '10px' }}>
+        <button
+          style={{
+            background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '25px',
+            padding: '10px 32px',
+            fontWeight: 600,
+            fontSize: '16px',
+            boxShadow: '0 2px 10px rgba(33,147,176,0.10)',
+            cursor: 'pointer',
+            marginLeft: '10px',
+            marginTop: '10px',
+          }}
+          onClick={() => navigate('/CustomerDashBoardPage')}
+        >
+          Back
+        </button>
+      </div>
       <div className="feedbacklist-card">
         <h2 className="feedbacklist-title">Feedback List</h2>
         {message && <div className="feedbacklist-message">{message}</div>}
