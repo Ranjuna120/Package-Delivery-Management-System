@@ -18,6 +18,8 @@ function AdminLogin({ onLogin, userType }) {
         if (StoredRole === "Stock" || StoredRole === "General") {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('username', username);
+          localStorage.setItem('adminLoggedIn', 'true');
+          window.dispatchEvent(new Event('adminLoginChange'));
           navigate('/StockDashBoardPage');
           window.location.reload();
         } else {
@@ -28,6 +30,8 @@ function AdminLogin({ onLogin, userType }) {
           if (StoredRole === "Deputy" || StoredRole === "General") {
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('username', username);
+            localStorage.setItem('adminLoggedIn', 'true');
+            window.dispatchEvent(new Event('adminLoginChange'));
             navigate('/DMChoose');
             window.location.reload();
           } else {
@@ -40,6 +44,8 @@ function AdminLogin({ onLogin, userType }) {
         if (StoredRole === "Plant" || StoredRole === "General") {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('username', username);
+          localStorage.setItem('adminLoggedIn', 'true');
+          window.dispatchEvent(new Event('adminLoginChange'));
           navigate('/PMChoose');
           window.location.reload();
         } else {
@@ -48,6 +54,8 @@ function AdminLogin({ onLogin, userType }) {
       } else if (role === "General") {
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('username', username);
+        localStorage.setItem('adminLoggedIn', 'true');
+        window.dispatchEvent(new Event('adminLoginChange'));
         navigate('/GMChoose');
         window.location.reload();
       } else {
