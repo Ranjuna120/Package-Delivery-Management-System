@@ -1,6 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Or_Analysis() {
+    let a =0;
+    let p =0;
+    let c =0;
+
+    const[data,SetStatus]=useState([]);
+
+    useEffect(() => {
+        const fedata = async ()=>{
+            try{
+               const response= await axios.get('http://localhost:8070/api/orders/Allread');
+               SetStatus(response.data);
+
+            }catch(error){
+                console.error("Error ",error);
+
+            }
+        };
+        fedata();
+    },[]);
+data.forEach(order => {
+    if(order.status == 'Approval'){
+        a++;
+    }
+    else if (order.status == 'Cancel'){
+        c++;
+    }else if (order.status == 'Pending'){
+        p++;
+    }
+    
+});
+    
+
     return (
         <div>
             <style>{`
@@ -22,16 +55,17 @@ function Or_Analysis() {
                     background-color: #fff; 
                     border-radius: 8px;
                     display: flex;
-                    flex-direction: column; /* Changed from row to column */
-                    align-items: center; /* Center the content horizontally */
-                    justify-content: space-between; /* Space between h3 and h2 */
-                    height: 150px; /* Ensure height is consistent for spacing */
+                    flex-direction: column; 
+                    align-items: center; 
+                    justify-content: space-between; 
+                    height: 150px; 
                 }
                 .Or_anaCard h3 {
-                    color: blue;
+                    color: #329f1f;
                     font-size: 20px;
-                    text-align: center; /* Center align text */
-                    margin: 0; /* Remove default margin */
+                    text-align: center; 
+                    margin: 0; 
+                    
                 }
                 .Or_anaCard h2 {
                     color: #333;
@@ -44,15 +78,15 @@ function Or_Analysis() {
             <div className="Or_anaCardrow">
                 <div className="Or_anaCard">
                     <h3 className="or_ana_h3">Approvals Orders</h3>
-                    <h2>15</h2>
+                    <h2 style={{ color: 'darkgreen' }}>{a}</h2>
                 </div>
                 <div className="Or_anaCard">
                     <h3>Pending Orders</h3>
-                    <h2>2</h2>
+                    <h2 style={{ color: 'blue' }}>{p}</h2>
                 </div>
                 <div className="Or_anaCard">
                     <h3>Cancel Orders</h3>
-                    <h2>4</h2>
+                    <h2 style={{ color: 'red' }}>{c}</h2>
                 </div>
             </div>
         </div>
