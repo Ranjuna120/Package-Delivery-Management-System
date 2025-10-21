@@ -1,67 +1,145 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-
+import axios from 'axios';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { useNavigate } from 'react-router-dom';
 
 function OrAdminTable() {
+    const [data, setData] = useState([]); 
+    const [filterOrder, setFilterOrder] = useState([]); 
+    const navigate = useNavigate();
+
+  
+    const handleNavigate = (action, id) => {
+        navigate(`/OrderDashBoardPage${action}/${id}`);
+    };
+
+
+    const handleSearch = (e) => {
+        const searchValue = e.target.value.toLowerCase();
+        if (searchValue === '') {
+            setFilterOrder(data); 
+        } else {
+            const filtered = data.filter((order) =>
+                order.Cus_email.toLowerCase().includes(searchValue),
+            
+            );
+            setFilterOrder(filtered);
+        }
+    };
+
+
+    const handleGeneratePDF = () => {
+        const doc = new jsPDF();
+        doc.setFontSize(16); 
+        doc.text("Order Details", 14, 20);
+        
+        const tableclm = [
+            "Order ID",
+            "Customer Name",
+            "Quantity",
+            "Package Type",
+            "Order Status",
+            "Tracking Status"
+        ];
+    
+        const tablerow = data.map((order) => [
+            order._id,
+            order.Cus_name,
+            order.qty,
+            order.package_type,
+            order.status,
+            order.Or_tracking
+        ]);
+    
+    
+        doc.autoTable({
+            head: [tableclm],
+            body: tablerow,
+            startY: 30 
+        });
+    
+        doc.save("Order_Details.pdf");
+    };
+    
     const columns = [
         {
             name: 'Order ID',
-            selector: row => row.name,
+            selector: row => row._id,
             sortable: true,
         },
         {
-            name: 'Date',
-            selector: row => row.date,
+            name: 'Name',
+            selector: row => row.Cus_name,
         },
         {
             name: 'Email',
-            selector: row => row.email,
+            selector: row => row.Cus_email,
         },
         {
             name: 'Status',
-            selector: row => row.age,
+            selector: row => row.status,
+            cell: row => (
+                <span
+                    style={{
+                        color: row.status === 'Approval' ? 'green' : row.status === 'Cancel' ? 'red' : row.status === 'Pending' ? 'blue' : 'black',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    {row.status}
+                </span>
+            ),
+        },
+        {
+            name: 'Tracking',
+            selector: row => row.Or_tracking,
+            cell: row => (
+                <span
+                    style={{
+                        color: row.Or_tracking === 'Approval' ? 'green' : row.Or_tracking === 'Pending' ? 'red' : row.Or_tracking === 'Finish' ? 'blue' : 'black',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    {row.Or_tracking}
+                </span>
+            ),
         },
         {
             name: 'Action',
-            selector: row => row.button,
+            cell: row => (
+                <>
+                    <button onClick={() => handleNavigate('/orderTrack', row._id)}>
+                        More
+                    </button>
+                </>
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
         },
     ];
 
-    const data = [
-        {
-            id: 1,
-            name: 'Yousaf',
-            email: 'abd@gmail.com',
-            age: '22',
-            button: <button>more</button>
-        },
-        {
-            id: 2,
-            name: 'Yousaf',
-            email: 'abd@gmail.com',
-            age: '24',
-            button: <button>more</button>
-        },
-        {
-            id: 3,
-            name: 'Yousaf',
-            email: 'abd@gmail.com',
-            age: '30',
-            button: <button className='or_button'>more</button>
-        },
-        {
-            id: 4,
-            name: 'Yoffusaf',
-            email: 'abd@gmail.com',
-            age: '35',
-            button: <button className='or_button'>more</button>
-        },
-    ];
+    // Fetch data from backend
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8070/api/orders/Allread'); 
+                setData(response.data); 
+                setFilterOrder(response.data); 
+            } catch (error) {
+                console.error("Error fetching data", error);
+            }
+        };
+        fetchData(); 
+    }, []);
 
     return (
         <div className='container mt-5'>
             <style>
                 {`
+                body{background-color:#e6eee4;}
+
                     .or_search {
                         display: flex;
                         align-items: center;
@@ -79,6 +157,7 @@ function OrAdminTable() {
                         padding: 1rem; 
                         background-color: #fff; 
                         border-radius: 8px;
+                        
                     }
                     .or_search .search-wrapper {
                         position: relative;
@@ -98,7 +177,7 @@ function OrAdminTable() {
                         top: 68%;
                         transform: translateY(-50%);
                         color: #9ca3af;
-                font-size: 15px;
+                        font-size: 15px;
                     }
                     .or_button {
                         display: flex;
@@ -122,23 +201,21 @@ function OrAdminTable() {
                     }
                 `}
             </style>
-            <button href="/add">add</button>
             <div className='or_card'>
                 <div className='or_search'>
                     <div className='search-wrapper'>
                         <i className="fa fa-search"></i>
-                        <input type='text' placeholder='Search...' />
+                        <input type='text' placeholder='Search...' onChange={handleSearch} />
                     </div>
                     <div className='or_button'>
-                        <button>Print <i className="bi bi-printer"></i></button>
+                        <button onClick={handleGeneratePDF}>Print <i className="bi bi-printer"></i></button>
                     </div>
                 </div>
                 <DataTable
                     columns={columns}
-                    data={data}
+                    data={filterOrder} 
+                    // pagination
                 />
-
-
             </div>
         </div>
     );
