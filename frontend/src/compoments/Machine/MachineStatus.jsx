@@ -55,9 +55,10 @@ const MachineStatus = () => {
 
   // Function to remove a machine
   const handleRemoveMachine = (index) => {
+    const ok = window.confirm('Remove this machine from the list?');
+    if (!ok) return;
     const updatedNames = currentMachineNames.filter((_, i) => i !== index);
     const updatedStatuses = machineStatuses.filter((_, i) => i !== index);
-    
     setCurrentMachineNames(updatedNames);
     setMachineStatuses(updatedStatuses);
   };
@@ -67,8 +68,37 @@ const MachineStatus = () => {
   const inProcessCount = machineStatuses.filter(status => status === 'In process').length;
   const maintainCount = machineStatuses.filter(status => status === 'Maintain').length;
 
+  // Inline helpers for status chip/select styles
+  const statusColor = (status) => {
+    switch (status) {
+      case 'Available':
+        return { bg: '#d4edda', dot: '#2ecc71', border: '#b5e2c3' };
+      case 'In process':
+        return { bg: '#f8d7da', dot: '#e74c3c', border: '#f1b0b7' };
+      case 'Maintain':
+        return { bg: '#fff3cd', dot: '#f1c40f', border: '#ffe08a' };
+      default:
+        return { bg: 'transparent', dot: '#95a5a6', border: '#ecf0f1' };
+    }
+  };
+
   return (
     <div style={styles.container}>
+      {/* Header */}
+      <div style={styles.headerRow}>
+        <div>
+          <h1 style={styles.title}>Machine Status</h1>
+          <p style={styles.subtitle}>Track availability and manage assignments</p>
+        </div>
+        <button style={styles.backButton} onClick={() => navigate('/MachineDashBoardPage')}>← Back to Machines</button>
+      </div>
+
+      {/* Legend */}
+      <div style={styles.legendRow}>
+        <span style={styles.legendItem}><span style={{...styles.legendDot, backgroundColor: '#2ecc71'}}></span>Available</span>
+        <span style={styles.legendItem}><span style={{...styles.legendDot, backgroundColor: '#e74c3c'}}></span>In process</span>
+        <span style={styles.legendItem}><span style={{...styles.legendDot, backgroundColor: '#f1c40f'}}></span>Maintain</span>
+      </div>
       {/* Status summary boxes */}
       <div style={styles.statusBoxes}>
         <div style={styles.statusBox}>
@@ -85,7 +115,11 @@ const MachineStatus = () => {
         </div>
       </div>
 
-      {/* Machines table with status dropdowns */}
+      {/* Empty state */}
+      {currentMachineNames.length === 0 ? (
+        <div style={styles.emptyState}>No machines provided. Go back and select machines to manage.</div>
+      ) : (
+      /* Machines table with status dropdowns */
       <div style={styles.tableFrame}>
         <table style={styles.table}>
           <thead>
@@ -103,15 +137,28 @@ const MachineStatus = () => {
               >
                 <td style={styles.tableCell}>{machineName}</td>
                 <td style={styles.tableCell}>
-                  <select
-                    value={machineStatuses[index]}
-                    onChange={(e) => handleStatusChange(index, e.target.value)}
-                    style={styles.select}
-                  >
-                    <option value="Available">Available</option>
-                    <option value="In process">In process</option>
-                    <option value="Maintain">Maintain</option>
-                  </select>
+                  <div style={styles.statusCell}>
+                    <span style={{
+                      ...styles.statusChip,
+                      backgroundColor: statusColor(machineStatuses[index]).bg,
+                      borderColor: statusColor(machineStatuses[index]).border,
+                    }}>
+                      <span style={{...styles.statusDot, backgroundColor: statusColor(machineStatuses[index]).dot}}></span>
+                      {machineStatuses[index]}
+                    </span>
+                    <select
+                      value={machineStatuses[index]}
+                      onChange={(e) => handleStatusChange(index, e.target.value)}
+                      style={{
+                        ...styles.select,
+                        borderColor: statusColor(machineStatuses[index]).border,
+                      }}
+                    >
+                      <option value="Available">Available</option>
+                      <option value="In process">In process</option>
+                      <option value="Maintain">Maintain</option>
+                    </select>
+                  </div>
                 </td>
                 <td style={styles.tableCell}>
                   {machineStatuses[index] === 'Available' && (
@@ -134,6 +181,7 @@ const MachineStatus = () => {
           </tbody>
         </table>
       </div>
+      )}
     </div>
   );
 };
@@ -143,6 +191,52 @@ const styles = {
     padding: '30px',
     background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
     minHeight: '100vh',
+  },
+  headerRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  title: {
+    margin: 0,
+    color: '#2193b0',
+    fontSize: 28,
+    fontWeight: 800,
+  },
+  subtitle: {
+    marginTop: 6,
+    color: '#5f6b7a',
+    fontSize: 14,
+  },
+  backButton: {
+    padding: '10px 14px',
+    background: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: 8,
+    fontWeight: 700,
+    cursor: 'pointer',
+    boxShadow: '0 4px 12px rgba(33,147,176,0.25)'
+  },
+  legendRow: {
+    display: 'flex',
+    gap: 16,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  legendItem: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    color: '#5f6b7a',
+    fontSize: 14,
+  },
+  legendDot: {
+    width: 10,
+    height: 10,
+    borderRadius: '50%',
+    display: 'inline-block',
   },
   statusBoxes: {
     display: 'flex',
@@ -176,6 +270,14 @@ const styles = {
     width: '100%',
     borderCollapse: 'collapse',
   },
+  emptyState: {
+    background: 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)',
+    borderRadius: '12px',
+    boxShadow: '0 6px 18px rgba(33,147,176,0.12)',
+    padding: 24,
+    textAlign: 'center',
+    color: '#5f6b7a',
+  },
   tableHeader: {
     background: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
     color: '#fff',
@@ -191,6 +293,28 @@ const styles = {
     textAlign: 'left',
     fontSize: '14px',
     color: '#2c3e50',
+  },
+  statusCell: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 12,
+    flexWrap: 'wrap',
+  },
+  statusChip: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    padding: '6px 10px',
+    borderRadius: 999,
+    border: '2px solid transparent',
+    fontWeight: 700,
+    color: '#2c3e50',
+  },
+  statusDot: {
+    width: 8,
+    height: 8,
+    borderRadius: '50%',
+    display: 'inline-block',
   },
   select: {
     padding: '8px 12px',
