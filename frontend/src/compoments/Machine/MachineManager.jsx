@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable'; // Importing the plugin for table in pdf
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable'; // Recommended import for reliability
 
 const MachineManager = () => {
     const navigate = useNavigate();
@@ -62,32 +62,39 @@ const MachineManager = () => {
 
     // Function to generate and download PDF
     const handleDownloadReport = () => {
-        const doc = new jsPDF();
-        doc.text('Machine Report', 14, 16);
-        
-        const tableColumn = ['Machine Name', 'Category', 'Duration Time', 'Description', 'Quality Details'];
-        const tableRows = [];
+        try {
+            const doc = new jsPDF();
+            doc.text('Machine Report', 14, 16);
 
-        filteredMachines.forEach(machine => {
-            const machineData = [
-                machine.machineName,
-                machine.machineCategory || 'N/A',
-                machine.durationTime,
-                machine.description,
-                machine.qualityDetails
-            ];
-            tableRows.push(machineData);
-        });
+            const tableColumn = ['Machine Name', 'Category', 'Duration Time', 'Description', 'Quality Details'];
+            const tableRows = [];
 
-        // Add table to PDF
-        doc.autoTable({
-            head: [tableColumn],
-            body: tableRows,
-            startY: 20,
-        });
+            filteredMachines.forEach(machine => {
+                const machineData = [
+                    machine.machineName,
+                    machine.machineCategory || 'N/A',
+                    machine.durationTime,
+                    machine.description,
+                    machine.qualityDetails
+                ];
+                tableRows.push(machineData);
+            });
 
-        // Save the PDF
-        doc.save('machines_report.pdf');
+            // Add table to PDF (using function import for reliability)
+            autoTable(doc, {
+                head: [tableColumn],
+                body: tableRows,
+                startY: 20,
+                styles: { fontSize: 10 },
+                headStyles: { fillColor: [33, 147, 176] },
+            });
+
+            const stamp = new Date().toISOString().slice(0,10);
+            doc.save(`machines_report_${stamp}.pdf`);
+        } catch (err) {
+            console.error('Failed to generate PDF:', err);
+            alert('Failed to generate PDF. Please try again.');
+        }
     };
 
     // Derived: unique categories for filter and summary
