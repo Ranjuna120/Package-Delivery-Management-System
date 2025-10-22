@@ -461,8 +461,8 @@ function EmployeeDashBoardPage() {
             <button onClick={() => navigate('/EmployeeDashBoardTwo')} className="navBtn">
               📋 Manage Attendance
             </button>
-            <button onClick={() => navigate('/EmployeeDashBoardThree')} className="navBtn">
-              🔍 Search Records
+            <button onClick={() => navigate('/EmployeeDashBoardOne')} className="navBtn">
+              🔙 Back
             </button>
           </div>
         </div>
