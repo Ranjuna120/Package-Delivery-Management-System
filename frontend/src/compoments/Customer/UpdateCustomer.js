@@ -41,7 +41,7 @@ function UpdateCustomer() {
     try {
       await axios.put(`http://localhost:8070/api/customers/${id}`, customerData);
       alert('Customer updated successfully!');
-      navigate('/AdminChoose/DMChoose/CustomerDashBoardPage/Cusdetails'); // Redirect after successful update
+      navigate('/CusProfile'); // Redirect to customer profile page after successful update
     } catch (error) {
       console.error('Error updating customer:', error);
       alert('Failed to update customer');
