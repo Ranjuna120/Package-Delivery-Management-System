@@ -83,199 +83,287 @@ function AddEmployee() {
   };
 
   return (
-    <div>
-      <style>
-        {`
-          .container {
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 800px;
-            width: 100%;
-            background-color: white;
-            margin: 0 auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          }
+    <>
+      <style>{`
+        body {
+          background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+          min-height: 100vh !important;
+          margin: 0 !important;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        }
+        .addEmpContainer {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 30px 20px;
+        }
+        .addEmpCard {
+          background: white;
+          border-radius: 16px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+          padding: 40px;
+          max-width: 700px;
+          width: 100%;
+        }
+        .addEmpHeader {
+          text-align: center;
+          margin-bottom: 30px;
+          padding-bottom: 20px;
+          border-bottom: 2px solid #f0f0f0;
+        }
+        .addEmpIcon {
+          width: 70px;
+          height: 70px;
+          margin: 0 auto 15px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #11998e, #38ef7d);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          fontSize: 35px;
+          box-shadow: 0 4px 12px rgba(17, 153, 142, 0.3);
+        }
+        .addEmpTitle {
+          color: #11998e;
+          fontSize: 26px;
+          fontWeight: 700;
+          margin: 0 0 5px 0;
+        }
+        .addEmpSubtitle {
+          color: #6c757d;
+          fontSize: 13px;
+          margin: 0;
+        }
+        .formGrid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 18px;
+          margin-bottom: 18px;
+        }
+        .formGroup {
+          display: flex;
+          flex-direction: column;
+        }
+        .formGroup.full {
+          grid-column: 1 / -1;
+        }
+        .formLabel {
+          display: block;
+          fontSize: 13px;
+          fontWeight: 600;
+          color: #333;
+          marginBottom: 6px;
+        }
+        .formInput {
+          width: 100%;
+          padding: 12px 14px;
+          fontSize: 14px;
+          border: 2px solid #e0e0e0;
+          borderRadius: 8px;
+          transition: all 0.3s ease;
+          outline: none;
+          background: white;
+        }
+        .formInput:focus {
+          border-color: #11998e;
+          box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.1);
+        }
+        .errorMsg {
+          color: #c33;
+          fontSize: 12px;
+          marginTop: 4px;
+        }
+        .buttonGroup {
+          display: flex;
+          gap: 12px;
+          marginTop: 25px;
+          justifyContent: flex-end;
+        }
+        .btn {
+          padding: 13px 24px;
+          fontSize: 15px;
+          fontWeight: 600;
+          border: none;
+          borderRadius: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .btnBack {
+          background: #e9f1f7;
+          color: #2c3e50;
+        }
+        .btnBack:hover {
+          background: #d4e4ed;
+          transform: translateY(-2px);
+        }
+        .btnSubmit {
+          background: linear-gradient(135deg, #11998e, #38ef7d);
+          color: white;
+          box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+        }
+        .btnSubmit:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(17, 153, 142, 0.5);
+        }
+      `}</style>
 
-          h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-          }
-
-          .form-group {
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-          }
-
-          .form-group label {
-            flex: 1;
-            font-weight: bold;
-          }
-
-          .form-group input {
-            flex: 2;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-          }
-
-          .error {
-            color: red;
-            font-size: 14px;
-          }
-
-          .button-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-          }
-
-          .button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-          }
-          .button.add {
-            background-color: #0F9D58;
-          }
-
-          .button:hover {
-            background-color: #0056b3;
-          }
-        `}
-      </style>
-
-      <div className="container">
-        <h1>Add Employee</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="EmpID">Employee ID:</label>
-            <input
-              type="number"
-              id="EmpID"
-              value={formData.EmpID}
-              onChange={handleChange}
-            />
-            {errors.EmpID && <div className="error">{errors.EmpID}</div>}
+      <div className="addEmpContainer">
+        <div className="addEmpCard">
+          <div className="addEmpHeader">
+            <div className="addEmpIcon">👤</div>
+            <h1 className="addEmpTitle">Add New Employee</h1>
+            <p className="addEmpSubtitle">Fill in the details to add a new employee to the system</p>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpName">Emp Name:</label>
-            <input
-              type="text"
-              id="EmpName"
-              value={formData.EmpName}
-              onChange={handleChange}
-            />
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="formGrid">
+              <div className="formGroup">
+                <label className="formLabel">🆔 Employee ID *</label>
+                <input
+                  type="number"
+                  id="EmpID"
+                  className="formInput"
+                  placeholder="4-digit ID (e.g., 1002)"
+                  value={formData.EmpID}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.EmpID && <div className="errorMsg">{errors.EmpID}</div>}
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpFullName">Full Name:</label>
-            <input
-              type="text"
-              id="EmpFullName"
-              value={formData.EmpFullName}
-              onChange={handleChange}
-            />
-          </div>
+              <div className="formGroup">
+                <label className="formLabel">👤 Short Name *</label>
+                <input
+                  type="text"
+                  id="EmpName"
+                  className="formInput"
+                  placeholder="Short name"
+                  value={formData.EmpName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpAddress">Address:</label>
-            <input
-              type="text"
-              id="EmpAddress"
-              value={formData.EmpAddress}
-              onChange={handleChange}
-            />
-          </div>
+              <div className="formGroup full">
+                <label className="formLabel">📝 Full Name *</label>
+                <input
+                  type="text"
+                  id="EmpFullName"
+                  className="formInput"
+                  placeholder="Full legal name"
+                  value={formData.EmpFullName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpQualifications">Qualifications:</label>
-            <input
-              type="text"
-              id="EmpQualifications"
-              value={formData.EmpQualifications}
-              onChange={handleChange}
-            />
-          </div>
+              <div className="formGroup full">
+                <label className="formLabel">📍 Address</label>
+                <input
+                  type="text"
+                  id="EmpAddress"
+                  className="formInput"
+                  placeholder="Residential address"
+                  value={formData.EmpAddress}
+                  onChange={handleChange}
+                />
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpExperience">Experience:</label>
-            <input
-              type="text"
-              id="EmpExperience"
-              value={formData.EmpExperience}
-              onChange={handleChange}
-            />
-          </div>
+              <div className="formGroup">
+                <label className="formLabel">🎓 Qualifications</label>
+                <input
+                  type="text"
+                  id="EmpQualifications"
+                  className="formInput"
+                  placeholder="Educational qualifications"
+                  value={formData.EmpQualifications}
+                  onChange={handleChange}
+                />
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpPosition">Position:</label>
-            <input
-              type="text"
-              id="EmpPosition"
-              value={formData.EmpPosition}
-              onChange={handleChange}
-            />
-            {errors.EmpPosition && (
-              <div className="error">{errors.EmpPosition}</div>
-            )}
-          </div>
+              <div className="formGroup">
+                <label className="formLabel">💼 Experience</label>
+                <input
+                  type="text"
+                  id="EmpExperience"
+                  className="formInput"
+                  placeholder="Years of experience"
+                  value={formData.EmpExperience}
+                  onChange={handleChange}
+                />
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpWage">Salary/Wage:</label>
-            <input
-              type="number"
-              id="EmpWage"
-              value={formData.EmpWage}
-              onChange={handleChange}
-            />
-            {errors.EmpWage && <div className="error">{errors.EmpWage}</div>}
-          </div>
+              <div className="formGroup">
+                <label className="formLabel">🏢 Position *</label>
+                <input
+                  type="text"
+                  id="EmpPosition"
+                  className="formInput"
+                  placeholder="Job position"
+                  value={formData.EmpPosition}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.EmpPosition && <div className="errorMsg">{errors.EmpPosition}</div>}
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpJoin">Join Date:</label>
-            <input
-              type="date"
-              id="EmpJoin"
-              value={formData.EmpJoin}
-              onChange={handleChange}
-            />
-          </div>
+              <div className="formGroup">
+                <label className="formLabel">💰 Salary/Wage *</label>
+                <input
+                  type="number"
+                  id="EmpWage"
+                  className="formInput"
+                  placeholder="Monthly salary"
+                  value={formData.EmpWage}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.EmpWage && <div className="errorMsg">{errors.EmpWage}</div>}
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="EmpPassKey">PassKey:</label>
-            <input
-              type="number"
-              id="EmpPassKey"
-              value={formData.EmpPassKey}
-              onChange={handleChange}
-            />
-            {errors.EmpPassKey && (
-              <div className="error">{errors.EmpPassKey}</div>
-            )}
-          </div>
+              <div className="formGroup">
+                <label className="formLabel">📅 Join Date</label>
+                <input
+                  type="date"
+                  id="EmpJoin"
+                  className="formInput"
+                  value={formData.EmpJoin}
+                  onChange={handleChange}
+                />
+              </div>
 
-          <div className="button-container">
-            <button
-              className="button"
-              type="button"
-              onClick={() => navigate('/EmployeeDashBoardPage')}
-            >
-              Go Back
-            </button>
-            <button className="button add" type="submit">
-              Add Employee
-            </button>
-          </div>
-        </form>
+              <div className="formGroup">
+                <label className="formLabel">🔑 PassKey *</label>
+                <input
+                  type="password"
+                  id="EmpPassKey"
+                  className="formInput"
+                  placeholder="4-digit PassKey"
+                  value={formData.EmpPassKey}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.EmpPassKey && <div className="errorMsg">{errors.EmpPassKey}</div>}
+              </div>
+            </div>
+
+            <div className="buttonGroup">
+              <button
+                className="btn btnBack"
+                type="button"
+                onClick={() => navigate('/EmployeeDashBoardPage')}
+              >
+                ← Go Back
+              </button>
+              <button className="btn btnSubmit" type="submit">
+                ✓ Add Employee
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
