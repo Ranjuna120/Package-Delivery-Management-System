@@ -86,7 +86,7 @@ function AddEmployee() {
     <>
       <style>{`
         body {
-          background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+          background: linear-gradient(135deg, #f3f4f4ff 0%, #fafbfaff 100%) !important;
           min-height: 100vh !important;
           margin: 0 !important;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
