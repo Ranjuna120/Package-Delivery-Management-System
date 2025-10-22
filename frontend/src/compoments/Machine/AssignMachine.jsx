@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AssignMachine = () => {
+  const navigate = useNavigate();
   const [orderQueue, setOrderQueue] = useState({ orderId: '', machineId: '' });
   const [infoOrders, setInfoOrders] = useState([]);
   const [completedOrders, setCompletedOrders] = useState([]);
@@ -62,6 +64,8 @@ const AssignMachine = () => {
 
   // Removing an order
   const handleRemoveOrder = async (id, index) => {
+    const ok = window.confirm('Are you sure you want to remove this assigned order?');
+    if (!ok) return;
     try {
       setLoading(true);
       await axios.delete(`http://localhost:8070/orderqueues/delete/${id}`);
@@ -92,8 +96,31 @@ const AssignMachine = () => {
     setInfoOrders(updatedOrders);
   };
 
+  const assignedCount = infoOrders.length;
+  const completedCount = completedOrders.length;
+
   return (
     <div style={styles.container}>
+      {/* Header */}
+      <div style={styles.headerRow}>
+        <div>
+          <h1 style={styles.title}>Assign Machine</h1>
+          <p style={styles.subtitle}>Link orders with machines and track progress</p>
+        </div>
+        <button style={styles.backButton} onClick={() => navigate(-1)}>← Back</button>
+      </div>
+
+      {/* Stats */}
+      <div style={styles.statsRow}>
+        <div style={styles.statCard}>
+          <div style={styles.statLabel}>Assigned</div>
+          <div style={styles.statValue}>{assignedCount}</div>
+        </div>
+        <div style={styles.statCard}>
+          <div style={styles.statLabel}>Completed</div>
+          <div style={styles.statValue}>{completedCount}</div>
+        </div>
+      </div>
       {/* Assign Machine to Order Form */}
       <div style={styles.manageOrderQueue}>
         <h2>Assign Machine to Order</h2>
@@ -120,7 +147,7 @@ const AssignMachine = () => {
               />
             </div>
           </div>
-          <button type="submit" style={styles.assignButton} disabled={loading}>
+          <button type="submit" style={{...styles.assignButton, opacity: loading ? 0.8 : 1}} disabled={loading}>
             {loading ? 'Assigning...' : 'Assign'}
           </button>
         </form>
@@ -130,9 +157,9 @@ const AssignMachine = () => {
       <div style={styles.infoSection}>
         <h2>Assigned Orders</h2>
         {loading ? (
-          <p>Loading orders...</p>
+          <div style={styles.emptyState}>Loading orders...</div>
         ) : infoOrders.length === 0 ? (
-          <p>No orders assigned yet.</p>
+          <div style={styles.emptyState}>No orders assigned yet. Use the form above to assign one.</div>
         ) : (
           infoOrders.map((order, index) => (
             <div key={order._id} style={styles.infoBox}>
@@ -157,7 +184,7 @@ const AssignMachine = () => {
       <div style={styles.infoSection}>
         <h2>Completed Orders</h2>
         {completedOrders.length === 0 ? (
-          <p>No completed orders yet.</p>
+          <div style={styles.emptyState}>No completed orders yet.</div>
         ) : (
           completedOrders.map((order, index) => (
             <div key={order._id} style={styles.infoBox}>
@@ -184,6 +211,57 @@ const styles = {
     padding: '30px',
     background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
     minHeight: '100vh',
+  },
+  headerRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '16px',
+  },
+  title: {
+    margin: 0,
+    color: '#2193b0',
+    fontSize: '28px',
+    fontWeight: 800,
+  },
+  subtitle: {
+    marginTop: 6,
+    color: '#5f6b7a',
+    fontSize: 14,
+  },
+  backButton: {
+    padding: '10px 14px',
+    background: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: 8,
+    fontWeight: 700,
+    cursor: 'pointer',
+    boxShadow: '0 4px 12px rgba(33,147,176,0.25)'
+  },
+  statsRow: {
+    display: 'flex',
+    gap: '16px',
+    marginBottom: '20px',
+    flexWrap: 'wrap',
+  },
+  statCard: {
+    flex: '1 1 200px',
+    minWidth: '200px',
+    background: 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)',
+    borderRadius: '12px',
+    boxShadow: '0 6px 18px rgba(33,147,176,0.12)',
+    padding: '16px 18px',
+  },
+  statLabel: {
+    color: '#5f6b7a',
+    fontSize: '13px',
+    marginBottom: '6px',
+  },
+  statValue: {
+    color: '#2193b0',
+    fontWeight: 800,
+    fontSize: '22px',
   },
   manageOrderQueue: {
     width: '100%',
@@ -273,6 +351,14 @@ const styles = {
     fontSize: '14px',
     transition: 'all 0.3s ease',
     outline: 'none',
+  },
+  emptyState: {
+    background: 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)',
+    borderRadius: '12px',
+    boxShadow: '0 6px 18px rgba(33,147,176,0.12)',
+    padding: '16px',
+    textAlign: 'center',
+    color: '#5f6b7a',
   },
 };
 
