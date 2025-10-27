@@ -8,6 +8,11 @@ require('dotenv').config();
 const feedbackRoutes = require('./Routes/feedbackRoutes.js');  
 const customerRoutes = require('./Routes/customerRoutes.js');
 const employeeRoutes = require('./Routes/employeeRoutes.js');
+const attendanceRoutes = require('./Routes/attendanceRoutes.js');
+const machineRoutes = require('./Routes/machine.js');
+const or_Routes = require("./Routes/Order");
+const orderqueueRoutes = require('./Routes/orderqueue.js');
+const assign_itemsRouter = require('./Routes/assign_itemsRoutes');
 
 // Middleware
 app.use(cors());
@@ -21,15 +26,16 @@ app.use(express.static('public')); // Assuming you store PDF files in 'public' f
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api', employeeRoutes);
-
+app.use('/api', attendanceRoutes);
+app.use('/machines', machineRoutes);
+app.use('/api/assign_items', assign_itemsRouter);
+app.use("/api/orders", or_Routes);
+app.use('/orderqueues', orderqueueRoutes);
 // Database connection
 const PORT = process.env.PORT || 8070;
 const URL = process.env.MONGODB_URL;
 
-mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(URL);
 
 const connection = mongoose.connection;
 connection.once("open", () => {
