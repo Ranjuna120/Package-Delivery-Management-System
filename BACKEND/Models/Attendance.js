@@ -7,6 +7,7 @@ const attendanceSchema = new mongoose.Schema({
   WorkDate: { type: Date, required: true },
   WorkHours: { type: Number, required: true },
   OTHours: { type: Number },
+  EmpWage: { type: Number, required: true }, 
 });
 
 module.exports = mongoose.model('Attendance', attendanceSchema);
