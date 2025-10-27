@@ -46,8 +46,8 @@ function AdminLogin({ onLogin, userType }) {
           localStorage.setItem('username', username);
           localStorage.setItem('adminLoggedIn', 'true');
           window.dispatchEvent(new Event('adminLoginChange'));
-          navigate('/PMChoose');
-          window.location.reload();
+          // Navigate to the Plant Manager (PM) dashboard chooser page
+          navigate('/AdminChoose/PMChoose');
         } else {
           setError("Access denied. Incorrect role.");
         }
@@ -56,7 +56,7 @@ function AdminLogin({ onLogin, userType }) {
         localStorage.setItem('username', username);
         localStorage.setItem('adminLoggedIn', 'true');
         window.dispatchEvent(new Event('adminLoginChange'));
-        navigate('/GMChoose');
+        navigate('/AdminChoose/GMChoose');
         window.location.reload();
       } else {
         setError("Invalid role selected.");
