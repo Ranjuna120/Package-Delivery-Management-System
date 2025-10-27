@@ -33,6 +33,7 @@ function CustomerProfileOne  ()  {
         <ul className="sidebar-menu">
           <li><a href="/CusProfile">Profile</a></li>
           <li><a href="/Or_Add">My Orders</a></li>
+          <li><a href="/My/FindOrder">Track Order</a></li>
           <li><a href="/FeedbackForm">Feedback</a></li>
           <li><a href="/PaymentDashBoardOne">Payment</a></li>
           <li><a href="#">Create Package</a></li>
