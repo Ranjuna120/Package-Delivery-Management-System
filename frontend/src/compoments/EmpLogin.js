@@ -4,106 +4,265 @@ import { useNavigate } from 'react-router-dom';
 const EmpLogin = () => {
   const [empID, setEmpID] = useState('');
   const [empPassKey, setEmpPassKey] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
-    // Store values in local variables
-    const EmpID = empID;
-    const EmpPassKey = empPassKey;
-  
+    setLoading(true);
+    setError('');
+
     try {
-      const response = await fetch(`http://localhost:8070/api/employees/${EmpID}`); // Adjust the URL as needed
-  
-      // Check if the response is okay
-      if (response.ok) {
-        const employeeData = await response.json();
-  
-        // Check if the pass key matches
-        if (Number(employeeData.EmpPassKey) === Number(EmpPassKey)) {
-          // Successful login
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('username', EmpID);
-          //navigate('/EmployeeProfile'); // Redirect to the EmployeeProfile
-          navigate('/EmployeeProfile', { state: { empID: EmpID } }); // Redirect to the EmployeeProfile with the ID
-          window.location.reload();
-        } else {
-          // Handle login error
-          //setError('Invalid EmpID or PassKey');
-        }
+      const response = await fetch('http://localhost:8070/api/employees/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ empID, empPassKey }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Store employee info in localStorage
+        localStorage.setItem('employeeLoggedIn', 'true');
+        localStorage.setItem('empID', data.employee.EmpID);
+        localStorage.setItem('empName', data.employee.EmpName);
+        localStorage.setItem('empFullName', data.employee.EmpFullName);
+        localStorage.setItem('empPosition', data.employee.EmpPosition);
+        localStorage.setItem('empWage', data.employee.EmpWage);
+        localStorage.setItem('employeeId', data.employee._id);
+
+        // Navigate to employee profile
+        navigate('/EmployeeProfile', { 
+          state: { 
+            empID: data.employee.EmpID,
+            empName: data.employee.EmpName,
+            empFullName: data.employee.EmpFullName,
+            empPosition: data.employee.EmpPosition
+          } 
+        });
+        window.location.reload();
       } else {
-        console.error('Failed to fetch employee:', response.status);
-        setError('Employee not found');
+        setError(data.error || 'Invalid credentials');
       }
     } catch (error) {
-      console.error('Error fetching employee:', error);
-      setError('Error fetching employee information');
+      console.error('Login error:', error);
+      setError('Unable to connect to server. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
-  
-  
 
   return (
-    <section
-      className="d-flex align-items-center justify-content-center"
-      style={{
-        minHeight: 'calc(100vh - 120px)',
-        background: 'linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%)',
-        padding: '20px'
-      }}
-    >
-      <div className="card shadow-lg p-4" style={{ maxWidth: 420, width: '100%', borderRadius: 16 }}>
-        <h3 className="text-center mb-4" style={{ color: '#2193b0', fontWeight: 700 }}>Employee Login</h3>
-        {error && (
-          <div className="alert alert-danger py-2 mb-3 text-center" role="alert" style={{ fontSize: 15 }}>{error}</div>
-        )}
-        <form onSubmit={handleLogin} autoComplete="off">
-          <div className="mb-3">
-            <label className="form-label" style={{ fontWeight: 500 }}>EmpID</label>
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter your EmpID (e.g., 1001)"
-              value={empID}
-              onChange={(e) => setEmpID(e.target.value)}
-              required
-              style={{ borderRadius: 10 }}
-            />
+    <>
+      <style>{`
+        body {
+          background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+          min-height: 100vh !important;
+          margin: 0 !important;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        }
+      `}</style>
+
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+      }}>
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '16px',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+          padding: '40px',
+          maxWidth: '420px',
+          width: '100%',
+        }}>
+          {/* Icon and Title */}
+          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+            <div style={{
+              width: '70px',
+              height: '70px',
+              margin: '0 auto 15px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #11998e, #38ef7d)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '35px',
+              boxShadow: '0 4px 12px rgba(17, 153, 142, 0.3)',
+            }}>
+              👔
+            </div>
+            <h2 style={{
+              color: '#11998e',
+              fontSize: '26px',
+              fontWeight: '700',
+              margin: '0 0 5px 0',
+            }}>
+              Employee Login
+            </h2>
+            <p style={{
+              color: '#6c757d',
+              fontSize: '13px',
+              margin: 0,
+            }}>
+              Enter your credentials to access your account
+            </p>
           </div>
-          <div className="mb-3">
-            <label className="form-label" style={{ fontWeight: 500 }}>PassKey</label>
-            <input
-              type="password"
-              className="form-control form-control-lg"
-              placeholder="Enter your 4-digit PassKey"
-              value={empPassKey}
-              onChange={(e) => setEmpPassKey(e.target.value)}
-              required
-              style={{ borderRadius: 10 }}
-            />
+
+          {/* Form */}
+          <form onSubmit={handleLogin}>
+            {/* Employee ID */}
+            <div style={{ marginBottom: '18px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '13px',
+                fontWeight: '600',
+                color: '#333',
+                marginBottom: '6px',
+              }}>🆔 Employee ID</label>
+              <input
+                type="text"
+                value={empID}
+                onChange={(e) => setEmpID(e.target.value)}
+                placeholder="Enter your Employee ID"
+                required
+                style={{
+                  width: '100%',
+                  padding: '12px 14px',
+                  fontSize: '14px',
+                  border: '2px solid #e0e0e0',
+                  borderRadius: '8px',
+                  transition: 'all 0.3s ease',
+                  outline: 'none',
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#11998e'}
+                onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
+              />
+            </div>
+
+            {/* PassKey */}
+            <div style={{ marginBottom: '18px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '13px',
+                fontWeight: '600',
+                color: '#333',
+                marginBottom: '6px',
+              }}>🔑 PassKey</label>
+              <input
+                type="password"
+                value={empPassKey}
+                onChange={(e) => setEmpPassKey(e.target.value)}
+                placeholder="Enter your PassKey"
+                required
+                style={{
+                  width: '100%',
+                  padding: '12px 14px',
+                  fontSize: '14px',
+                  border: '2px solid #e0e0e0',
+                  borderRadius: '8px',
+                  transition: 'all 0.3s ease',
+                  outline: 'none',
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#11998e'}
+                onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
+              />
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div style={{
+                padding: '10px',
+                backgroundColor: '#fee',
+                border: '1px solid #fcc',
+                borderRadius: '8px',
+                color: '#c33',
+                fontSize: '13px',
+                marginBottom: '18px',
+                textAlign: 'center',
+              }}>
+                {error}
+              </div>
+            )}
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: '100%',
+                padding: '13px',
+                fontSize: '15px',
+                fontWeight: '600',
+                border: 'none',
+                borderRadius: '8px',
+                background: loading
+                  ? 'linear-gradient(135deg, #a0a0a0, #808080)'
+                  : 'linear-gradient(135deg, #11998e, #38ef7d)',
+                color: 'white',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(17, 153, 142, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 6px 16px rgba(17, 153, 142, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 4px 12px rgba(17, 153, 142, 0.4)';
+                }
+              }}
+            >
+              {loading ? (
+                <>
+                  <span style={{
+                    display: 'inline-block',
+                    width: '14px',
+                    height: '14px',
+                    border: '2px solid white',
+                    borderTopColor: 'transparent',
+                    borderRadius: '50%',
+                    animation: 'spin 0.8s linear infinite',
+                  }}></span>
+                  Signing in...
+                </>
+              ) : (
+                <>✓ Sign In</>
+              )}
+            </button>
+          </form>
+
+          {/* Help Text */}
+          <div style={{
+            textAlign: 'center',
+            marginTop: '22px',
+            fontSize: '13px',
+            color: '#6c757d',
+          }}>
+            Contact your administrator if you need assistance
           </div>
-          <button
-            type="submit"
-            className="btn w-100"
-            style={{
-              fontWeight: 600,
-              fontSize: 17,
-              background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 10,
-              boxShadow: '0 2px 10px rgba(33,147,176,0.15)',
-              transition: 'background 0.3s',
-              padding: '10px 0'
-            }}
-          >
-            Login
-          </button>
-        </form>
+        </div>
       </div>
-    </section>
+
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+    </>
   );
 };
 
