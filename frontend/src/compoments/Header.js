@@ -8,6 +8,7 @@ function Header() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isEmployee, setIsEmployee] = useState(false);
 
     useEffect(() => {
         // Function to update login and admin state
@@ -16,6 +17,8 @@ function Header() {
             setIsLoggedIn(loggedIn);
             const adminLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
             setIsAdmin(adminLoggedIn);
+            const employeeLoggedIn = localStorage.getItem('employeeLoggedIn') === 'true';
+            setIsEmployee(employeeLoggedIn);
         };
         updateAuthState();
         // Listen for storage changes (multi-tab and immediate update)
@@ -33,14 +36,26 @@ function Header() {
     };
 
     const handleLogout = () => {
+        // Clear customer data
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('username');
         localStorage.removeItem('customerName');
         localStorage.removeItem('customerId');
         localStorage.removeItem('lastLogin');
+        // Clear admin data
         localStorage.removeItem('adminLoggedIn');
+        // Clear employee data
+        localStorage.removeItem('employeeLoggedIn');
+        localStorage.removeItem('empID');
+        localStorage.removeItem('empName');
+        localStorage.removeItem('empFullName');
+        localStorage.removeItem('empPosition');
+        localStorage.removeItem('empWage');
+        localStorage.removeItem('employeeId');
+        
         setIsLoggedIn(false);
         setIsAdmin(false);
+        setIsEmployee(false);
         // Notify all listeners (including this tab) of admin login state change
         window.dispatchEvent(new Event('adminLoginChange'));
         navigate('/');
@@ -53,7 +68,7 @@ function Header() {
                 {/* Search removed as requested */}
                 <nav>
                     <ul className="nav_links">
-                        {!isAdmin && (
+                        {!isAdmin && !isEmployee && (
                           <li>
                             {isLoggedIn ? (
                               <a href="/CustomerProfileOne">Dashboard</a>
@@ -62,15 +77,20 @@ function Header() {
                             )}
                           </li>
                         )}
-                        {!isLoggedIn && !isAdmin && <li><a href="/Regi">Register</a></li>}
-                        {!isAdmin && <li><a href="/AdminLogin">Admin</a></li>}
-                        {!isAdmin && <li><a href="/EmpLogin">Employee</a></li>}
+                        {isEmployee && (
+                          <li>
+                            <a href="/EmployeeProfile">My Profile</a>
+                          </li>
+                        )}
+                        {!isLoggedIn && !isAdmin && !isEmployee && <li><a href="/Regi">Register</a></li>}
+                        {!isAdmin && !isEmployee && <li><a href="/AdminLogin">Admin</a></li>}
+                        {!isAdmin && !isEmployee && !isLoggedIn && <li><a href="/EmpLogin">Employee</a></li>}
                     </ul>
                 </nav>
-                {!isLoggedIn ? (
-                    <button className="cta" onClick={() => handleNavigate('/CustomerLogin')}>Login</button>
-                ) : (
+                {isLoggedIn || isAdmin || isEmployee ? (
                     <button className="cta" onClick={handleLogout} style={{ background: '#dc3545' }}>Logout</button>
+                ) : (
+                    <button className="cta" onClick={() => handleNavigate('/CustomerLogin')}>Login</button>
                 )}
             </header>
         </div>
