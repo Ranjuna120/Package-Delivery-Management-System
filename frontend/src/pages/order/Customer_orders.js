@@ -74,10 +74,15 @@ function App() {
   }, [id]); 
 
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+    <>
       <style>
         {`
-        body{background-color:#e6eee4;}
+        body{
+          background: linear-gradient(135deg, #f5f7fa 0%, #e3e9f0 100%) !important;
+          min-height: 100vh !important;
+          margin: 0 !important;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        }
           .or_container {
             font-family: Arial, sans-serif;
             padding: 20px;
@@ -200,11 +205,72 @@ function App() {
         `}
       </style>
 
-      {orderData ? (
-        <div className="or_orderSection">
+      <div style={{
+        minHeight: '100vh',
+        padding: '40px 20px',
+        marginLeft: '200px',
+      }}>
+        {/* Header */}
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '30px',
+        }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '70px',
+            height: '70px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #17a2b8, #20c997)',
+            fontSize: '35px',
+            boxShadow: '0 4px 12px rgba(23, 162, 184, 0.3)',
+            marginBottom: '15px',
+          }}>
+            📋
+          </div>
+          <h1 style={{
+            color: '#17a2b8',
+            fontSize: '32px',
+            fontWeight: '700',
+            margin: '10px 0',
+          }}>
+            Order Details
+          </h1>
+          <p style={{
+            color: '#6c757d',
+            fontSize: '14px',
+          }}>
+            View and manage your order information
+          </p>
+        </div>
+
+        {orderData ? (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
+          gap: '25px',
+          maxWidth: '1200px',
+          margin: '0 auto',
+        }}>
           {/* Order Tracking Section */}
-          <div className="or_orderBox"> 
-            <h2 className="or_title">ORDER TRACKING</h2>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            padding: '30px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+          }}> 
+            <h2 style={{
+              color: '#17a2b8',
+              fontSize: '20px',
+              fontWeight: '700',
+              marginBottom: '25px',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+              <span style={{ marginRight: '10px', fontSize: '24px' }}>🚚</span>
+              ORDER TRACKING
+            </h2>
             <div className="or_trackingBar">
               <div className={`or_step ${Tracking === 'Approval' || Tracking === 'Processing' || Tracking === 'Finish' ? 'or_completedStep' : ''}`}>✔</div>
               <div className={`or_stepLine ${Tracking === 'Processing' || Tracking === 'Finish' ? 'or_completedLine' : ''}`}></div>
@@ -213,11 +279,22 @@ function App() {
               <div className={`or_step ${Tracking === 'Finish' ? 'or_completedStep' : ''}`}>✔</div>
             </div>
             <div className="or_trackingLabels">
-              <p className="or_labelText">Approval Order</p>
-              <p className="or_labelText">Processing Order</p>
-              <p className="or_labelText">Finish Product</p>
+              <p style={{
+                fontSize: '12px',
+                fontWeight: '600',
+                color: Tracking === 'Approval' || Tracking === 'Processing' || Tracking === 'Finish' ? '#28a745' : '#6c757d',
+              }}>Approval Order</p>
+              <p style={{
+                fontSize: '12px',
+                fontWeight: '600',
+                color: Tracking === 'Processing' || Tracking === 'Finish' ? '#28a745' : '#6c757d',
+              }}>Processing Order</p>
+              <p style={{
+                fontSize: '12px',
+                fontWeight: '600',
+                color: Tracking === 'Finish' ? '#28a745' : '#6c757d',
+              }}>Finish Product</p>
             </div>
-            <hr></hr>
             {/* <h4>Order Status</h4>
             <select
               value={orderData.status}
@@ -239,59 +316,210 @@ function App() {
             </select> */}
           </div>
          
-          <div className="or_orderBox">
-            <h2 className="or_title">ORDER INFO</h2>
-            <div className="or_infoBox">
-              <p className="or_infoText">Order ID : <span className="or_infoSpan">{orderData._id}</span></p>
-              <p className="or_infoText">Customer Email : <span className="or_infoSpan">{orderData.Cus_email}</span></p>
-              <p className="or_infoText">Order Status : <span className="or_infoSpan"  style={{
-                color: orderData.status === 'Approval' ? 'green' : orderData.status === 'Cancel' ? 'red' : 'blue',
-                fontWeight: 'bold'
-              }}>{orderData.status}</span></p>
-              <p className="or_infoText">Quantity : <span className="or_infoSpan">{orderData.qty} pcs</span></p>
-              <p className="or_infoText">Order Tracking Status : <span className="or_infoSpan"  style={{
-                color: Tracking === 'Approval' ? 'green' : Tracking === 'Finish' ? 'red' : 'blue',
-                fontWeight: 'bold'
-              }}>{Tracking} Order</span></p>
-              <p className="or_infoText">Package Type : <span className="or_infoSpan">{orderData.package_type}</span></p>
-              <p className="or_infoText">Order Date : <span className="or_infoSpan">{orderData.date}</span></p>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            padding: '30px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+          }}>
+            <h2 style={{
+              color: '#17a2b8',
+              fontSize: '20px',
+              fontWeight: '700',
+              marginBottom: '25px',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+              <span style={{ marginRight: '10px', fontSize: '24px' }}>ℹ️</span>
+              ORDER INFO
+            </h2>
+            <div style={{
+              background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+              padding: '20px',
+              borderRadius: '8px',
+              borderLeft: '4px solid #17a2b8',
+            }}>
+              <p style={{
+                fontSize: '14px',
+                margin: '12px 0',
+                color: '#495057',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <span style={{ marginRight: '8px' }}>🆔</span>
+                <strong>Order ID:</strong>&nbsp;
+                <span style={{ fontFamily: 'monospace', fontSize: '13px' }}>{orderData._id}</span>
+              </p>
+              <p style={{
+                fontSize: '14px',
+                margin: '12px 0',
+                color: '#495057',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <span style={{ marginRight: '8px' }}>✉️</span>
+                <strong>Customer Email:</strong>&nbsp;{orderData.Cus_email}
+              </p>
+              <p style={{
+                fontSize: '14px',
+                margin: '12px 0',
+                color: '#495057',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <span style={{ marginRight: '8px' }}>📊</span>
+                <strong>Order Status:</strong>&nbsp;
+                <span style={{
+                  padding: '4px 12px',
+                  borderRadius: '12px',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  backgroundColor: orderData.status === 'Approval' ? '#d4edda' : orderData.status === 'Cancel' ? '#f8d7da' : '#cfe2ff',
+                  color: orderData.status === 'Approval' ? '#155724' : orderData.status === 'Cancel' ? '#721c24' : '#084298',
+                }}>{orderData.status}</span>
+              </p>
+              <p style={{
+                fontSize: '14px',
+                margin: '12px 0',
+                color: '#495057',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <span style={{ marginRight: '8px' }}>🔢</span>
+                <strong>Quantity:</strong>&nbsp;{orderData.qty} pcs
+              </p>
+              <p style={{
+                fontSize: '14px',
+                margin: '12px 0',
+                color: '#495057',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <span style={{ marginRight: '8px' }}>📍</span>
+                <strong>Tracking Status:</strong>&nbsp;
+                <span style={{
+                  padding: '4px 12px',
+                  borderRadius: '12px',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  backgroundColor: Tracking === 'Finish' ? '#d4edda' : Tracking === 'Processing' ? '#fff3cd' : '#cfe2ff',
+                  color: Tracking === 'Finish' ? '#155724' : Tracking === 'Processing' ? '#856404' : '#084298',
+                }}>{Tracking} Order</span>
+              </p>
+              <p style={{
+                fontSize: '14px',
+                margin: '12px 0',
+                color: '#495057',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <span style={{ marginRight: '8px' }}>📦</span>
+                <strong>Package Type:</strong>&nbsp;{orderData.package_type}
+              </p>
+              <p style={{
+                fontSize: '14px',
+                margin: '12px 0',
+                color: '#495057',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <span style={{ marginRight: '8px' }}>📅</span>
+                <strong>Order Date:</strong>&nbsp;{orderData.date}
+              </p>
             </div>
 
-            <div className="or_actionButtons">
-              <button className="or_editButton" onClick={() => handleNavigate("updateOrder", orderData._id)}>EDIT</button>
-              <button className="or_deleteButton" onClick={() => handleDelete(orderData._id)}>DELETE</button>
+            <div style={{
+              marginTop: '25px',
+              display: 'flex',
+              gap: '15px',
+            }}>
+              <button 
+                onClick={() => handleNavigate("updateOrder", orderData._id)}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  border: '2px solid #17a2b8',
+                  borderRadius: '8px',
+                  background: 'white',
+                  color: '#17a2b8',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#17a2b8';
+                  e.target.style.color = 'white';
+                  e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'white';
+                  e.target.style.color = '#17a2b8';
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                ✏️ EDIT
+              </button>
+              <button 
+                onClick={() => handleDelete(orderData._id)}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  border: '2px solid #dc3545',
+                  borderRadius: '8px',
+                  background: 'white',
+                  color: '#dc3545',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#dc3545';
+                  e.target.style.color = 'white';
+                  e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'white';
+                  e.target.style.color = '#dc3545';
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                🗑️ DELETE
+              </button>
             </div>
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '400px',
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+            <div style={{
+              width: '50px',
+              height: '50px',
+              border: '4px solid #17a2b8',
+              borderTopColor: 'transparent',
+              borderRadius: '50%',
+              animation: 'spin 0.8s linear infinite',
+            }}></div>
+            <p style={{
+              marginTop: '20px',
+              color: '#6c757d',
+              fontSize: '16px',
+            }}>Loading order details...</p>
+          </div>
+        </div>
       )}
-      
-      <div className="or_otherOrders">
-        <h2 className="or_title">OTHER ORDERS</h2>
-        <table className="or_table">
-          <thead>
-            <tr>
-              <th className="or_tableHeader">Order ID</th>
-              <th className="or_tableHeader">Package type</th>
-              <th className="or_tableHeader">Order ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="or_tableData">E2895A</td>
-              <td className="or_tableData">Cardboard pack</td>
-              <td className="or_tableData"><button className="or_moreButton">More</button></td>
-            </tr>
-            <tr>
-              <td className="or_tableData">E2895A</td>
-              <td className="or_tableData">Restaurants packs</td>
-              <td className="or_tableData"><button className="or_moreButton">More</button></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-    </div>
+    </>
   );
 }
 
