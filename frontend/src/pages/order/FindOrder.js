@@ -1,28 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-} from 'mdb-react-ui-kit';
 
 function App() {
   const [orderId, setOrderId] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigate = async () => {
-    if (orderId) {
+    if (orderId.trim()) {
+      setIsSearching(true);
+      setErrorMessage('');
+      
       try {
         const response = await fetch(`/api/orders/${orderId}`);
         
         if (!response.ok) {
           const errorData = await response.json();
-          setErrorMessage(errorData.error); // Show error message if order not found
+          setErrorMessage(errorData.error || 'Order not found. Please check your Order ID.');
+          setIsSearching(false);
           return;
         }
 
@@ -30,94 +26,240 @@ function App() {
         navigate(`/OrderDashBoardPage/orderTracks/${orderId}`, { state: { orderData } });
       } catch (error) {
         console.error('Error fetching order:', error);
-        setErrorMessage('Invalid Order Id.');
+        setErrorMessage('Invalid Order ID. Please try again.');
+        setIsSearching(false);
       }
     } else {
-      alert('Please enter a valid Order ID');
+      setErrorMessage('Please enter a valid Order ID');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleNavigate();
     }
   };
 
   return (
-    <MDBContainer fluid>
+    <>
       <style>
         {`
           body {
-            background-color: #f8f9fa; /* Light gray background for contrast */
-            font-family: 'Arial', sans-serif; /* Font style for the page */
-          }
-
-          h2 {
-            color: #343a40; /* Dark gray color for the header */
-          }
-
-          p {
-            color: #6c757d; /* Gray color for the subtitle text */
-          }
-
-          .mdb-card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect for card */
-          }
-
-          .mdb-btn {
-            background-color: #3b5998; /* Facebook-like color */
-            color: white; /* White text for button */
-            transition: background-color 0.3s; /* Smooth transition for hover effect */
-          }
-
-          .mdb-btn:hover {
-            background-color: #2d4373; /* Darker color on hover */
-          }
-
-          .mdb-input {
-            border-radius: 0.5rem; /* Rounded corners for input fields */
-            border: 1px solid #ced4da; /* Light border for input fields */
-          }
-
-          .mdb-input:focus {
-            border-color: #3b5998; /* Change border color on focus */
-            box-shadow: 0 0 0.2rem rgba(59, 89, 152, 0.25); /* Light blue shadow on focus */
-          }
-
-          hr {
-            border-top: 1px solid #ced4da; /* Light gray horizontal line */
-          }
-
-          @media (max-width: 768px) {
-            .mdb-card {
-              max-width: 90%; /* Responsive width for smaller screens */
-            }
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3e9f0 100%) !important;
+            min-height: 100vh !important;
+            margin: 0 !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
           }
         `}
       </style>
-      <MDBRow className='d-flex justify-content-center align-items-center h-100'>
-        <MDBCol col='12'>
-          <MDBCard className='bg-white my-5 mx-auto' style={{ borderRadius: '1rem', maxWidth: '500px' }}>
-            <MDBCardBody className='p-5 w-100 d-flex flex-column'>
-              <h2 className="fw-bold mb-2 text-center">Find Your Order</h2>
-              <p className="text-white-50 mb-3">Please enter your Order ID!</p>
 
-              {errorMessage && <p className="text-danger text-center">{errorMessage}</p>}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        padding: '20px',
+        marginLeft: '50px',
+      }}>
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '16px',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+          padding: '40px',
+          maxWidth: '500px',
+          width: '100%',
+        }}>
+          {/* Icon Section */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '20px',
+          }}>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #17a2b8, #20c997)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '40px',
+              boxShadow: '0 4px 12px rgba(23, 162, 184, 0.3)',
+            }}>
+              🔍
+            </div>
+          </div>
 
-              <MDBInput
-                wrapperClass='mb-4 w-100'
-                id='formControlLg'
-                type='text'
-                size="lg"
-                placeholder='Order Id'
-                value={orderId}
-                onChange={(e) => setOrderId(e.target.value)}
-              />
+          {/* Title Section */}
+          <h2 style={{
+            textAlign: 'center',
+            color: '#17a2b8',
+            fontSize: '28px',
+            fontWeight: '700',
+            marginBottom: '8px',
+          }}>
+            Find Your Order
+          </h2>
+          
+          <p style={{
+            textAlign: 'center',
+            color: '#6c757d',
+            fontSize: '14px',
+            marginBottom: '30px',
+          }}>
+            Enter your order ID to track your package
+          </p>
 
-              <hr className="my-4" />
+          {/* Error Message */}
+          {errorMessage && (
+            <div style={{
+              padding: '12px 16px',
+              backgroundColor: '#fee',
+              border: '1px solid #fcc',
+              borderRadius: '8px',
+              color: '#c33',
+              fontSize: '14px',
+              marginBottom: '20px',
+              textAlign: 'center',
+            }}>
+              {errorMessage}
+            </div>
+          )}
 
-              <MDBBtn className="mb-4 w-100" size="lg" style={{ backgroundColor: '#3b5998' }} onClick={handleNavigate}>
-                Find My Order
-              </MDBBtn>
-            </MDBCardBody>
-          </MDBCard>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+          {/* Order ID Input */}
+          <div style={{ marginBottom: '25px' }}>
+            <label style={{
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '15px',
+              fontWeight: '600',
+              color: '#333',
+              marginBottom: '8px',
+            }}>
+              <span style={{ marginRight: '8px', fontSize: '18px' }}>📦</span>
+              Order ID
+            </label>
+            <input
+              type="text"
+              value={orderId}
+              onChange={(e) => {
+                setOrderId(e.target.value);
+                setErrorMessage('');
+              }}
+              onKeyPress={handleKeyPress}
+              placeholder="Enter your order ID (e.g., ORD12345)"
+              style={{
+                width: '100%',
+                padding: '14px 16px',
+                fontSize: '15px',
+                border: errorMessage ? '2px solid #c33' : '2px solid #e0e0e0',
+                borderRadius: '8px',
+                transition: 'all 0.3s ease',
+                outline: 'none',
+              }}
+              onFocus={(e) => {
+                if (!errorMessage) e.target.style.borderColor = '#17a2b8';
+              }}
+              onBlur={(e) => {
+                if (!errorMessage) e.target.style.borderColor = '#e0e0e0';
+              }}
+            />
+            <small style={{
+              display: 'block',
+              marginTop: '6px',
+              color: '#6c757d',
+              fontSize: '13px',
+            }}>
+              You can find your order ID in your confirmation email
+            </small>
+          </div>
+
+          {/* Search Button */}
+          <button
+            onClick={handleNavigate}
+            disabled={isSearching}
+            style={{
+              width: '100%',
+              padding: '14px',
+              fontSize: '16px',
+              fontWeight: '600',
+              border: 'none',
+              borderRadius: '8px',
+              background: isSearching 
+                ? 'linear-gradient(135deg, #a0a0a0, #808080)' 
+                : 'linear-gradient(135deg, #17a2b8, #20c997)',
+              color: 'white',
+              cursor: isSearching ? 'not-allowed' : 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(23, 162, 184, 0.4)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onMouseEnter={(e) => {
+              if (!isSearching) {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 16px rgba(23, 162, 184, 0.5)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isSearching) {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 12px rgba(23, 162, 184, 0.4)';
+              }
+            }}
+          >
+            {isSearching ? (
+              <>
+                <span style={{
+                  display: 'inline-block',
+                  width: '16px',
+                  height: '16px',
+                  border: '2px solid white',
+                  borderTopColor: 'transparent',
+                  borderRadius: '50%',
+                  animation: 'spin 0.8s linear infinite',
+                  marginRight: '8px',
+                }}>
+                </span>
+                Searching...
+              </>
+            ) : (
+              <>
+                🔍 Find My Order
+              </>
+            )}
+          </button>
+
+          {/* Help Text */}
+          <div style={{
+            marginTop: '20px',
+            padding: '12px',
+            backgroundColor: '#f8f9fa',
+            borderRadius: '8px',
+            borderLeft: '4px solid #17a2b8',
+          }}>
+            <p style={{
+              margin: 0,
+              fontSize: '13px',
+              color: '#495057',
+              lineHeight: '1.6',
+            }}>
+              💡 <strong>Tip:</strong> If you're having trouble finding your order, please contact our support team.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <style>
+        {`
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+    </>
   );
 }
 
