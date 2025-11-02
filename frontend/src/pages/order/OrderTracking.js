@@ -1,14 +1,13 @@
 
-
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function App() {
+function OrderTracking() {
   
   const [orderData, setOrderData] = useState(null);
   const [Tracking, setTracking] = useState("");  
+  const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ function App() {
     if (confirmDelete) {
       try {
         await axios.delete(`http://localhost:8070/api/orders/delete/${id}`); 
-        alert("Order deleted successfully");
+        alert("Order deleted successfully!");
         navigate('/OrderDashBoardPage'); 
       } catch (error) {
         console.error("Error deleting order", error);
@@ -40,12 +39,11 @@ function App() {
         ...prevData,
         status: newStatus,
       }));
-      alert("Order status updated successfully");
+      alert("✓ Order status updated successfully!");
     } catch (error) {
-      console.error("Error updating order status", error.response.data);
-      alert(`Failed to update order status: ${error.response.data.message}`);
+      console.error("Error updating order status", error);
+      alert(`Failed to update order status`);
     }
-    
   };
 
   const handleTrackingStatus = async (id, newTracking) => {
@@ -54,7 +52,7 @@ function App() {
         Or_tracking: newTracking,
       });
       setTracking(newTracking);  
-      alert("Order tracking updated successfully");
+      alert("✓ Order tracking updated successfully!");
     } catch (error) {
       console.error("Error updating order tracking", error);
       alert("Failed to update order tracking");
@@ -65,287 +63,462 @@ function App() {
   useEffect(() => {
     const fetchOrderData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`http://localhost:8070/api/orders/read/${id}`);
         setOrderData(response.data);
-        setTracking(response.data.Or_tracking); 
+        setTracking(response.data.Or_tracking || 'Approval'); 
       } catch (error) {
         console.error("Error fetching order data", error);
+        alert("Failed to load order data");
+      } finally {
+        setLoading(false);
       }
     };
     
     fetchOrderData();
   }, [id]); 
 
-  return (
-    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
-      <style>
-        {`
-<<<<<<< HEAD
-=======
-        body{background-color:#e6eee4;}
->>>>>>> main
-          .or_container {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-          }
-          .or_header {
-            font-size: 24px;
-            text-align: center;
-            color: #031f42;
-            margin-bottom: 30px;
-          }
-          .or_orderSection {
-            display: flex;
-            justify-content: space-between;
-          }
-          .or_orderBox {
-            width: 45%;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            background-color: #f7f7f7;
-          }
-          .or_title {
-            font-size: 18px;
-            margin-bottom: 20px;
-          }
-          .or_trackingBar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          }
-          .or_step {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background-color: #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #fff;
-          }
-          .or_completedStep {
-            background-color: green;
-          }
-          .or_stepLine {
-            width: 100%;
-            height: 2px;
-<<<<<<< HEAD
-            background-color: #ccc;
-=======
-            background-color: #000;  /* Black color for step line */
-          }
-          .or_completedLine {
-            background-color: black;  /* Black bold line */
-            height: 4px;  /* Bold line */
->>>>>>> main
-          }
-          .or_trackingLabels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-          }
-          .or_labelText {
-            font-size: 14px;
-          }
-          .or_infoBox {
-            background-color: #ccc;
-            padding: 10px;
-            border-radius: 5px;
-          }
-          .or_infoText {
-            font-size: 14px;
-            margin: 5px 0;
-          }
-          .or_infoSpan {
-            font-weight: bold;
-          }
-          .or_actionButtons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-          }
-          .or_editButton {
-<<<<<<< HEAD
-            background-color: #2da6ab;
-=======
-            background-color: #439e2d;
->>>>>>> main
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-<<<<<<< HEAD
-            cursor: pointer;
-=======
-            cursor: pointer; 
->>>>>>> main
-          }
-          .or_deleteButton {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-          }
-          .or_otherOrders {
-            margin-top: 30px;
-          }
-          .or_table {
-            width: 100%;
-            border-collapse: collapse;
-          }
-          .or_tableHeader {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-          }
-          .or_tableData {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-          }
-          .or_moreButton {
-            background-color: #6a5acd;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-          }
-        `}
-      </style>
+  const getStatusColor = (status) => {
+    switch(status) {
+      case 'Approval': return '#27ae60';
+      case 'Pending': return '#f39c12';
+      case 'Cancel': return '#e74c3c';
+      default: return '#95a5a6';
+    }
+  };
 
-      <h1 className="or_header">Ruchi Package</h1>
+  const getTrackingSteps = () => {
+    const steps = [
+      { key: 'Approval', label: 'Order Approved' },
+      { key: 'Processing', label: 'Processing' },
+      { key: 'Finish', label: 'Completed' }
+    ];
+    
+    const currentIndex = steps.findIndex(s => s.key === Tracking);
+    return steps.map((step, index) => ({
+      ...step,
+      completed: index <= currentIndex,
+      active: index === currentIndex
+    }));
+  };
 
-      <div className="or_orderSection">
-        <div className="or_orderBox">
-          <h2 className="or_title">ORDER TRACKING</h2>
-          <div className="or_trackingBar">
-            <div className="or_step or_completedStep">✔</div>
-            <div className="or_stepLine"></div>
-            <div className="or_step or_completedStep">✔</div>
-            <div className="or_stepLine"></div>
-            <div className="or_step">⚪</div>
-          </div>
-          <div className="or_trackingLabels">
-            <p className="or_labelText">Approval Order</p>
-            <p className="or_labelText">Processing Order</p>
-            <p className="or_labelText">Finish Product</p>
-          </div>
+  if (loading) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.loadingCard}>
+          <div style={styles.loader}></div>
+          <p style={styles.loadingText}>Loading order details...</p>
         </div>
+      </div>
+    );
+  }
 
-        <div className="or_orderBox">
-          <h2 className="or_title">ORDER INFO</h2>
-          <div className="or_infoBox">
-            <p className="or_infoText">Order ID : <span className="or_infoSpan">E43D213</span></p>
-            <p className="or_infoText">Quantity : <span className="or_infoSpan">250 pcs</span></p>
-            <p className="or_infoText">Package Type : <span className="or_infoSpan">restaurants pack</span></p>
-            <p className="or_infoText">Finishing data : <span className="or_infoSpan">15/05/2024</span></p>
-          </div>
-          <div className="or_actionButtons">
-            <button className="or_editButton">Edit</button>
-            <button className="or_deleteButton">Delete</button>
-          </div>
+  if (!orderData) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.errorCard}>
+          <h2 style={styles.errorTitle}>Order Not Found</h2>
+          <p style={styles.errorText}>The order you're looking for doesn't exist.</p>
+          <button style={styles.backButton} onClick={() => navigate('/OrderDashBoardPage')}>
+            ← Back to Orders
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const trackingSteps = getTrackingSteps();
+
+  return (
+    <div style={styles.container}>
+      {/* Header */}
+      <div style={styles.header}>
+        <button style={styles.backBtn} onClick={() => navigate('/OrderDashBoardPage')}>
+          ← Back
+        </button>
+        <div>
+          <h1 style={styles.title}>Order Tracking</h1>
+          <p style={styles.subtitle}>Track and manage your order</p>
+        </div>
+        <div style={styles.headerActions}>
+          <button 
+            style={styles.editBtn}
+            onClick={() => navigate(`/OrderDashBoardPage/updateOrder/${orderData._id}`)}
+          >
+            ✎ Edit
+          </button>
+          <button 
+            style={styles.deleteBtn}
+            onClick={() => handleDelete(orderData._id)}
+          >
+            🗑 Delete
+          </button>
         </div>
       </div>
 
-      {orderData ? (
-        <div className="or_orderSection">
-          {/* Order Tracking Section */}
-          <div className="or_orderBox"> 
-            <h2 className="or_title">ORDER TRACKING</h2>
-            <div className="or_trackingBar">
-              <div className={`or_step ${Tracking === 'Approval' || Tracking === 'Processing' || Tracking === 'Finish' ? 'or_completedStep' : ''}`}>✔</div>
-              <div className={`or_stepLine ${Tracking === 'Processing' || Tracking === 'Finish' ? 'or_completedLine' : ''}`}></div>
-              <div className={`or_step ${Tracking === 'Processing' || Tracking === 'Finish' ? 'or_completedStep' : ''}`}>✔</div>
-              <div className={`or_stepLine ${Tracking === 'Finish' ? 'or_completedLine' : ''}`}></div>
-              <div className={`or_step ${Tracking === 'Finish' ? 'or_completedStep' : ''}`}>✔</div>
+      <div style={styles.mainContent}>
+        {/* Order Info Card */}
+        <div style={styles.infoCard}>
+          <div style={styles.cardHeader}>
+            <h2 style={styles.cardTitle}>Order Information</h2>
+            <div style={{...styles.statusBadge, backgroundColor: getStatusColor(orderData.status)}}>
+              {orderData.status || 'Pending'}
             </div>
-            <div className="or_trackingLabels">
-              <p className="or_labelText">Approval Order</p>
-              <p className="or_labelText">Processing Order</p>
-              <p className="or_labelText">Finish Product</p>
-            </div>
-            <hr></hr>
-            <h4>Order Status</h4>
-            <select
-              value={orderData.status}
-              onChange={(e) => handleStatusChange(orderData._id, e.target.value)}
-            >
-              <option value="none">--</option>
-              <option value="Pending">Pending</option>
-              <option value="Approval">Approval</option>
-              <option value="Cancel">Cancel</option>
-            </select>
-            <h4>Order Tracking</h4>
-            <select
-              value={Tracking}  
-              onChange={(e) => handleTrackingStatus(orderData._id, e.target.value)}
-            >
-              <option value="Approval">Approval</option>
-              <option value="Processing">Processing</option>
-              <option value="Finish">Finish</option>
-            </select>
           </div>
-         
-          <div className="or_orderBox">
-            <h2 className="or_title">ORDER INFO</h2>
-            <div className="or_infoBox">
-              <p className="or_infoText">Order ID : <span className="or_infoSpan">{orderData._id}</span></p>
-              <p className="or_infoText">Customer Email : <span className="or_infoSpan">{orderData.Cus_email}</span></p>
-              <p className="or_infoText">Order Status : <span className="or_infoSpan"  style={{
-                color: orderData.status === 'Approval' ? 'green' : orderData.status === 'Cancel' ? 'red' : 'blue',
-                fontWeight: 'bold'
-              }}>{orderData.status}</span></p>
-              <p className="or_infoText">Quantity : <span className="or_infoSpan">{orderData.qty} pcs</span></p>
-              <p className="or_infoText">Order Tracking Status : <span className="or_infoSpan"  style={{
-                color: Tracking === 'Approval' ? 'green' : Tracking === 'Finish' ? 'red' : 'blue',
-                fontWeight: 'bold'
-              }}>{Tracking} Order</span></p>
-              <p className="or_infoText">Package Type : <span className="or_infoSpan">{orderData.package_type}</span></p>
-              <p className="or_infoText">Order Date : <span className="or_infoSpan">{orderData.date}</span></p>
+          
+          <div style={styles.infoGrid}>
+            <div style={styles.infoItem}>
+              <span style={styles.infoLabel}>Order ID</span>
+              <span style={styles.infoValue}>{orderData._id}</span>
+            </div>
+            <div style={styles.infoItem}>
+              <span style={styles.infoLabel}>Customer</span>
+              <span style={styles.infoValue}>{orderData.Cus_name}</span>
+            </div>
+            <div style={styles.infoItem}>
+              <span style={styles.infoLabel}>Email</span>
+              <span style={styles.infoValue}>{orderData.Cus_email}</span>
+            </div>
+            <div style={styles.infoItem}>
+              <span style={styles.infoLabel}>Quantity</span>
+              <span style={styles.infoValue}>{orderData.qty} pcs</span>
+            </div>
+            <div style={styles.infoItem}>
+              <span style={styles.infoLabel}>Package Type</span>
+              <span style={styles.infoValue}>{orderData.package_type}</span>
+            </div>
+            <div style={styles.infoItem}>
+              <span style={styles.infoLabel}>Order Date</span>
+              <span style={styles.infoValue}>{new Date(orderData.date).toLocaleDateString()}</span>
+            </div>
+          </div>
+
+          {orderData.Cus_note && (
+            <div style={styles.noteSection}>
+              <span style={styles.infoLabel}>Customer Note</span>
+              <p style={styles.noteText}>{orderData.Cus_note}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Tracking Card */}
+        <div style={styles.trackingCard}>
+          <h2 style={styles.cardTitle}>Order Progress</h2>
+          
+          <div style={styles.trackingTimeline}>
+            {trackingSteps.map((step, index) => (
+              <div key={step.key} style={styles.timelineStep}>
+                <div style={styles.stepIndicatorRow}>
+                  <div style={{
+                    ...styles.stepCircle,
+                    backgroundColor: step.completed ? '#27ae60' : '#e0e0e0',
+                    border: step.active ? '3px solid #2193b0' : 'none'
+                  }}>
+                    {step.completed && <span style={styles.checkMark}>✓</span>}
+                  </div>
+                  {index < trackingSteps.length - 1 && (
+                    <div style={{
+                      ...styles.stepLine,
+                      backgroundColor: trackingSteps[index + 1].completed ? '#27ae60' : '#e0e0e0'
+                    }}></div>
+                  )}
+                </div>
+                <div style={styles.stepLabel}>{step.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={styles.controlsSection}>
+            <div style={styles.controlGroup}>
+              <label style={styles.controlLabel}>Order Status</label>
+              <select
+                style={styles.select}
+                value={orderData.status || 'Pending'}
+                onChange={(e) => handleStatusChange(orderData._id, e.target.value)}
+              >
+                <option value="Pending">Pending</option>
+                <option value="Approval">Approval</option>
+                <option value="Cancel">Cancel</option>
+              </select>
             </div>
 
-            <div className="or_actionButtons">
-              <button className="or_editButton" onClick={() => handleNavigate("updateOrder", orderData._id)}>EDIT</button>
-              <button className="or_deleteButton" onClick={() => handleDelete(orderData._id)}>DELETE</button>
+            <div style={styles.controlGroup}>
+              <label style={styles.controlLabel}>Tracking Stage</label>
+              <select
+                style={styles.select}
+                value={Tracking}
+                onChange={(e) => handleTrackingStatus(orderData._id, e.target.value)}
+              >
+                <option value="Approval">Approval</option>
+                <option value="Processing">Processing</option>
+                <option value="Finish">Finish</option>
+              </select>
             </div>
           </div>
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
-      
-      <div className="or_otherOrders">
-        <h2 className="or_title">OTHER ORDERS</h2>
-        <table className="or_table">
-          <thead>
-            <tr>
-              <th className="or_tableHeader">Order ID</th>
-              <th className="or_tableHeader">Package type</th>
-              <th className="or_tableHeader">Order ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="or_tableData">E2895A</td>
-              <td className="or_tableData">Cardboard pack</td>
-              <td className="or_tableData"><button className="or_moreButton">More</button></td>
-            </tr>
-            <tr>
-              <td className="or_tableData">E2895A</td>
-              <td className="or_tableData">Restaurants pack</td>
-              <td className="or_tableData">Restaurants packs</td>
-              <td className="or_tableData"><button className="or_moreButton">More</button></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   );
 }
 
-export default App;
+const styles = {
+  container: {
+    padding: '30px',
+    minHeight: '100vh',
+    background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '30px',
+    flexWrap: 'wrap',
+    gap: '16px',
+  },
+  backBtn: {
+    padding: '10px 16px',
+    background: 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    fontSize: '14px',
+  },
+  title: {
+    margin: 0,
+    color: '#2193b0',
+    fontSize: '28px',
+    fontWeight: 800,
+  },
+  subtitle: {
+    marginTop: 4,
+    color: '#5f6b7a',
+    fontSize: 14,
+  },
+  headerActions: {
+    display: 'flex',
+    gap: '12px',
+  },
+  editBtn: {
+    padding: '10px 20px',
+    background: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    fontSize: '14px',
+  },
+  deleteBtn: {
+    padding: '10px 20px',
+    background: 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    fontSize: '14px',
+  },
+  mainContent: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '24px',
+    '@media (max-width: 968px)': {
+      gridTemplateColumns: '1fr',
+    }
+  },
+  infoCard: {
+    background: '#ffffff',
+    borderRadius: '16px',
+    padding: '28px',
+    boxShadow: '0 8px 24px rgba(33,147,176,0.12)',
+  },
+  trackingCard: {
+    background: '#ffffff',
+    borderRadius: '16px',
+    padding: '28px',
+    boxShadow: '0 8px 24px rgba(33,147,176,0.12)',
+  },
+  cardHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '24px',
+  },
+  cardTitle: {
+    margin: 0,
+    color: '#2c3e50',
+    fontSize: '20px',
+    fontWeight: 700,
+  },
+  statusBadge: {
+    padding: '6px 16px',
+    borderRadius: '20px',
+    color: '#fff',
+    fontSize: '13px',
+    fontWeight: 600,
+  },
+  infoGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '20px',
+  },
+  infoItem: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+  },
+  infoLabel: {
+    color: '#7f8c8d',
+    fontSize: '13px',
+    fontWeight: 600,
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+  },
+  infoValue: {
+    color: '#2c3e50',
+    fontSize: '15px',
+    fontWeight: 600,
+  },
+  noteSection: {
+    marginTop: '24px',
+    padding: '16px',
+    background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+    borderRadius: '8px',
+  },
+  noteText: {
+    margin: '8px 0 0 0',
+    color: '#2c3e50',
+    fontSize: '14px',
+    lineHeight: '1.6',
+  },
+  trackingTimeline: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '32px',
+    marginTop: '24px',
+  },
+  timelineStep: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  stepIndicatorRow: {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+  },
+  stepCircle: {
+    width: '48px',
+    height: '48px',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '20px',
+    flexShrink: 0,
+    zIndex: 1,
+  },
+  checkMark: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  stepLine: {
+    flex: 1,
+    height: '4px',
+    marginLeft: '-24px',
+  },
+  stepLabel: {
+    marginTop: '12px',
+    fontSize: '13px',
+    fontWeight: 600,
+    color: '#2c3e50',
+    textAlign: 'center',
+  },
+  controlsSection: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '20px',
+    marginTop: '24px',
+    paddingTop: '24px',
+    borderTop: '2px solid #ecf0f1',
+  },
+  controlGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+  },
+  controlLabel: {
+    color: '#2c3e50',
+    fontSize: '14px',
+    fontWeight: 600,
+  },
+  select: {
+    padding: '12px 14px',
+    borderRadius: '8px',
+    border: '2px solid #e1e8ed',
+    fontSize: '14px',
+    fontWeight: 500,
+    color: '#2c3e50',
+    backgroundColor: '#fff',
+    cursor: 'pointer',
+    outline: 'none',
+    transition: 'all 0.3s ease',
+  },
+  loadingCard: {
+    maxWidth: '400px',
+    margin: '100px auto',
+    padding: '48px',
+    background: '#ffffff',
+    borderRadius: '16px',
+    boxShadow: '0 8px 24px rgba(33,147,176,0.12)',
+    textAlign: 'center',
+  },
+  loader: {
+    width: '48px',
+    height: '48px',
+    border: '4px solid #e1e8ed',
+    borderTop: '4px solid #2193b0',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+    margin: '0 auto 20px',
+  },
+  loadingText: {
+    color: '#5f6b7a',
+    fontSize: '16px',
+  },
+  errorCard: {
+    maxWidth: '500px',
+    margin: '100px auto',
+    padding: '48px',
+    background: '#ffffff',
+    borderRadius: '16px',
+    boxShadow: '0 8px 24px rgba(33,147,176,0.12)',
+    textAlign: 'center',
+  },
+  errorTitle: {
+    margin: '0 0 12px 0',
+    color: '#e74c3c',
+    fontSize: '24px',
+    fontWeight: 700,
+  },
+  errorText: {
+    margin: '0 0 24px 0',
+    color: '#5f6b7a',
+    fontSize: '16px',
+  },
+  backButton: {
+    padding: '12px 24px',
+    background: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    fontSize: '14px',
+  },
+};
+
+export default OrderTracking;
