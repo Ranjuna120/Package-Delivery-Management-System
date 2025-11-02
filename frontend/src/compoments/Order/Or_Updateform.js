@@ -73,7 +73,9 @@ const OrderUpdateForm = () => {
             });
             console.log("Update response:", response.data); 
             alert("Order updated successfully!"); 
-            navigate('/OrderDashBoardPage'); 
+            
+            // Redirect to order tracking page with the updated order ID
+            navigate(`/OrderDashBoardPage/orderTracks/${id}`); 
         } catch (error) {
             console.error("Error updating order", error);
             alert("Failed to update the order. Please try again.");
