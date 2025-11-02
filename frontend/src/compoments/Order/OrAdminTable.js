@@ -80,39 +80,94 @@ function OrAdminTable() {
         {
             name: 'Status',
             selector: row => row.status,
-            cell: row => (
-                <span
-                    style={{
-                        color: row.status === 'Approval' ? 'green' : row.status === 'Cancel' ? 'red' : row.status === 'Pending' ? 'blue' : 'black',
-                        fontWeight: 'bold',
-                    }}
-                >
-                    {row.status}
-                </span>
-            ),
+            cell: row => {
+                const getStatusStyle = (status) => {
+                    switch(status) {
+                        case 'Approval':
+                            return { bg: '#d4edda', color: '#155724', border: '#c3e6cb' };
+                        case 'Cancel':
+                            return { bg: '#f8d7da', color: '#721c24', border: '#f5c6cb' };
+                        case 'Pending':
+                            return { bg: '#d1ecf1', color: '#0c5460', border: '#bee5eb' };
+                        default:
+                            return { bg: '#e2e3e5', color: '#383d41', border: '#d6d8db' };
+                    }
+                };
+                const style = getStatusStyle(row.status);
+                return (
+                    <span
+                        style={{
+                            padding: '6px 12px',
+                            borderRadius: '20px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            backgroundColor: style.bg,
+                            color: style.color,
+                            border: `1px solid ${style.border}`,
+                            display: 'inline-block',
+                        }}
+                    >
+                        {row.status || 'N/A'}
+                    </span>
+                );
+            },
         },
         {
             name: 'Tracking',
             selector: row => row.Or_tracking,
-            cell: row => (
-                <span
-                    style={{
-                        color: row.Or_tracking === 'Approval' ? 'green' : row.Or_tracking === 'Pending' ? 'red' : row.Or_tracking === 'Finish' ? 'blue' : 'black',
-                        fontWeight: 'bold',
-                    }}
-                >
-                    {row.Or_tracking}
-                </span>
-            ),
+            cell: row => {
+                const getTrackingStyle = (tracking) => {
+                    switch(tracking) {
+                        case 'Approval':
+                            return { bg: '#d4edda', color: '#155724', border: '#c3e6cb', label: '✓ Approved' };
+                        case 'Processing':
+                            return { bg: '#fff3cd', color: '#856404', border: '#ffeaa7', label: '⏱ Processing' };
+                        case 'Finish':
+                            return { bg: '#d1ecf1', color: '#0c5460', border: '#bee5eb', label: '✓ Finished' };
+                        default:
+                            return { bg: '#e2e3e5', color: '#383d41', border: '#d6d8db', label: tracking || 'N/A' };
+                    }
+                };
+                const style = getTrackingStyle(row.Or_tracking);
+                return (
+                    <span
+                        style={{
+                            padding: '6px 12px',
+                            borderRadius: '20px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            backgroundColor: style.bg,
+                            color: style.color,
+                            border: `1px solid ${style.border}`,
+                            display: 'inline-block',
+                        }}
+                    >
+                        {style.label}
+                    </span>
+                );
+            },
         },
         {
             name: 'Action',
             cell: row => (
-                <>
-                    <button onClick={() => handleNavigate('/orderTrack', row._id)}>
-                        More
-                    </button>
-                </>
+                <button 
+                    onClick={() => handleNavigate('/orderTrack', row._id)}
+                    style={{
+                        padding: '8px 16px',
+                        background: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        fontSize: '13px',
+                        transition: 'all 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                >
+                    View Details
+                </button>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
@@ -134,91 +189,130 @@ function OrAdminTable() {
         fetchData(); 
     }, []);
 
-    return (
-        <div className='container mt-5'>
-            <style>
-                {`
-                body{background-color:#e6eee4;}
+    const customStyles = {
+        headRow: {
+            style: {
+                backgroundColor: '#2193b0',
+                color: '#ffffff',
+                fontSize: '14px',
+                fontWeight: '700',
+                borderRadius: '8px 8px 0 0',
+            },
+        },
+        headCells: {
+            style: {
+                paddingLeft: '16px',
+                paddingRight: '16px',
+            },
+        },
+        rows: {
+            style: {
+                fontSize: '14px',
+                '&:hover': {
+                    backgroundColor: '#f8f9fa',
+                    cursor: 'pointer',
+                },
+            },
+        },
+        cells: {
+            style: {
+                paddingLeft: '16px',
+                paddingRight: '16px',
+            },
+        },
+    };
 
-                    .or_search {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        margin-bottom: 1rem; 
-                        justify-content: space-between;
-                        position: relative;
-                    }
-                    .or_card {
-                        box-shadow: 0 4px 8px 0 rgba(0.8,0,0,0.2);
-                        transition: 0.4s;
-                        width: 100%; 
-                        max-width: 1200px; 
-                        margin: 0 auto; 
-                        padding: 1rem; 
-                        background-color: #fff; 
-                        border-radius: 8px;
-                        
-                    }
-                    .or_search .search-wrapper {
-                        position: relative;
-                        flex: 1;
-                    }
-                    .or_search input {
-                        width: 20%;
-                        padding: 0.5rem 0.5rem 0.5rem 2.5rem; /* Adjust padding to make space for the icon */
-                        border: 1px solid #ccc;
-                        border-radius: 10px;
-                        height: 35px;
-                        font-size: 16px;
-                    }
-                    .or_search .fa-search {
-                        position: absolute;
-                        left: -2px;
-                        top: 68%;
-                        transform: translateY(-50%);
-                        color: #9ca3af;
-                        font-size: 15px;
-                    }
-                    .or_button {
-                        display: flex;
-                        justify-content: flex-end;
-                    }
-                    .or_button button {
-                        padding: 0.5rem 1rem;
-                        border: none;
-                        border-radius: 4px;
-                        background-color: #007bff; 
-                        color: #fff; 
-                        cursor: pointer;
-                    }
-                    .or_button button:hover {
-                        background-color: #0056b3; 
-                    }
-                    @media (max-width: 768px) {
-                        .or_card {
-                            width: 95%; 
-                        }
-                    }
-                `}
-            </style>
-            <div className='or_card'>
-                <div className='or_search'>
-                    <div className='search-wrapper'>
-                        <i className="fa fa-search"></i>
-                        <input type='text' placeholder='Search...' onChange={handleSearch} />
+    return (
+        <div>
+            <div style={styles.tableHeader}>
+                <h2 style={styles.tableTitle}>All Orders</h2>
+                <div style={styles.actions}>
+                    <div style={styles.searchWrapper}>
+                        <input
+                            type='text'
+                            placeholder='Search by email...'
+                            onChange={handleSearch}
+                            style={styles.searchInput}
+                        />
+                        <span style={styles.searchIcon}>🔍</span>
                     </div>
-                    <div className='or_button'>
-                        <button onClick={handleGeneratePDF}>Print <i className="bi bi-printer"></i></button>
-                    </div>
+                    <button onClick={handleGeneratePDF} style={styles.pdfButton}>
+                        📄 Export PDF
+                    </button>
                 </div>
-                <DataTable
-                    columns={columns}
-                    data={filterOrder} 
-                    // pagination
-                />
             </div>
+            <DataTable
+                columns={columns}
+                data={filterOrder}
+                customStyles={customStyles}
+                highlightOnHover
+                pointerOnHover
+                noDataComponent={
+                    <div style={styles.noData}>
+                        <p>No orders found</p>
+                    </div>
+                }
+            />
         </div>
     );
 }
+
+const styles = {
+    tableHeader: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '20px',
+        flexWrap: 'wrap',
+        gap: '16px',
+    },
+    tableTitle: {
+        margin: 0,
+        color: '#2c3e50',
+        fontSize: '20px',
+        fontWeight: 700,
+    },
+    actions: {
+        display: 'flex',
+        gap: '12px',
+        alignItems: 'center',
+    },
+    searchWrapper: {
+        position: 'relative',
+    },
+    searchInput: {
+        padding: '10px 40px 10px 14px',
+        borderRadius: '8px',
+        border: '2px solid #e1e8ed',
+        fontSize: '14px',
+        width: '280px',
+        outline: 'none',
+        transition: 'all 0.3s ease',
+    },
+    searchIcon: {
+        position: 'absolute',
+        right: '12px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        fontSize: '18px',
+    },
+    pdfButton: {
+        padding: '10px 20px',
+        background: 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '8px',
+        fontWeight: 600,
+        cursor: 'pointer',
+        fontSize: '14px',
+        transition: 'all 0.3s ease',
+    },
+    noData: {
+        padding: '40px',
+        textAlign: 'center',
+        color: '#5f6b7a',
+        fontSize: '16px',
+    },
+};
 
 export default OrAdminTable;
