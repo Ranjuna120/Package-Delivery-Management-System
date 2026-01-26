@@ -12,14 +12,14 @@ function Or_Dashboard() {
             description: 'Create a new order',
             icon: '➕',
             path: '/Or_add',
-            color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: '#4A90E2',
         },
         {
             title: 'Track Orders',
             description: 'Monitor order status',
             icon: '📍',
             path: '/OrderTracking',
-            color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            color: '#2ECC71',
         },
     ];
 
@@ -39,18 +39,22 @@ function Or_Dashboard() {
                 {actionCards.map((card, index) => (
                     <div
                         key={index}
-                        style={{...styles.actionCard, background: card.color}}
+                        style={styles.actionCard}
                         onClick={() => navigate(card.path)}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-4px)';
-                            e.currentTarget.style.boxShadow = '0 10px 28px rgba(0,0,0,0.18)';
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                            e.currentTarget.style.borderColor = card.color;
                         }}
                         onMouseLeave={(e) => {
                             e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.12)';
+                            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)';
+                            e.currentTarget.style.borderColor = '#E1E8ED';
                         }}
                     >
-                        <div style={styles.actionIcon}>{card.icon}</div>
+                        <div style={{...styles.actionIcon, backgroundColor: card.color + '15', color: card.color}}>
+                            {card.icon}
+                        </div>
                         <div>
                             <div style={styles.actionTitle}>{card.title}</div>
                             <div style={styles.actionDescription}>{card.description}</div>
@@ -71,21 +75,23 @@ const styles = {
     container: {
         padding: '30px',
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
+        background: '#F5F7FA',
     },
     header: {
-        marginBottom: '24px',
+        marginBottom: '32px',
     },
     title: {
         margin: 0,
-        color: '#2193b0',
+        color: '#2C3E50',
         fontSize: '32px',
-        fontWeight: 800,
+        fontWeight: 700,
+        letterSpacing: '-0.5px',
     },
     subtitle: {
-        marginTop: 6,
-        color: '#5f6b7a',
-        fontSize: 15,
+        marginTop: 8,
+        color: '#7F8C8D',
+        fontSize: 16,
+        fontWeight: 400,
     },
     actionsRow: {
         display: 'flex',
@@ -98,8 +104,10 @@ const styles = {
         flex: '1 1 300px',
         minWidth: '280px',
         padding: '24px',
-        borderRadius: '12px',
-        boxShadow: '0 6px 20px rgba(0,0,0,0.12)',
+        borderRadius: '8px',
+        backgroundColor: '#ffffff',
+        border: '1px solid #E1E8ED',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
         cursor: 'pointer',
         transition: 'all 0.3s ease',
         display: 'flex',
@@ -107,23 +115,32 @@ const styles = {
         gap: '16px',
     },
     actionIcon: {
-        fontSize: '42px',
+        fontSize: '32px',
+        width: '48px',
+        height: '48px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '8px',
+        flexShrink: 0,
     },
     actionTitle: {
-        color: '#ffffff',
-        fontSize: '20px',
-        fontWeight: 700,
+        color: '#2C3E50',
+        fontSize: '18px',
+        fontWeight: 600,
         marginBottom: '4px',
     },
     actionDescription: {
-        color: 'rgba(255,255,255,0.9)',
+        color: '#7F8C8D',
         fontSize: '14px',
+        fontWeight: 400,
     },
     tableSection: {
         background: '#ffffff',
-        borderRadius: '12px',
+        borderRadius: '8px',
         padding: '24px',
-        boxShadow: '0 8px 24px rgba(33,147,176,0.12)',
+        border: '1px solid #E1E8ED',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
     },
 };
 
