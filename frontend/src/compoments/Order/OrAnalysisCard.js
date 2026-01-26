@@ -39,29 +39,29 @@ function Or_Analysis() {
             title: 'Approved Orders',
             value: a,
             icon: '✓',
-            color: 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)',
-            iconBg: '#27ae60',
+            color: '#27AE60',
+            bgColor: '#E8F8F5',
         },
         {
             title: 'Pending Orders',
             value: p,
             icon: '⏱',
-            color: 'linear-gradient(135deg, #f39c12 0%, #f1c40f 100%)',
-            iconBg: '#f39c12',
+            color: '#F39C12',
+            bgColor: '#FEF5E7',
         },
         {
             title: 'Cancelled Orders',
             value: c,
             icon: '✕',
-            color: 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)',
-            iconBg: '#e74c3c',
+            color: '#E74C3C',
+            bgColor: '#FADBD8',
         },
         {
             title: 'Total Orders',
             value: data.length,
             icon: '📦',
-            color: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
-            iconBg: '#2193b0',
+            color: '#3498DB',
+            bgColor: '#EBF5FB',
         },
     ];
 
@@ -78,23 +78,23 @@ function Or_Analysis() {
             {stats.map((stat, index) => (
                 <div
                     key={index}
-                    style={{...styles.card, background: stat.color}}
+                    style={{...styles.card, backgroundColor: '#ffffff'}}
                     onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-4px)';
-                        e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.15)';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
                     }}
                     onMouseLeave={(e) => {
                         e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(33,147,176,0.12)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)';
                     }}
                 >
                     <div style={styles.cardContent}>
-                        <div style={{...styles.iconCircle, backgroundColor: stat.iconBg}}>
-                            <span style={styles.icon}>{stat.icon}</span>
+                        <div style={{...styles.iconCircle, backgroundColor: stat.bgColor}}>
+                            <span style={{...styles.icon, color: stat.color}}>{stat.icon}</span>
                         </div>
                         <div style={styles.textContent}>
                             <div style={styles.title}>{stat.title}</div>
-                            <div style={styles.value}>{stat.value}</div>
+                            <div style={{...styles.value, color: stat.color}}>{stat.value}</div>
                         </div>
                     </div>
                 </div>
@@ -112,8 +112,9 @@ const styles = {
     },
     card: {
         padding: '24px',
-        borderRadius: '12px',
-        boxShadow: '0 8px 24px rgba(33,147,176,0.12)',
+        borderRadius: '8px',
+        border: '1px solid #E1E8ED',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
         transition: 'all 0.3s ease',
         cursor: 'pointer',
     },
@@ -125,38 +126,36 @@ const styles = {
     iconCircle: {
         width: '56px',
         height: '56px',
-        borderRadius: '50%',
+        borderRadius: '12px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(255,255,255,0.2)',
         flexShrink: 0,
     },
     icon: {
-        fontSize: '28px',
-        filter: 'brightness(0) invert(1)',
+        fontSize: '24px',
+        fontWeight: 'bold',
     },
     textContent: {
         flex: 1,
     },
     title: {
-        color: 'rgba(255,255,255,0.95)',
-        fontSize: '14px',
+        color: '#7F8C8D',
+        fontSize: '13px',
         fontWeight: 600,
-        marginBottom: '4px',
+        marginBottom: '8px',
         textTransform: 'uppercase',
         letterSpacing: '0.5px',
     },
     value: {
-        color: '#ffffff',
         fontSize: '32px',
-        fontWeight: 800,
+        fontWeight: 700,
         lineHeight: 1,
     },
     loadingText: {
         textAlign: 'center',
         padding: '24px',
-        color: '#5f6b7a',
+        color: '#7F8C8D',
         fontSize: '16px',
         gridColumn: '1 / -1',
     },
