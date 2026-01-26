@@ -154,17 +154,23 @@ function OrAdminTable() {
                     onClick={() => handleNavigate('/orderTrack', row._id)}
                     style={{
                         padding: '8px 16px',
-                        background: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+                        backgroundColor: '#4A90E2',
                         color: '#fff',
                         border: 'none',
                         borderRadius: '6px',
                         fontWeight: 600,
                         cursor: 'pointer',
                         fontSize: '13px',
-                        transition: 'all 0.3s ease',
+                        transition: 'all 0.2s ease',
                     }}
-                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                    onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#357ABD';
+                        e.target.style.transform = 'scale(1.02)';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#4A90E2';
+                        e.target.style.transform = 'scale(1)';
+                    }}
                 >
                     View Details
                 </button>
@@ -192,11 +198,12 @@ function OrAdminTable() {
     const customStyles = {
         headRow: {
             style: {
-                backgroundColor: '#2193b0',
+                backgroundColor: '#2C3E50',
                 color: '#ffffff',
-                fontSize: '14px',
-                fontWeight: '700',
+                fontSize: '13px',
+                fontWeight: '600',
                 borderRadius: '8px 8px 0 0',
+                minHeight: '48px',
             },
         },
         headCells: {
@@ -208,8 +215,9 @@ function OrAdminTable() {
         rows: {
             style: {
                 fontSize: '14px',
+                minHeight: '60px',
                 '&:hover': {
-                    backgroundColor: '#f8f9fa',
+                    backgroundColor: '#F8F9FA',
                     cursor: 'pointer',
                 },
             },
@@ -268,7 +276,7 @@ const styles = {
     },
     tableTitle: {
         margin: 0,
-        color: '#2c3e50',
+        color: '#2C3E50',
         fontSize: '20px',
         fontWeight: 700,
     },
@@ -282,35 +290,37 @@ const styles = {
     },
     searchInput: {
         padding: '10px 40px 10px 14px',
-        borderRadius: '8px',
-        border: '2px solid #e1e8ed',
+        borderRadius: '6px',
+        border: '1px solid #E1E8ED',
         fontSize: '14px',
         width: '280px',
         outline: 'none',
-        transition: 'all 0.3s ease',
+        transition: 'all 0.2s ease',
+        backgroundColor: '#ffffff',
     },
     searchIcon: {
         position: 'absolute',
         right: '12px',
         top: '50%',
         transform: 'translateY(-50%)',
-        fontSize: '18px',
+        fontSize: '16px',
+        color: '#7F8C8D',
     },
     pdfButton: {
         padding: '10px 20px',
-        background: 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)',
+        backgroundColor: '#E74C3C',
         color: '#fff',
         border: 'none',
-        borderRadius: '8px',
+        borderRadius: '6px',
         fontWeight: 600,
         cursor: 'pointer',
         fontSize: '14px',
-        transition: 'all 0.3s ease',
+        transition: 'all 0.2s ease',
     },
     noData: {
         padding: '40px',
         textAlign: 'center',
-        color: '#5f6b7a',
+        color: '#7F8C8D',
         fontSize: '16px',
     },
 };
