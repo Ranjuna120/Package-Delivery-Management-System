@@ -173,7 +173,7 @@ function OrderTracking() {
     return (
       <div style={styles.container}>
         <button 
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/OrderDashBoardPage')}
           style={styles.searchBackButton}
         >
           ← Back
@@ -274,15 +274,16 @@ function OrderTracking() {
 
   return (
     <div style={styles.container}>
-      {/* Header */}
-      <div style={styles.header}>
-        <button style={styles.backBtn} onClick={() => navigate('/OrderDashBoardPage')}>
-          ← Back
-        </button>
-        <div>
-          <h1 style={styles.title}>Order Tracking</h1>
-          <p style={styles.subtitle}>Track and manage your order</p>
-        </div>
+      <div style={styles.contentWrapper}>
+        {/* Header */}
+        <div style={styles.header}>
+          <button style={styles.backBtn} onClick={() => navigate('/OrderDashBoardPage')}>
+            ← Back
+          </button>
+          <div>
+            <h1 style={styles.title}>Order Tracking</h1>
+            <p style={styles.subtitle}>Track and manage your order</p>
+          </div>
         <div style={styles.headerActions}>
           <button 
             style={styles.editBtn}
@@ -400,19 +401,21 @@ function OrderTracking() {
           </div>
         </div>
       </div>
+      </div>
     </div>
   );
 }
 
 const styles = {
   container: {
-    padding: '30px',
+    padding: '40px 20px',
     minHeight: '100vh',
-    background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    background: '#f8f9fa',
     position: 'relative',
+  },
+  contentWrapper: {
+    maxWidth: '1400px',
+    margin: '0 auto',
   },
   header: {
     display: 'flex',
@@ -423,25 +426,27 @@ const styles = {
     gap: '16px',
   },
   backBtn: {
-    padding: '10px 16px',
-    background: 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)',
+    padding: '10px 20px',
+    background: '#6c757d',
     color: '#fff',
     border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
+    borderRadius: '6px',
+    fontWeight: '600',
     cursor: 'pointer',
     fontSize: '14px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
   },
   title: {
     margin: 0,
-    color: '#2193b0',
-    fontSize: '28px',
-    fontWeight: 800,
+    color: '#2C3E50',
+    fontSize: '32px',
+    fontWeight: 700,
   },
   subtitle: {
-    marginTop: 4,
-    color: '#5f6b7a',
-    fontSize: 14,
+    marginTop: '8px',
+    color: '#7F8C8D',
+    fontSize: '16px',
   },
   headerActions: {
     display: 'flex',
@@ -449,23 +454,25 @@ const styles = {
   },
   editBtn: {
     padding: '10px 20px',
-    background: 'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+    background: '#4A90E2',
     color: '#fff',
     border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
+    borderRadius: '6px',
+    fontWeight: '600',
     cursor: 'pointer',
     fontSize: '14px',
+    transition: 'background 0.3s ease',
   },
   deleteBtn: {
     padding: '10px 20px',
-    background: 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)',
+    background: '#E74C3C',
     color: '#fff',
     border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
+    borderRadius: '6px',
+    fontWeight: '600',
     cursor: 'pointer',
     fontSize: '14px',
+    transition: 'background 0.3s ease',
   },
   mainContent: {
     display: 'grid',
@@ -477,15 +484,17 @@ const styles = {
   },
   infoCard: {
     background: '#ffffff',
-    borderRadius: '16px',
-    padding: '28px',
-    boxShadow: '0 8px 24px rgba(33,147,176,0.12)',
+    borderRadius: '12px',
+    padding: '32px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+    border: '1px solid #E8E8E8',
   },
   trackingCard: {
     background: '#ffffff',
-    borderRadius: '16px',
-    padding: '28px',
-    boxShadow: '0 8px 24px rgba(33,147,176,0.12)',
+    borderRadius: '12px',
+    padding: '32px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+    border: '1px solid #E8E8E8',
   },
   cardHeader: {
     display: 'flex',
