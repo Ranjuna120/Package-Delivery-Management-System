@@ -57,9 +57,13 @@ const MachineAdd = () => {
     };
 
     return (
-        <div className="form-container">
-            <form onSubmit={handleSubmit}>
-                <h2>Add Machine</h2>
+        <div className="page-container">
+            <button className="back-button" onClick={() => navigate('/MachineDashBoardPage')}>
+                ← Back
+            </button>
+            <div className="form-container">
+                <form onSubmit={handleSubmit}>
+                    <h2>Add Machine</h2>
                 
                 {error && <div className="error-message">{error}</div>}
                 
@@ -75,15 +79,24 @@ const MachineAdd = () => {
                 />
 
                 <label htmlFor="machine-category">Machine Category:</label>
-                <input
-                    type="text"
+                <select
                     id="machine-category"
                     name="machine-category"
-                    placeholder="Enter machine category"
                     value={machineCategory}
                     onChange={(e) => setMachineCategory(e.target.value)}
                     required
-                />
+                >
+                    <option value="">Select a category</option>
+                    <option value="Packaging">Packaging</option>
+                    <option value="Sorting">Sorting</option>
+                    <option value="Loading">Loading</option>
+                    <option value="Unloading">Unloading</option>
+                    <option value="Labeling">Labeling</option>
+                    <option value="Scanning">Scanning</option>
+                    <option value="Quality Check">Quality Check</option>
+                    <option value="Conveyor">Conveyor</option>
+                    <option value="Other">Other</option>
+                </select>
 
                 <label htmlFor="duration-time">Duration Time (in hours):</label>
                 <input
@@ -122,6 +135,7 @@ const MachineAdd = () => {
                     {loading ? 'Adding Machine...' : 'Add Machine'}
                 </button>
             </form>
+        </div>
         </div>
     );
 };
