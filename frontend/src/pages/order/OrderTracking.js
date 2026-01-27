@@ -7,7 +7,11 @@ function OrderTracking() {
   
   const [orderData, setOrderData] = useState(null);
   const [Tracking, setTracking] = useState("");  
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [searchOrderId, setSearchOrderId] = useState('');
+  const [searchEmail, setSearchEmail] = useState('');
+  const [searchMethod, setSearchMethod] = useState('email'); // 'email' or 'id'
+  const [showSearch, setShowSearch] = useState(true);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -61,15 +65,23 @@ function OrderTracking() {
   };
 
   useEffect(() => {
+    if (!id) {
+      setShowSearch(true);
+      setLoading(false);
+      return;
+    }
+
     const fetchOrderData = async () => {
       try {
         setLoading(true);
+        setShowSearch(false);
         const response = await axios.get(`http://localhost:8070/api/orders/read/${id}`);
         setOrderData(response.data);
         setTracking(response.data.Or_tracking || 'Approval'); 
       } catch (error) {
         console.error("Error fetching order data", error);
         alert("Failed to load order data");
+        setShowSearch(true);
       } finally {
         setLoading(false);
       }
@@ -101,6 +113,131 @@ function OrderTracking() {
       active: index === currentIndex
     }));
   };
+
+  const handleSearch = async () => {
+    if (searchMethod === 'email') {
+      if (!searchEmail.trim()) {
+        alert('Please enter your email address');
+        return;
+      }
+      
+      try {
+        setLoading(true);
+        // Fetch all orders and filter by email
+        const response = await axios.get('http://localhost:8070/api/orders/Allread');
+        const orders = response.data;
+        const userOrders = orders.filter(order => 
+          order.Cus_email.toLowerCase() === searchEmail.toLowerCase()
+        );
+        
+        if (userOrders.length === 0) {
+          alert('No orders found for this email address.');
+          setLoading(false);
+          return;
+        }
+        
+        // If multiple orders, show the most recent one
+        const latestOrder = userOrders.sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+        setOrderData(latestOrder);
+        setTracking(latestOrder.Or_tracking || 'Approval');
+        setShowSearch(false);
+      } catch (error) {
+        console.error("Error fetching order data", error);
+        alert("Error searching for orders. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      // Search by Order ID
+      if (!searchOrderId.trim()) {
+        alert('Please enter an Order ID');
+        return;
+      }
+      
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://localhost:8070/api/orders/read/${searchOrderId}`);
+        setOrderData(response.data);
+        setTracking(response.data.Or_tracking || 'Approval');
+        setShowSearch(false);
+      } catch (error) {
+        console.error("Error fetching order data", error);
+        alert("Order not found. Please check your Order ID and try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  if (showSearch && !id) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.searchCard}>
+          <div style={styles.searchIcon}>📦</div>
+          <h1 style={styles.searchTitle}>Track Your Order</h1>
+          <p style={styles.searchSubtitle}>Enter your details to track your package</p>
+          
+          {/* Toggle between Email and Order ID */}
+          <div style={styles.toggleButtons}>
+            <button
+              style={{
+                ...styles.toggleButton,
+                ...(searchMethod === 'email' ? styles.toggleButtonActive : {}),
+              }}
+              onClick={() => setSearchMethod('email')}
+            >
+              Track by Email
+            </button>
+            <button
+              style={{
+                ...styles.toggleButton,
+                ...(searchMethod === 'id' ? styles.toggleButtonActive : {}),
+              }}
+              onClick={() => setSearchMethod('id')}
+            >
+              Track by Order ID
+            </button>
+          </div>
+
+          <div style={styles.searchBox}>
+            {searchMethod === 'email' ? (
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={searchEmail}
+                onChange={(e) => setSearchEmail(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                style={styles.searchInput}
+              />
+            ) : (
+              <input
+                type="text"
+                placeholder="Enter Order ID"
+                value={searchOrderId}
+                onChange={(e) => setSearchOrderId(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                style={styles.searchInput}
+              />
+            )}
+            <button 
+              onClick={handleSearch}
+              style={styles.searchButton}
+              disabled={loading}
+            >
+              {loading ? 'Searching...' : 'Track Order'}
+            </button>
+          </div>
+          
+          <p style={styles.helpText}>
+            {searchMethod === 'email' 
+              ? 'Enter the email address you used when placing the order'
+              : 'Your Order ID was sent to your email when you placed the order'
+            }
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -518,6 +655,83 @@ const styles = {
     fontWeight: 600,
     cursor: 'pointer',
     fontSize: '14px',
+  },
+  searchCard: {
+    backgroundColor: '#fff',
+    borderRadius: '16px',
+    padding: '60px 40px',
+    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
+    maxWidth: '600px',
+    width: '100%',
+    textAlign: 'center',
+  },
+  searchIcon: {
+    fontSize: '72px',
+    marginBottom: '24px',
+  },
+  searchTitle: {
+    color: '#2c3e50',
+    fontSize: '32px',
+    fontWeight: 700,
+    marginBottom: '12px',
+  },
+  searchSubtitle: {
+    color: '#7f8c8d',
+    fontSize: '16px',
+    marginBottom: '40px',
+  },
+  searchBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
+  searchInput: {
+    padding: '16px 20px',
+    borderRadius: '8px',
+    border: '2px solid #e1e8ed',
+    fontSize: '16px',
+    outline: 'none',
+    transition: 'border-color 0.2s ease',
+  },
+  searchButton: {
+    padding: '16px 32px',
+    background: 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '16px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'transform 0.2s ease',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+  },
+  toggleButtons: {
+    display: 'flex',
+    gap: '12px',
+    marginBottom: '24px',
+    justifyContent: 'center',
+  },
+  toggleButton: {
+    padding: '12px 24px',
+    background: '#ecf0f1',
+    color: '#7f8c8d',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+  },
+  toggleButtonActive: {
+    background: 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)',
+    color: '#fff',
+  },
+  helpText: {
+    marginTop: '20px',
+    color: '#95a5a6',
+    fontSize: '13px',
+    fontStyle: 'italic',
   },
 };
 
