@@ -172,6 +172,12 @@ function OrderTracking() {
   if (showSearch && !id) {
     return (
       <div style={styles.container}>
+        <button 
+          onClick={() => navigate('/')}
+          style={styles.searchBackButton}
+        >
+          ← Back
+        </button>
         <div style={styles.searchCard}>
           <div style={styles.searchIcon}>📦</div>
           <h1 style={styles.searchTitle}>Track Your Order</h1>
@@ -735,6 +741,21 @@ const styles = {
     color: '#95a5a6',
     fontSize: '13px',
     fontStyle: 'italic',
+  },
+  searchBackButton: {
+    padding: '10px 20px',
+    background: '#6c757d',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '6px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    fontSize: '14px',
+    marginBottom: '20px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    alignSelf: 'flex-start',
   },
 };
 
