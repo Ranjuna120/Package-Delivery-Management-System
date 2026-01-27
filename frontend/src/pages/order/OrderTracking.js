@@ -412,6 +412,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
   },
   header: {
     display: 'flex',
@@ -743,6 +744,9 @@ const styles = {
     fontStyle: 'italic',
   },
   searchBackButton: {
+    position: 'absolute',
+    top: '20px',
+    left: '20px',
     padding: '10px 20px',
     background: '#6c757d',
     color: '#fff',
@@ -751,11 +755,10 @@ const styles = {
     fontWeight: '600',
     cursor: 'pointer',
     fontSize: '14px',
-    marginBottom: '20px',
     display: 'inline-flex',
     alignItems: 'center',
     gap: '8px',
-    alignSelf: 'flex-start',
+    zIndex: 10,
   },
 };
 
