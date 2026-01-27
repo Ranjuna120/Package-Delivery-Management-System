@@ -403,6 +403,9 @@ const styles = {
     padding: '30px',
     minHeight: '100vh',
     background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     display: 'flex',
