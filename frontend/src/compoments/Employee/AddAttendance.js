@@ -90,87 +90,114 @@ const AddAttendance = ({ empID }) => {
       <style>{`
         .attendanceCard {
           background: white;
-          border-radius: 8px;
-          border: 1px solid #E1E8ED;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-          padding: 32px;
+          border-radius: 16px;
+          border: none;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+          padding: 40px;
           max-width: 600px;
           width: 100%;
+          position: relative;
+          overflow: hidden;
+        }
+        .attendanceCard::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #667eea, #764ba2);
         }
         .attendanceTitle {
           text-align: center;
           color: #2C3E50;
-          font-size: 20px;
+          font-size: 22px;
           font-weight: 700;
-          margin: 0 0 28px 0;
-          padding-bottom: 16px;
-          border-bottom: 1px solid #E1E8ED;
+          margin: 0 0 32px 0;
+          padding-bottom: 20px;
+          border-bottom: 2px solid #f0f0f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
         }
         .formGroup {
-          margin-bottom: 18px;
+          margin-bottom: 20px;
         }
         .formLabel {
           display: block;
           font-size: 12px;
-          font-weight: 600;
-          color: #7F8C8D;
+          font-weight: 700;
+          color: #8b92b8;
           margin-bottom: 8px;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: 1px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
         }
         .formInput {
           width: 100%;
-          padding: 11px 14px;
+          padding: 13px 16px;
           fontSize: 14px;
-          border: 1px solid #E1E8ED;
-          border-radius: 6px;
-          transition: all 0.2s ease;
+          border: 2px solid #e8eaf6;
+          border-radius: 10px;
+          transition: all 0.3s ease;
           outline: none;
           background: white;
           box-sizing: border-box;
         }
         .formInput:focus:not(:read-only) {
-          border-color: #4A90E2;
-          box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+          border-color: #667eea;
+          box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+          transform: translateY(-1px);
         }
         .formInput:read-only {
-          background-color: #F8F9FA;
-          color: #7F8C8D;
+          background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+          color: #667eea;
+          font-weight: 600;
+          border-color: #e0e4ff;
         }
         .submitBtn {
           width: 100%;
-          padding: 12px;
+          padding: 14px;
           font-size: 15px;
-          font-weight: 600;
+          font-weight: 700;
           border: none;
-          border-radius: 6px;
-          background: #4A90E2;
+          border-radius: 10px;
+          background: linear-gradient(135deg, #667eea, #764ba2);
           color: white;
           cursor: pointer;
-          transition: all 0.2s ease;
-          box-shadow: 0 2px 6px rgba(74, 144, 226, 0.3);
-          margin-top: 12px;
+          transition: all 0.3s ease;
+          box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+          margin-top: 16px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
         .submitBtn:hover {
-          background: #357ABD;
-          transform: translateY(-1px);
-          box-shadow: 0 3px 10px rgba(74, 144, 226, 0.4);
+          background: linear-gradient(135deg, #764ba2, #667eea);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        .submitBtn:active {
+          transform: translateY(0);
         }
         .errorMsg {
-          padding: 12px;
-          background-color: #FADBD8;
-          border: 1px solid #E74C3C;
-          border-radius: 6px;
-          color: #C0392B;
+          padding: 14px;
+          background: linear-gradient(135deg, #ffe8e8, #ffd5d5);
+          border: 2px solid #ff6b6b;
+          border-radius: 10px;
+          color: #c92a2a;
           font-size: 13px;
-          margin-bottom: 18px;
+          margin-bottom: 20px;
           text-align: center;
+          font-weight: 600;
         }
         .infoGrid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 16px;
-          margin-bottom: 18px;
+          gap: 18px;
+          margin-bottom: 20px;
         }
         .fullWidth {
           grid-column: 1 / -1;
@@ -178,12 +205,14 @@ const AddAttendance = ({ empID }) => {
       `}</style>
 
       <div className="attendanceCard">
-        <h2 className="attendanceTitle">Add Attendance</h2>
+        <h2 className="attendanceTitle">
+          <span>📋</span> Add Attendance
+        </h2>
         <form onSubmit={handleSubmit}>
           {/* Employee Info Grid */}
           <div className="infoGrid">
             <div className="formGroup">
-              <label className="formLabel">Employee ID</label>
+              <label className="formLabel"><span>🆔</span> Employee ID</label>
               <input
                 type="text"
                 value={empID}
@@ -192,7 +221,7 @@ const AddAttendance = ({ empID }) => {
               />
             </div>
             <div className="formGroup">
-              <label className="formLabel">Employee Name</label>
+              <label className="formLabel"><span>👤</span> Employee Name</label>
               <input
                 type="text"
                 value={empName}
@@ -205,7 +234,7 @@ const AddAttendance = ({ empID }) => {
           {/* Wage and Date */}
           <div className="infoGrid">
             <div className="formGroup">
-              <label className="formLabel">Hourly Wage</label>
+              <label className="formLabel"><span>💰</span> Hourly Wage</label>
               <input
                 type="text"
                 value={empWage}
@@ -214,7 +243,7 @@ const AddAttendance = ({ empID }) => {
               />
             </div>
             <div className="formGroup">
-              <label className="formLabel">Work Date</label>
+              <label className="formLabel"><span>📅</span> Work Date</label>
               <input
                 type="text"
                 value={todayDate}
@@ -227,7 +256,7 @@ const AddAttendance = ({ empID }) => {
           {/* Work Hours and OT */}
           <div className="infoGrid">
             <div className="formGroup">
-              <label className="formLabel">Work Hours (0-8)</label>
+              <label className="formLabel"><span>⏰</span> Work Hours (0-8)</label>
               <input
                 type="number"
                 value={workHours}
@@ -241,7 +270,7 @@ const AddAttendance = ({ empID }) => {
               />
             </div>
             <div className="formGroup">
-              <label className="formLabel">OT Hours (0-4)</label>
+              <label className="formLabel"><span>⏱️</span> OT Hours (0-4)</label>
               <input
                 type="number"
                 value={otHours}
@@ -260,7 +289,7 @@ const AddAttendance = ({ empID }) => {
 
           {/* Submit Button */}
           <button type="submit" className="submitBtn">
-            Submit Attendance
+            ✓ Submit Attendance
           </button>
         </form>
       </div>
