@@ -208,8 +208,31 @@ function App() {
       <div style={{
         minHeight: '100vh',
         padding: '40px 20px',
-        marginLeft: '200px',
+        maxWidth: '1400px',
+        margin: '0 auto',
       }}>
+        <button 
+          onClick={() => navigate('/OrderDashBoardPage')}
+          style={{
+            padding: '10px 20px',
+            background: '#6c757d',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '6px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            fontSize: '14px',
+            marginBottom: '30px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          }}
+        >
+          ← BACK
+        </button>
+
         {/* Header */}
         <div style={{
           textAlign: 'center',
