@@ -46,7 +46,7 @@ const EmployeeProfile = () => {
       <style>
         {`
           body {
-            background: #F5F7FA !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
             min-height: 100vh !important;
           }
           .EPLayout {  
@@ -59,55 +59,87 @@ const EmployeeProfile = () => {
           }
           .profileCard {
             background: white;
-            border-radius: 8px;
-            border: 1px solid #E1E8ED;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            padding: 32px;
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 40px;
             max-width: 700px;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+          }
+          .profileCard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
           }
           .welcomeSection {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
             padding-bottom: 24px;
-            border-bottom: 1px solid #E1E8ED;
+            border-bottom: 2px solid #f0f0f5;
           }
           .empAvatar {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 16px;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
             border-radius: 50%;
-            background: #4A90E2;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
-            fontSize: 36px;
-            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+            fontSize: 48px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            animation: fadeInScale 0.5s ease-out;
+          }
+          @keyframes fadeInScale {
+            from {
+              opacity: 0;
+              transform: scale(0.8);
+            }
+            to {
+              opacity: 1;
+              transform: scale(1);
+            }
           }
           .empInfo {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
           }
           .infoItem {
-            padding: 16px;
-            background: #F8F9FA;
-            border-radius: 8px;
-            border-left: 3px solid #4A90E2;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            cursor: pointer;
+          }
+          .infoItem:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.15);
+            border-left-color: #764ba2;
           }
           .infoLabel {
-            font-size: 12px;
-            color: #7F8C8D;
-            font-weight: 600;
-            margin-bottom: 6px;
+            font-size: 11px;
+            color: #8b92b8;
+            font-weight: 700;
+            margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
           }
           .infoValue {
-            font-size: 15px;
+            font-size: 16px;
             color: #2C3E50;
-            font-weight: 600;
+            font-weight: 700;
           }
           .actionButtons {
             display: flex;
@@ -116,25 +148,25 @@ const EmployeeProfile = () => {
             flex-wrap: wrap;
           }
           .actionBtn {
-            padding: 11px 24px;
+            padding: 13px 28px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
           }
           .actionBtn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
           }
           .logoutBtn {
-            background: #E74C3C;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
             color: white;
           }
           .logoutBtn:hover {
-            background: #C0392B;
+            background: linear-gradient(135deg, #ee5a6f, #ff6b6b);
           }
         `}
       </style>
@@ -143,30 +175,30 @@ const EmployeeProfile = () => {
         {/* Employee Info Card */}
         <div className="profileCard">
           <div className="welcomeSection">
-            <div className="empAvatar">�</div>
-            <h2 style={{ color: '#2C3E50', margin: '0 0 6px 0', fontSize: '24px', fontWeight: 700 }}>
-              Welcome, {empName}!
+            <div className="empAvatar">👨‍💼</div>
+            <h2 style={{ color: '#2C3E50', margin: '0 0 8px 0', fontSize: '28px', fontWeight: 700 }}>
+              Welcome Back, {empName}!
             </h2>
-            <p style={{ color: '#7F8C8D', fontSize: '14px', margin: 0, fontWeight: 500 }}>
+            <p style={{ color: '#667eea', fontSize: '15px', margin: 0, fontWeight: 600 }}>
               {empPosition}
             </p>
           </div>
 
           <div className="empInfo">
             <div className="infoItem">
-              <div className="infoLabel">Employee ID</div>
+              <div className="infoLabel"><span>🆔</span> Employee ID</div>
               <div className="infoValue">{empID}</div>
             </div>
             <div className="infoItem">
-              <div className="infoLabel">Short Name</div>
+              <div className="infoLabel"><span>👤</span> Short Name</div>
               <div className="infoValue">{empName}</div>
             </div>
             <div className="infoItem" style={{ gridColumn: '1 / -1' }}>
-              <div className="infoLabel">Full Name</div>
+              <div className="infoLabel"><span>📝</span> Full Name</div>
               <div className="infoValue">{empFullName}</div>
             </div>
             <div className="infoItem" style={{ gridColumn: '1 / -1' }}>
-              <div className="infoLabel">Position</div>
+              <div className="infoLabel"><span>💼</span> Position</div>
               <div className="infoValue">{empPosition}</div>
             </div>
           </div>
@@ -176,7 +208,7 @@ const EmployeeProfile = () => {
               className="actionBtn logoutBtn"
               onClick={handleLogout}
             >
-              Logout
+              🚪 Logout
             </button>
           </div>
         </div>
