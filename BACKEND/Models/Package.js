@@ -10,9 +10,10 @@ const packageSchema = new Schema ({
     Material: { type: String, required: true },
     Length: { type: Number, required: true },
     Width: { type: Number, required: true },
-    Height: { type: Number, required: true }
+    Height: { type: Number, required: true },
+    status: { type: String, default: 'pending' }
 
-});
+}, { timestamps: true });
 
 const Package = mongoose.model('Package', packageSchema);
 
