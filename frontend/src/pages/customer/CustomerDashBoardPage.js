@@ -42,11 +42,12 @@ function CustomerDashBoard() {
             onMouseLeave={() => setHoverIdx(null)}
             style={{
               ...styles.card,
-              transform: hoverIdx === idx ? 'translateY(-6px) scale(1.02)' : 'translateY(0)',
+              transform: hoverIdx === idx ? 'translateY(-8px) scale(1.02)' : 'translateY(0)',
               boxShadow:
                 hoverIdx === idx
-                  ? '0 16px 32px rgba(33,147,176,0.25)'
-                  : '0 8px 24px rgba(33,147,176,0.15)',
+                  ? '0 16px 40px rgba(102, 126, 234, 0.25)'
+                  : '0 8px 24px rgba(0, 0, 0, 0.08)',
+              borderColor: hoverIdx === idx ? '#667eea' : 'transparent',
             }}
           >
             <div style={styles.icon}>{c.icon}</div>
@@ -62,72 +63,88 @@ function CustomerDashBoard() {
 
 const styles = {
   section: {
-    minHeight: '100vh',
-    padding: '48px 20px',
-    background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
+    minHeight: 'calc(100vh - 120px)',
+    padding: '48px 32px 80px 32px',
+    background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   headerWrap: {
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: 48,
+    padding: '32px 40px',
+    background: 'white',
+    borderRadius: 16,
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+    maxWidth: 800,
+    width: '100%',
   },
   title: {
     margin: 0,
     fontSize: 36,
     lineHeight: 1.2,
-    color: '#2193b0',
+    color: '#2c3e50',
     fontWeight: 800,
   },
   subtitle: {
-    marginTop: 8,
-    color: '#5f6b7a',
+    marginTop: 12,
+    color: '#495057',
     fontSize: 16,
+    fontWeight: 500,
   },
   grid: {
     width: '100%',
-    maxWidth: 1100,
+    maxWidth: 1200,
     display: 'flex',
     flexWrap: 'wrap',
-    gap: 24,
+    gap: 32,
     justifyContent: 'center',
   },
   card: {
-    width: 360,
-    minHeight: 250,
-    padding: '32px 28px',
-    border: '0',
-    borderRadius: 16,
-    background: 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)',
-    boxShadow: '0 8px 24px rgba(33,147,176,0.15)',
+    width: 380,
+    minHeight: 280,
+    padding: '36px 32px',
+    border: '2px solid transparent',
+    borderRadius: 20,
+    background: 'white',
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
     cursor: 'pointer',
-    transition: 'all 0.25s ease',
+    transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
     textAlign: 'left',
+    position: 'relative',
+    overflow: 'hidden',
   },
   icon: {
-    fontSize: 52,
-    marginBottom: 14,
+    fontSize: 64,
+    marginBottom: 20,
+    filter: 'drop-shadow(0 4px 8px rgba(102, 126, 234, 0.2))',
   },
   cardTitle: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 700,
     color: '#2c3e50',
-    marginBottom: 10,
+    marginBottom: 12,
   },
   cardDesc: {
     fontSize: 15,
-    color: '#6c7a89',
+    color: '#6c757d',
     flexGrow: 1,
-    marginBottom: 18,
+    marginBottom: 24,
+    lineHeight: 1.6,
   },
   cardCta: {
     alignSelf: 'flex-end',
     fontWeight: 700,
-    color: '#2193b0',
+    fontSize: 15,
+    color: '#667eea',
+    padding: '10px 20px',
+    background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+    borderRadius: 8,
+    letterSpacing: '0.5px',
   },
 };
 
