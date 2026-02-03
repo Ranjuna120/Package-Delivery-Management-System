@@ -22,20 +22,22 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  background: #6c757d;
-  color: white;
+  background: #6c757d !important;
+  color: white !important;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background 0.3s ease;
+  z-index: 10;
+  opacity: 1 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .back-button:hover {
-  background: #5a6268;
-  transform: translateX(-3px);
+  background: #5a6268 !important;
 }
 
 .payment-title {
