@@ -1,0 +1,114 @@
+/* Hover effects for Expense Management components */
+
+/* Back button hover */
+.expense-back-btn:hover {
+  background: #5a6268 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Summary cards hover */
+.expense-summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Form input focus */
+.expense-input:focus {
+  border-color: #4CAF50 !important;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+/* Form button hover */
+.expense-submit-btn:hover {
+  background-color: #45a049 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.expense-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Search input focus */
+.expense-search-input:focus {
+  border-color: #4CAF50 !important;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+/* Download button hover */
+.expense-download-btn:hover {
+  background-color: #1a252f !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+}
+
+/* Update button hover */
+.expense-update-btn:hover {
+  background-color: #1976D2 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+/* Delete button hover */
+.expense-delete-btn:hover {
+  background-color: #c0392b !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+/* Table row hover */
+.expense-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .expense-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .expense-search-input {
+    width: 100% !important;
+    margin-right: 0 !important;
+    margin-bottom: 10px;
+  }
+
+  .expense-download-btn {
+    width: 100%;
+  }
+
+  .expense-summary-section {
+    grid-template-columns: 1fr !important;
+  }
+
+  .expense-main-content {
+    margin-left: 0 !important;
+    padding: 20px 15px !important;
+  }
+
+  .expense-table-container {
+    padding: 20px !important;
+    overflow-x: auto;
+  }
+
+  .expense-form-container {
+    padding: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .expense-update-btn,
+  .expense-delete-btn {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    margin: 4px !important;
+  }
+
+  .expense-table th,
+  .expense-table td {
+    padding: 10px !important;
+    font-size: 14px !important;
+  }
+}
