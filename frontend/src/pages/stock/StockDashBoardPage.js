@@ -9,7 +9,7 @@ function StockDashBoardPage() {
       <div style={styles.contentWrapper}>
         {/* Header */}
         <div style={styles.header}>
-          <button style={styles.backBtn} onClick={() => navigate('/')}>
+          <button style={styles.backBtn} onClick={() => navigate('/AdminLogin')}>
             ← BACK
           </button>
           <div>
@@ -38,70 +38,75 @@ function StockDashBoardPage() {
 
 const styles = {
   container: {
-    padding: '40px 20px',
-    minHeight: '100vh',
-    background: '#f8f9fa',
+    padding: '48px 32px 80px 32px',
+    minHeight: 'calc(100vh - 120px)',
+    background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
   },
   contentWrapper: {
     maxWidth: '1400px',
     margin: '0 auto',
   },
   header: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
+    background: 'white',
+    padding: '32px 40px',
+    borderRadius: '20px',
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
     marginBottom: '40px',
   },
   backBtn: {
-    padding: '10px 20px',
+    padding: '12px 24px',
     background: '#6c757d',
     color: '#fff',
     border: 'none',
-    borderRadius: '6px',
-    fontWeight: '600',
+    borderRadius: '10px',
+    fontWeight: '700',
     cursor: 'pointer',
     fontSize: '14px',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
+    marginBottom: '16px',
   },
   title: {
     margin: 0,
-    color: '#2C3E50',
-    fontSize: '32px',
-    fontWeight: 700,
+    color: '#2c3e50',
+    fontSize: '36px',
+    fontWeight: 800,
   },
   subtitle: {
-    marginTop: '8px',
-    color: '#7F8C8D',
+    marginTop: '12px',
+    color: '#6c757d',
     fontSize: '16px',
-    margin: 0,
+    margin: '12px 0 0 0',
+    fontWeight: '500',
   },
   dashboardGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '24px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+    gap: '32px',
   },
   comingSoonCard: {
     background: '#ffffff',
-    borderRadius: '12px',
-    padding: '40px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-    border: '1px solid #E8E8E8',
+    borderRadius: '20px',
+    padding: '60px 40px',
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+    border: '2px solid transparent',
     textAlign: 'center',
+    transition: 'all 0.35s ease',
   },
   iconContainer: {
-    fontSize: '64px',
-    marginBottom: '20px',
+    fontSize: '80px',
+    marginBottom: '24px',
+    filter: 'drop-shadow(0 4px 8px rgba(102, 126, 234, 0.2))',
   },
   cardTitle: {
     margin: '0 0 16px 0',
-    color: '#2C3E50',
-    fontSize: '24px',
+    color: '#2c3e50',
+    fontSize: '28px',
     fontWeight: 700,
   },
   cardText: {
     margin: 0,
-    color: '#7F8C8D',
+    color: '#6c757d',
     fontSize: '16px',
     lineHeight: '1.6',
   },
