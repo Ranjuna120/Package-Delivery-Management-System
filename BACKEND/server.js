@@ -14,6 +14,12 @@ const or_Routes = require("./Routes/Order");
 const orderqueueRoutes = require('./Routes/orderqueue.js');
 const assign_itemsRouter = require('./Routes/assign_itemsRoutes');
 
+const expenseRoutes = require('./Routes/ExpenseRoutes.js');
+const PMprofileRoutes = require('./Routes/PMprofile.js');
+const paymentRoutes = require('./Routes/paymentRoutes.js');
+const packageRoutes = require('./Routes/packageRoutes.js');
+const deliveryRoutes = require('./Routes/deliveryRoutes.js');
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -31,6 +37,13 @@ app.use('/machines', machineRoutes);
 app.use('/api/assign_items', assign_itemsRouter);
 app.use("/api/orders", or_Routes);
 app.use('/orderqueues', orderqueueRoutes);
+
+app.use("/expenses", expenseRoutes); // Using /expenses for clarity
+app.use("/PMprofiles", PMprofileRoutes); 
+app.use("/payments", paymentRoutes);
+app.use("/packages", packageRoutes);
+app.use("/deliveries", deliveryRoutes);
+
 // Database connection
 const PORT = process.env.PORT || 8070;
 const URL = process.env.MONGODB_URL;
