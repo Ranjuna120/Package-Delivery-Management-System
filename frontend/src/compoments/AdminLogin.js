@@ -19,6 +19,7 @@ function AdminLogin({ onLogin, userType }) {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('username', username);
           localStorage.setItem('adminLoggedIn', 'true');
+          localStorage.setItem('lastLogin', Date.now().toString());
           window.dispatchEvent(new Event('adminLoginChange'));
           navigate('/StockDashBoardPage');
           window.location.reload();
@@ -31,6 +32,7 @@ function AdminLogin({ onLogin, userType }) {
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('username', username);
             localStorage.setItem('adminLoggedIn', 'true');
+            localStorage.setItem('lastLogin', Date.now().toString());
             window.dispatchEvent(new Event('adminLoginChange'));
             navigate('/DMChoose');
             window.location.reload();
@@ -45,6 +47,7 @@ function AdminLogin({ onLogin, userType }) {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('username', username);
           localStorage.setItem('adminLoggedIn', 'true');
+          localStorage.setItem('lastLogin', Date.now().toString());
           window.dispatchEvent(new Event('adminLoginChange'));
           // Navigate to the Plant Manager (PM) dashboard chooser page
           navigate('/AdminChoose/PMChoose');
@@ -55,6 +58,7 @@ function AdminLogin({ onLogin, userType }) {
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('username', username);
         localStorage.setItem('adminLoggedIn', 'true');
+        localStorage.setItem('lastLogin', Date.now().toString());
         window.dispatchEvent(new Event('adminLoginChange'));
         navigate('/AdminChoose/GMChoose');
         window.location.reload();
