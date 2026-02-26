@@ -41,10 +41,9 @@ import EmployeeDashBoardOne from './compoments/Employee/EmployeeDashBoardOne';
 import GMChoose from './compoments/GMChoose';
 import DMChoose from './compoments/DMChoose';
 import PMChoose from './compoments/PMChoose';
-import StockDashBoard from './compoments/Stock/StockDashBoardOne';
-// import PackageDashBoard from './compoments/Package/PackageDashBoardOne';
+
+
 // import OrderDashBoard from './compoments/Order/OrderDashBoardOne';
-// import PaymentDashBoard from './compoments/Payment/PaymentDashBoardOne';
 import EmployeeDashBoard from './compoments/Employee/EmployeeDashBoardOne';
 
  
@@ -60,6 +59,15 @@ import UpdateMachine from './compoments/Machine/UpdateMachine';
 import MachineStatus from './compoments/Machine/MachineStatus';
 import AssignMachine from './compoments/Machine/AssignMachine';
 
+// Delivery Section Imports
+import DeliveryDashBoardPage from './pages/delivery/DeliveryDashBoardPage';
+import DeliveryList from './compoments/Delivery/DeliveryList';
+import AddDelivery from './compoments/Delivery/AddDelivery';
+import EditDelivery from './compoments/Delivery/EditDelivery';
+import AssignDelivery from './compoments/Delivery/AssignDelivery';
+import DeliveryTracking from './compoments/Delivery/DeliveryTracking';
+import DeliveryHistory from './compoments/Delivery/DeliveryHistory';
+
 //order mee tika nm atha thiynna epa kanawa thowa
 import Or_add from './compoments/Order/AddForm'; // Importing Order Add Form component
 import Or_Confirm from './compoments/Order/Or_confirm'; // Importing Order Confirm component
@@ -70,8 +78,30 @@ import Cus_Order from './pages/order/Customer_orders.js';
 import Find_order from './pages/order/FindOrder.js';
 import OrderTracking from './pages/order/OrderTracking'
 
+// Stock Section Imports
+import StockDashBoard from './compoments/Stock/StockDashBoardOne';
+import StockDashBoardPage from './pages/stock/StockDashBoardPage'; 
+// import StockAddForm from './pages/stock/AddItems';
+// import ContactSupplier from './pages/stock/contactSupplier'
+// import AssignItems from './pages/stock/pendingOrders';
+// import StockDetails from './pages/stock/stockDetails';
 
 
+//payment section
+import PaymentDashBoardPage from './pages/payment/PaymentDashBoardPage';
+// import PaymentDashBoard from './compoments/Payment/PaymentDashBoardOne';
+import Handlepayment from './pages/payment/Handlepayment';
+import Profile from './pages/payment/PMprofile';
+import PaymentForm from './pages/payment/Addpaymentform';
+// import CusDashboard from './pages/payment/CusDashboard';
+
+//packege section
+// import PackageDashBoard from './compoments/Package/PackageDashBoardOne';
+import CreatePackage from './compoments/Package/CreatePackage'; // Import Create Package component
+import PackageList from './compoments/Package/PackageList'; // Import Package List component
+import UpdatePackage from './compoments/Package/UpdatePackage'; // Import Update Package component
+import ReportGen from './pages/package/ReportGen'; // Import Package Report Generation component
+import PackageDashBoardPage from './pages/package/PackageDashBoardPage'; // Import Package Dashboard Page component
 
 import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
 
@@ -143,6 +173,15 @@ function App() {
           <Route path="/MachineDashBoardPage/Machine-Status" element={<MachineStatus />} />
           <Route path="/MachineStatus/Assign-machine" element={<AssignMachine />} />
 
+          {/* Delivery Section Routes */}
+          <Route path="/DeliveryDashBoardPage" element={<DeliveryDashBoardPage />} />
+          <Route path="/DeliveryDashBoardPage/deliveries" element={<DeliveryList />} />
+          <Route path="/DeliveryDashBoardPage/add-delivery" element={<AddDelivery />} />
+          <Route path="/DeliveryDashBoardPage/edit/:id" element={<EditDelivery />} />
+          <Route path="/DeliveryDashBoardPage/assign-delivery" element={<AssignDelivery />} />
+          <Route path="/DeliveryDashBoardPage/tracking" element={<DeliveryTracking />} />
+          <Route path="/DeliveryDashBoardPage/history" element={<DeliveryHistory />} />
+
           {/* Order Section Routes */}
           <Route path="/Or_add" element={<Or_add/>}/>     
           <Route path="/Or_Add/order-details" element={<Or_Confirm/>}/> {/* Order Confirmation */}
@@ -153,6 +192,29 @@ function App() {
           <Route path="/My/FindOrder" element={<Find_order/>} /> 
           <Route path="/OrderTracking" element={<OrderTracking/>}/> 
 
+          {/* Stock Section Routes */}
+           <Route path="/StockDashBoardPage" element={<StockDashBoardPage/>}/>
+           {/* <Route path="/StockAddForm" element={<StockAddForm/>}/> 
+           <Route path="/ContactSupplier" element={<ContactSupplier/>}/>
+           <Route path="/AssignItems" element={<AssignItems/>}/>
+           <Route path="/StockDetails" element={<StockDetails/>}/> */}
+
+            {/* Payment Section Routes */}
+           <Route path="/PaymentDashBoardPage" element={<PaymentDashBoardPage/>}/> 
+           {/* <Route path="/CusDashboard" element={<CusDashboard />} /> */}
+          <Route path="/Addpaymentform" element={<PaymentForm />} />
+           <Route path="/PMprofile" element={<Profile />} />
+          <Route path="/Handlepayment" element={<Handlepayment />} />
+          {/* <Route path="/PaymentDashBoard" element={<PaymentDashBoard />} /> */}
+          
+          {/* Package Section Routes */}
+          <Route path="/create" element={<CreatePackage />} /> {/* Create Package */}
+          <Route path="/packages" element={<PackageList />} /> {/* Display All Packages */}
+          <Route path="/updatepackage/:id" element={<UpdatePackage />} /> {/* Update Package */}
+          <Route path="/package-dashboard" element={<PackageDashBoardPage />} />
+          <Route path="/PackageDashBoardPage" element={<PackageDashBoardPage />} />
+          <Route path="/reportGen" element={<ReportGen/>} />
+           
         </Routes>
        <Footer/>
       </div>
