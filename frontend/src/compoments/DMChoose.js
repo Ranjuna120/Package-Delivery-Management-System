@@ -24,6 +24,13 @@ function DMChoose() {
 
   return (
     <section style={styles.section}>
+      <button
+        onClick={() => navigate('/AdminLogin')}
+        style={styles.backBtn}
+      >
+        <span>←</span> Back
+      </button>
+
       <div style={styles.headerWrap}>
         <h1 style={styles.title}>Deputy Manager</h1>
         <p style={styles.subtitle}>Choose a module to manage daily operations</p>
@@ -66,6 +73,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    position: 'relative',
   },
   headerWrap: {
     textAlign: 'center',
@@ -126,6 +134,24 @@ const styles = {
     alignSelf: 'flex-end',
     fontWeight: 700,
     color: '#2193b0',
+  },
+  backBtn: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    padding: '12px 24px',
+    background: 'white',
+    color: '#2193b0',
+    border: '2px solid #2193b0',
+    borderRadius: 10,
+    fontSize: 15,
+    fontWeight: 700,
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
   },
 };
 
