@@ -13,11 +13,34 @@ function Header() {
     useEffect(() => {
         // Function to update login and admin state
         const updateAuthState = () => {
+            // Check if session has expired (24 hours)
+            const lastLogin = localStorage.getItem('lastLogin');
+            const sessionTimeout = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+            
+            if (lastLogin) {
+                const timeElapsed = Date.now() - parseInt(lastLogin);
+                if (timeElapsed > sessionTimeout) {
+                    // Session expired, clear all auth data
+                    clearAllAuthData();
+                    setIsLoggedIn(false);
+                    setIsAdmin(false);
+                    setIsEmployee(false);
+                    return;
+                }
+            }
+            
+            // Strictly check for 'true' string, any other value means not logged in
             const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            setIsLoggedIn(loggedIn);
             const adminLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
-            setIsAdmin(adminLoggedIn);
             const employeeLoggedIn = localStorage.getItem('employeeLoggedIn') === 'true';
+            
+            // If none are true, make sure all localStorage values are cleared
+            if (!loggedIn && !adminLoggedIn && !employeeLoggedIn) {
+                clearAllAuthData();
+            }
+            
+            setIsLoggedIn(loggedIn);
+            setIsAdmin(adminLoggedIn);
             setIsEmployee(employeeLoggedIn);
         };
         updateAuthState();
@@ -31,28 +54,28 @@ function Header() {
         };
     }, []);
 
-    const handleNavigate = (path) => {
-        navigate(`${path}`);
-    };
-
-    const handleLogout = () => {
-        // Clear customer data
+    const clearAllAuthData = () => {
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('employeeLoggedIn');
+        localStorage.removeItem('lastLogin');
         localStorage.removeItem('username');
         localStorage.removeItem('customerName');
         localStorage.removeItem('customerId');
-        localStorage.removeItem('lastLogin');
-        // Clear admin data
-        localStorage.removeItem('adminLoggedIn');
-        // Clear employee data
-        localStorage.removeItem('employeeLoggedIn');
         localStorage.removeItem('empID');
         localStorage.removeItem('empName');
         localStorage.removeItem('empFullName');
         localStorage.removeItem('empPosition');
         localStorage.removeItem('empWage');
         localStorage.removeItem('employeeId');
-        
+    };
+
+    const handleNavigate = (path) => {
+        navigate(`${path}`);
+    };
+
+    const handleLogout = () => {
+        clearAllAuthData();
         setIsLoggedIn(false);
         setIsAdmin(false);
         setIsEmployee(false);
