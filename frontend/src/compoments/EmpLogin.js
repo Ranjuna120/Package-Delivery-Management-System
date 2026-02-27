@@ -33,6 +33,7 @@ const EmpLogin = () => {
         localStorage.setItem('empPosition', data.employee.EmpPosition);
         localStorage.setItem('empWage', data.employee.EmpWage);
         localStorage.setItem('employeeId', data.employee._id);
+        localStorage.setItem('lastLogin', Date.now().toString());
 
         // Navigate to employee profile
         navigate('/EmployeeProfile', { 
