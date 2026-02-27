@@ -217,7 +217,6 @@ function EmployeeDashBoardTwo() {
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 14px;
-            transition: all 0.3s ease;
             background: white;
           }
 
@@ -230,15 +229,14 @@ function EmployeeDashBoardTwo() {
 
           .attPdfBtn {
             padding: 10px 20px;
-            background: #dc3545;
-            color: white;
+            background: #dc3545 !important;
+            color: white !important;
             border: none;
             border-radius: 8px;
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -246,9 +244,9 @@ function EmployeeDashBoardTwo() {
           }
 
           .attPdfBtn:hover {
-            background: #c82333;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(220, 53, 69, 0.5);
+            background: #dc3545 !important;
+            transform: none !important;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
           }
 
           .attTableCard {
@@ -287,11 +285,6 @@ function EmployeeDashBoardTwo() {
 
           .attTable tbody tr {
             border-bottom: 1px solid #f0f4f8;
-            transition: background 0.2s ease;
-          }
-
-          .attTable tbody tr:hover {
-            background: #f8fffe;
           }
 
           .attTable tbody tr:last-child {
@@ -299,9 +292,10 @@ function EmployeeDashBoardTwo() {
           }
 
           .attTable tbody td {
-            padding: 14px;
+            padding: 16px 14px;
             font-size: 14px;
             color: #2c3e50;
+            vertical-align: middle;
           }
 
           .attIdBadge {
@@ -322,28 +316,27 @@ function EmployeeDashBoardTwo() {
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
             margin-right: 6px;
           }
 
           .attUpdateBtn {
-            background: #f7c600;
-            color: #2c3e50;
+            background: #f7c600 !important;
+            color: #2c3e50 !important;
           }
 
           .attUpdateBtn:hover {
-            background: #e0b200;
-            transform: translateY(-1px);
+            background: #f7c600 !important;
+            transform: none !important;
           }
 
           .attDeleteBtn {
-            background: #ea2c03;
-            color: white;
+            background: #ea2c03 !important;
+            color: white !important;
           }
 
           .attDeleteBtn:hover {
-            background: #d32703;
-            transform: translateY(-1px);
+            background: #ea2c03 !important;
+            transform: none !important;
           }
 
           .attEmptyMsg {
@@ -355,14 +348,13 @@ function EmployeeDashBoardTwo() {
 
           .attBackBtn {
             padding: 12px 20px;
-            background: white;
-            color: #11998e;
-            border: 2px solid #11998e;
+            background: white !important;
+            color: #11998e !important;
+            border: 2px solid #11998e !important;
             border-radius: 8px;
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -370,10 +362,10 @@ function EmployeeDashBoardTwo() {
           }
 
           .attBackBtn:hover {
-            background: #11998e;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(17, 153, 142, 0.3);
+            background: white !important;
+            color: #11998e !important;
+            transform: none !important;
+            box-shadow: none !important;
           }
 
           @media (max-width: 768px) {
