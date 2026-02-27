@@ -31,6 +31,13 @@ function GMChoose() {
 
   return (
     <div style={styles.container}>
+      <button
+        onClick={() => navigate('/AdminLogin')}
+        style={styles.backBtn}
+      >
+        <span>←</span> Back
+      </button>
+
       <div style={styles.header}>
         <h1 style={styles.title}>General Manager Dashboard</h1>
         <p style={styles.subtitle}>Select a module to manage</p>
@@ -64,6 +71,7 @@ const styles = {
     padding: '40px 30px',
     minHeight: '100vh',
     background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
+    position: 'relative',
   },
   header: {
     textAlign: 'center',
@@ -109,6 +117,24 @@ const styles = {
     fontSize: '28px',
     fontWeight: 700,
     textAlign: 'center',
+  },
+  backBtn: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    padding: '12px 24px',
+    background: 'white',
+    color: '#2193b0',
+    border: '2px solid #2193b0',
+    borderRadius: 10,
+    fontSize: 15,
+    fontWeight: 700,
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
   },
 };
 
