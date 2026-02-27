@@ -121,18 +121,18 @@ function AddEmployee() {
           display: flex;
           align-items: center;
           justify-content: center;
-          fontSize: 35px;
+          font-size: 35px;
           box-shadow: 0 4px 12px rgba(17, 153, 142, 0.3);
         }
         .addEmpTitle {
           color: #11998e;
-          fontSize: 26px;
-          fontWeight: 700;
+          font-size: 26px;
+          font-weight: 700;
           margin: 0 0 5px 0;
         }
         .addEmpSubtitle {
           color: #6c757d;
-          fontSize: 13px;
+          font-size: 13px;
           margin: 0;
         }
         .formGrid {
@@ -150,18 +150,17 @@ function AddEmployee() {
         }
         .formLabel {
           display: block;
-          fontSize: 13px;
-          fontWeight: 600;
+          font-size: 13px;
+          font-weight: 600;
           color: #333;
-          marginBottom: 6px;
+          margin-bottom: 6px;
         }
         .formInput {
           width: 100%;
           padding: 12px 14px;
-          fontSize: 14px;
+          font-size: 14px;
           border: 2px solid #e0e0e0;
-          borderRadius: 8px;
-          transition: all 0.3s ease;
+          border-radius: 8px;
           outline: none;
           background: white;
         }
@@ -171,40 +170,40 @@ function AddEmployee() {
         }
         .errorMsg {
           color: #c33;
-          fontSize: 12px;
-          marginTop: 4px;
+          font-size: 12px;
+          margin-top: 4px;
         }
         .buttonGroup {
           display: flex;
           gap: 12px;
-          marginTop: 25px;
-          justifyContent: flex-end;
+          margin-top: 25px;
+          justify-content: center;
         }
         .btn {
           padding: 13px 24px;
-          fontSize: 15px;
-          fontWeight: 600;
+          font-size: 15px;
+          font-weight: 600;
           border: none;
-          borderRadius: 8px;
+          border-radius: 8px;
           cursor: pointer;
-          transition: all 0.3s ease;
         }
         .btnBack {
-          background: #e9f1f7;
-          color: #2c3e50;
+          background: #e9f1f7 !important;
+          color: #2c3e50 !important;
         }
         .btnBack:hover {
-          background: #d4e4ed;
-          transform: translateY(-2px);
+          background: #e9f1f7 !important;
+          transform: none !important;
         }
         .btnSubmit {
-          background: linear-gradient(135deg, #11998e, #38ef7d);
-          color: white;
-          box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+          background: linear-gradient(135deg, #11998e, #38ef7d) !important;
+          color: white !important;
+          box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4) !important;
         }
         .btnSubmit:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(17, 153, 142, 0.5);
+          background: linear-gradient(135deg, #11998e, #38ef7d) !important;
+          box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4) !important;
+          transform: none !important;
         }
       `}</style>
 
