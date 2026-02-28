@@ -272,7 +272,8 @@ const styles = {
   },
   table: {
     width: '100%',
-    borderCollapse: 'collapse',
+    borderCollapse: 'separate',
+    borderSpacing: 0,
   },
   emptyState: {
     background: '#ffffff',
@@ -291,16 +292,18 @@ const styles = {
     textAlign: 'left',
     fontWeight: '600',
     fontSize: '13px',
-    border: 'none',
+    borderRight: '2px solid #415B76',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
   },
   tableCell: {
     padding: '16px 20px',
-    borderBottom: '1px solid #E1E8ED',
+    borderBottom: '2px solid #D1D8DD',
+    borderRight: '2px solid #D1D8DD',
     textAlign: 'left',
     fontSize: '14px',
     color: '#2C3E50',
+    verticalAlign: 'middle',
   },
   statusCell: {
     display: 'flex',
@@ -326,7 +329,7 @@ const styles = {
     display: 'inline-block',
   },
   select: {
-    padding: '8px 12px',
+    padding: '8px 32px 8px 12px',
     fontSize: '13px',
     borderRadius: '6px',
     border: '1px solid #E1E8ED',
@@ -334,6 +337,11 @@ const styles = {
     transition: 'all 0.2s ease',
     cursor: 'pointer',
     backgroundColor: '#ffffff',
+    appearance: 'none',
+    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234A90E2' d='M6 9L1 4h10z'/%3E%3C/svg%3E\")",
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'right 10px center',
+    fontWeight: '500',
   },
   actionButton: {
     padding: '8px 16px',
