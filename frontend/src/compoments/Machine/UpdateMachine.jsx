@@ -49,9 +49,13 @@ const UpdateMachine = () => {
     };
 
     return (
-        <div style={styles.formContainer}>
-            <form onSubmit={handleUpdate}>
-                <h2 style={styles.heading}>Update Machine</h2>
+        <div style={styles.pageContainer}>
+            <button style={styles.backButton} onClick={() => navigate('/MachineDashBoardPage')}>
+                ← Back
+            </button>
+            <div style={styles.formContainer}>
+                <form onSubmit={handleUpdate}>
+                    <h1 style={styles.heading}>Update Machine</h1>
                 <label htmlFor="machine-name" style={styles.label}>Machine Name:</label>
                 <input
                     type="text"
@@ -125,10 +129,27 @@ const UpdateMachine = () => {
                 <button type="submit" style={styles.button}>Update Machine</button>
             </form>
         </div>
+        </div>
     );
 };
 
 const styles = {
+    pageContainer: {
+        padding: '30px',
+        minHeight: '100vh',
+    },
+    backButton: {
+        padding: '10px 20px',
+        background: '#f4f4f4',
+        color: 'blue',
+        border: 'none',
+        borderRadius: '6px',
+        fontWeight: '600',
+        cursor: 'pointer',
+        transition: 'background 0.2s ease',
+        fontSize: '14px',
+        marginBottom: '20px',
+    },
     formContainer: {
         background: 'linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%)',
         padding: '30px 40px',
@@ -136,7 +157,7 @@ const styles = {
         boxShadow: '0 8px 24px rgba(33, 147, 176, 0.15)',
         maxWidth: '500px',
         width: '100%',
-        margin: '40px auto'
+        margin: '0 auto',
     },
     heading: {
         textAlign: 'center',
