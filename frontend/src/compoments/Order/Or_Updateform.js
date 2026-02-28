@@ -90,13 +90,14 @@ const OrderUpdateForm = () => {
         <>
             <style>{`
                 body {
-                    background: linear-gradient(135deg, #f5f7fa 0%, #e3e9f0 100%) !important;
+                    background: #f8f9fa !important;
                     min-height: 100vh;
                 }
             `}</style>
             <div style={{
-                marginLeft: '200px',
-                padding: '30px 60px',
+                maxWidth: '1400px',
+                margin: '0 auto',
+                padding: '40px 20px',
                 minHeight: '100vh',
                 background: 'transparent',
                 display: 'flex',
