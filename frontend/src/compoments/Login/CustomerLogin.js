@@ -19,20 +19,12 @@ const CustomerLogin = () => {
         // Get customer name from response
         const customerName = response.data.customer?.name || username;
         const customerId = response.data.customer?._id;
-        const loginTime = new Date().toLocaleString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric', 
-          hour: '2-digit', 
-          minute: '2-digit' 
-        });
-        
         // Set login status in localStorage
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('username', username);
         localStorage.setItem('customerName', customerName);
         localStorage.setItem('customerId', customerId);
-        localStorage.setItem('lastLogin', loginTime);
+        localStorage.setItem('lastLogin', Date.now().toString());
         
         navigate('/CustomerProfileOne');
         // Reload to update header
