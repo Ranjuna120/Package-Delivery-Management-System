@@ -80,12 +80,14 @@ function Or_Analysis() {
                     key={index}
                     style={{...styles.card, backgroundColor: '#ffffff'}}
                     onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                        e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 16px 40px rgba(102, 126, 234, 0.25)';
+                        e.currentTarget.style.borderColor = '#667eea';
                     }}
                     onMouseLeave={(e) => {
                         e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)';
+                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.08)';
+                        e.currentTarget.style.borderColor = 'transparent';
                     }}
                 >
                     <div style={styles.cardContent}>
@@ -106,46 +108,47 @@ function Or_Analysis() {
 const styles = {
     container: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '20px',
-        marginBottom: '24px',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+        gap: '24px',
+        marginBottom: '32px',
     },
     card: {
-        padding: '24px',
-        borderRadius: '8px',
-        border: '1px solid #E1E8ED',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-        transition: 'all 0.3s ease',
+        padding: '32px 28px',
+        borderRadius: '16px',
+        border: '2px solid transparent',
+        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+        transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
         cursor: 'pointer',
     },
     cardContent: {
         display: 'flex',
         alignItems: 'center',
-        gap: '16px',
+        gap: '20px',
     },
     iconCircle: {
-        width: '56px',
-        height: '56px',
+        width: '64px',
+        height: '64px',
         borderRadius: '12px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
+        filter: 'drop-shadow(0 4px 8px rgba(102, 126, 234, 0.2))',
     },
     icon: {
-        fontSize: '24px',
+        fontSize: '32px',
         fontWeight: 'bold',
     },
     textContent: {
         flex: 1,
     },
     title: {
-        color: '#7F8C8D',
+        color: '#6c757d',
         fontSize: '13px',
-        fontWeight: 600,
+        fontWeight: 700,
         marginBottom: '8px',
         textTransform: 'uppercase',
-        letterSpacing: '0.5px',
+        letterSpacing: '0.8px',
     },
     value: {
         fontSize: '32px',
