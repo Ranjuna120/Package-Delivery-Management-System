@@ -122,32 +122,32 @@ function EmployeeDashBoardPage() {
     <>
       <style>{`
         body {
-          background: linear-gradient(135deg, #eeefefff 0%, #ebf1edff 100%) !important;
+          background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
           min-height: 100vh !important;
           margin: 0 !important;
         }
         .empDashContainer {
-          min-height: 100vh;
-          padding: 40px 20px;
+          min-height: calc(100vh - 120px);
+          padding: 48px 32px 80px 32px;
         }
         .empDashWrapper {
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
         }
         .empDashHeader {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 30px;
+          margin-bottom: 40px;
           background: white;
-          padding: 25px 30px;
-          border-radius: 16px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+          padding: 32px 40px;
+          border-radius: 20px;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         }
         .empHeaderLeft h1 {
           margin: 0;
-          font-size: 28px;
-          color: #11998e;
+          font-size: 36px;
+          color: #2c3e50;
           font-weight: 800;
         }
         .empHeaderLeft p {
@@ -161,43 +161,44 @@ function EmployeeDashBoardPage() {
           align-items: center;
         }
         .addEmpBtn {
-          padding: 12px 20px;
-          background: linear-gradient(135deg, #11998e, #38ef7d);
-          color: white;
+          padding: 12px 24px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+          color: white !important;
           border: none;
-          border-radius: 8px;
+          border-radius: 10px;
           font-weight: 700;
           font-size: 15px;
           cursor: pointer;
-          box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
-          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 8px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
         .addEmpBtn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(17, 153, 142, 0.5);
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+          transform: none !important;
         }
         .pdfBtn {
           padding: 12px 20px;
-          background: #dc3545;
-          color: white;
+          background: #dc3545 !important;
+          color: white !important;
           border: none;
           border-radius: 8px;
           font-weight: 700;
           font-size: 15px;
           cursor: pointer;
-          box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
-          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
           display: flex;
           align-items: center;
           gap: 6px;
         }
         .pdfBtn:hover {
-          background: #c82333;
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(220, 53, 69, 0.5);
+          background: #dc3545 !important;
+          box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
+          transform: none !important;
         }
         .searchBar {
           margin-bottom: 20px;
@@ -213,7 +214,7 @@ function EmployeeDashBoardPage() {
         }
         .searchInputGroup label {
           font-weight: 700;
-          color: #11998e;
+          color: #667eea;
           font-size: 14px;
           display: flex;
           align-items: center;
@@ -221,32 +222,33 @@ function EmployeeDashBoardPage() {
         }
         .searchInputGroup input {
           flex: 1;
-          padding: 10px 16px;
+          padding: 12px 18px;
           border: 2px solid #e0e0e0;
-          border-radius: 8px;
+          border-radius: 10px;
           font-size: 14px;
           transition: all 0.3s ease;
           max-width: 300px;
+          background: #f8f9fa;
         }
         .searchInputGroup input:focus {
           outline: none;
-          border-color: #11998e;
-          box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.1);
+          border-color: #667eea;
+          box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+          background: white;
         }
         .clearSearchBtn {
           padding: 10px 16px;
-          background: #6c757d;
-          color: white;
+          background: #6c757d !important;
+          color: white !important;
           border: none;
           border-radius: 8px;
           font-weight: 600;
           font-size: 14px;
           cursor: pointer;
-          transition: all 0.3s ease;
         }
         .clearSearchBtn:hover {
-          background: #5a6268;
-          transform: translateY(-1px);
+          background: #6c757d !important;
+          transform: none !important;
         }
         .empTableCard {
           background: white;
@@ -260,10 +262,10 @@ function EmployeeDashBoardPage() {
           border-collapse: collapse;
         }
         .empTable thead {
-          background: linear-gradient(135deg, #11998e, #38ef7d);
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         .empTable thead th {
-          padding: 16px 14px;
+          padding: 18px 16px;
           text-align: left;
           font-size: 13px;
           font-weight: 700;
@@ -274,27 +276,24 @@ function EmployeeDashBoardPage() {
         }
         .empTable tbody tr {
           border-bottom: 1px solid #f0f4f8;
-          transition: background 0.2s ease;
-        }
-        .empTable tbody tr:hover {
-          background: #f8fffe;
         }
         .empTable tbody tr:last-child {
           border-bottom: none;
         }
         .empTable tbody td {
-          padding: 14px;
+          padding: 16px;
           font-size: 14px;
           color: #2c3e50;
+          vertical-align: middle;
         }
         .empIdBadge {
           display: inline-block;
-          padding: 4px 10px;
-          background: linear-gradient(135deg, #11998e15, #38ef7d15);
-          border: 1px solid #11998e40;
-          border-radius: 6px;
+          padding: 6px 12px;
+          background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+          border: 1px solid rgba(102, 126, 234, 0.3);
+          border-radius: 8px;
           font-weight: 700;
-          color: #11998e;
+          color: #667eea;
           font-size: 13px;
         }
         .empActionBtn {
@@ -304,24 +303,23 @@ function EmployeeDashBoardPage() {
           font-size: 13px;
           font-weight: 700;
           cursor: pointer;
-          transition: all 0.2s ease;
           margin-right: 6px;
         }
         .empEditBtn {
-          background: #f7c600;
-          color: #2c3e50;
+          background: #f7c600 !important;
+          color: #2c3e50 !important;
         }
         .empEditBtn:hover {
-          background: #e0b200;
-          transform: translateY(-1px);
+          background: #f7c600 !important;
+          color: #2c3e50 !important;
         }
         .empDeleteBtn {
-          background: #ea2c03;
-          color: white;
+          background: #ea2c03 !important;
+          color: white !important;
         }
         .empDeleteBtn:hover {
-          background: #d32703;
-          transform: translateY(-1px);
+          background: #ea2c03 !important;
+          color: white !important;
         }
         .navBtnGroup {
           display: flex;
@@ -336,14 +334,14 @@ function EmployeeDashBoardPage() {
           font-size: 14px;
           font-weight: 700;
           cursor: pointer;
-          transition: all 0.3s ease;
-          background: white;
-          color: #11998e;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          background: white !important;
+          color: #11998e !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
         }
         .navBtn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+          background: white !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+          transform: none !important;
         }
         .loadingMsg, .errorMsg, .emptyMsg {
           padding: 40px 20px;
