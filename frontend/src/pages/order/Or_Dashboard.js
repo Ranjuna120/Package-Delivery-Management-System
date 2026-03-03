@@ -25,6 +25,13 @@ function Or_Dashboard() {
 
     return (
         <div style={styles.container}>
+            <button
+                onClick={() => navigate('/AdminChoose/GMChoose')}
+                style={styles.backBtn}
+            >
+                <span>←</span> Back
+            </button>
+
             {/* Header */}
             <div style={styles.header}>
                 <h1 style={styles.title}>Order Dashboard</h1>
@@ -42,14 +49,14 @@ function Or_Dashboard() {
                         style={styles.actionCard}
                         onClick={() => navigate(card.path)}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-2px)';
-                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-                            e.currentTarget.style.borderColor = card.color;
+                            e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+                            e.currentTarget.style.boxShadow = '0 16px 40px rgba(102, 126, 234, 0.25)';
+                            e.currentTarget.style.borderColor = '#667eea';
                         }}
                         onMouseLeave={(e) => {
                             e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)';
-                            e.currentTarget.style.borderColor = '#E1E8ED';
+                            e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.08)';
+                            e.currentTarget.style.borderColor = 'transparent';
                         }}
                     >
                         <div style={{...styles.actionIcon, backgroundColor: card.color + '15', color: card.color}}>
@@ -73,74 +80,102 @@ function Or_Dashboard() {
 
 const styles = {
     container: {
-        padding: '30px',
-        minHeight: '100vh',
-        background: '#F5F7FA',
+        padding: '48px 32px 80px 32px',
+        minHeight: 'calc(100vh - 120px)',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+        position: 'relative',
     },
     header: {
-        marginBottom: '32px',
+        marginBottom: '40px',
+        marginTop: '60px',
+        background: 'white',
+        padding: '32px 40px',
+        borderRadius: '20px',
+        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+        textAlign: 'center',
     },
     title: {
         margin: 0,
-        color: '#2C3E50',
-        fontSize: '32px',
-        fontWeight: 700,
+        color: '#2c3e50',
+        fontSize: '36px',
+        fontWeight: 800,
         letterSpacing: '-0.5px',
     },
     subtitle: {
-        marginTop: 8,
-        color: '#7F8C8D',
+        marginTop: 12,
+        color: '#6c757d',
         fontSize: 16,
-        fontWeight: 400,
+        fontWeight: 500,
     },
     actionsRow: {
         display: 'flex',
-        gap: '20px',
-        marginTop: '24px',
-        marginBottom: '32px',
+        gap: '24px',
+        marginTop: '32px',
+        marginBottom: '40px',
         flexWrap: 'wrap',
     },
     actionCard: {
-        flex: '1 1 300px',
-        minWidth: '280px',
-        padding: '24px',
-        borderRadius: '8px',
+        flex: '1 1 340px',
+        minWidth: '300px',
+        padding: '32px',
+        borderRadius: '16px',
         backgroundColor: '#ffffff',
-        border: '1px solid #E1E8ED',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+        border: '2px solid transparent',
+        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
         cursor: 'pointer',
-        transition: 'all 0.3s ease',
+        transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
         display: 'flex',
         alignItems: 'center',
-        gap: '16px',
+        gap: '20px',
     },
     actionIcon: {
-        fontSize: '32px',
-        width: '48px',
-        height: '48px',
+        fontSize: '40px',
+        width: '64px',
+        height: '64px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: '8px',
+        borderRadius: '12px',
         flexShrink: 0,
+        filter: 'drop-shadow(0 4px 8px rgba(102, 126, 234, 0.2))',
     },
     actionTitle: {
-        color: '#2C3E50',
-        fontSize: '18px',
-        fontWeight: 600,
-        marginBottom: '4px',
+        color: '#2c3e50',
+        fontSize: '20px',
+        fontWeight: 700,
+        marginBottom: '8px',
     },
     actionDescription: {
-        color: '#7F8C8D',
-        fontSize: '14px',
+        color: '#6c757d',
+        fontSize: '15px',
         fontWeight: 400,
+        lineHeight: 1.5,
     },
     tableSection: {
         background: '#ffffff',
-        borderRadius: '8px',
-        padding: '24px',
-        border: '1px solid #E1E8ED',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+        borderRadius: '20px',
+        padding: '32px',
+        border: 'none',
+        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+    },
+    backBtn: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        padding: '12px 24px',
+        background: 'white',
+        color: '#667eea',
+        border: '2px solid #667eea',
+        borderRadius: 10,
+        fontSize: 15,
+        fontWeight: 700,
+        cursor: 'pointer',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 8,
+        transition: 'all 0.3s ease',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        zIndex: 10,
     },
 };
 
