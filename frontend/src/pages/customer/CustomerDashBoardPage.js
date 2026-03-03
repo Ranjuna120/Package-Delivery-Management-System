@@ -26,6 +26,13 @@ function CustomerDashBoard() {
 
   return (
     <section style={styles.section}>
+      <button
+        onClick={() => navigate('/DMChoose')}
+        style={styles.backBtn}
+      >
+        <span>←</span> Back
+      </button>
+
       <div style={styles.headerWrap}>
         <h1 style={styles.title}>Customer Dashboard</h1>
         <p style={styles.subtitle}>Quick access to customer operations</p>
@@ -69,6 +76,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    position: 'relative',
   },
   headerWrap: {
     textAlign: 'center',
@@ -145,6 +153,24 @@ const styles = {
     background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
     borderRadius: 8,
     letterSpacing: '0.5px',
+  },
+  backBtn: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    padding: '12px 24px',
+    background: 'white',
+    color: '#667eea',
+    border: '2px solid #667eea',
+    borderRadius: 10,
+    fontSize: 15,
+    fontWeight: 700,
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
   },
 };
 
